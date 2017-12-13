@@ -1,0 +1,1566 @@
+/*
+
+Theme Name: Novos Elementos
+
+Theme URI: http://novoselementos.com.br/
+
+Author: Agência Novos Elementos
+
+Author URI: http://novoselementos.com.br/
+
+Description: Projeto criado pela Agência Novos Elementos.
+
+Version: 1.2015
+
+
+
+*/
+
+
+
+/* The bootstrap.css file is auto-enqueued in functions.php */
+
+
+
+
+
+/******************
+
+IDENTIDADE VISUAL
+
+****************/
+
+
+
+/*
+
+cor forte: #;
+
+cor fraca: #;
+
+*/
+
+
+
+@font-face{
+
+    src: url('fonts/VisbyCF-Light.otf');
+
+    font-family: 'visby';
+
+}
+
+
+
+@font-face{
+
+    src: url('fonts/VisbyCF-Bold.otf');
+
+    font-family: 'visbyb';
+
+}
+
+
+
+@font-face{
+
+    src: url('fonts/QuincyCF-LightItalic.otf');
+
+    font-family: 'quincy';
+
+}
+
+
+
+.quincy{
+
+    font-family: 'quincy';
+
+}
+
+
+
+*{
+
+	word-break: break-word;
+
+}
+
+
+
+body {
+
+    overflow-x: hidden;
+
+    font-family: "visby",Helvetica,Arial,sans-serif;
+
+}
+
+
+
+h1,h2,h3,h4,h5,h6 {
+
+    text-transform: uppercase;
+
+    font-family: "visby",Helvetica,Arial,sans-serif;
+
+    font-weight: 400;
+
+}
+
+
+
+a {
+
+    color: #333;
+
+}
+
+
+
+a:hover,
+
+a:focus,
+
+a:active,
+
+a.active {
+
+    color: #333;
+
+    text-decoration: none !important;
+
+}
+
+.post-title{
+    position: relative;
+    min-height: 52px;
+}
+
+.post-title a{
+    font-size: 22px;
+    text-transform: initial;
+    color: #287178;
+    text-transform: initial;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    width: 100%;
+}
+
+
+
+#wpadminbar{
+
+    display: none !important;
+
+}
+
+
+
+
+
+.circles{
+
+    float: left;
+
+    width: 100%;
+
+    position: relative;
+
+    bottom: 220px;
+
+}
+
+.circles h2{
+
+    font-size: 28px;
+
+    color: #46b0b8;
+
+    text-align: center;
+
+}
+
+
+
+/**********************/
+
+/*                    */
+
+/*      RESETS        */
+
+/*                    */
+
+/**********************/
+
+
+
+header .navbar .menu-button{ width: 100%; margin: 0;}
+
+#logo img { width: 100%; max-width: 350px; }
+
+.navbar { margin-bottom: 0; }
+
+#menu .navbar.navbar-default {
+
+    border: none;
+
+    background-color: transparent;
+
+    margin-bottom: 0px;
+
+}
+
+
+
+#menu .navbar-default .navbar-nav>.active>a, 
+
+#menu .navbar-default .navbar-nav>.active>a:focus, 
+
+#menu .navbar-default .navbar-nav>.active>a:hover{
+
+    background-color: transparent;
+
+}
+
+
+
+.navbar-default .navbar-brand:hover,
+
+.navbar-default .navbar-brand:focus,
+
+.navbar-default .navbar-brand:active,
+
+.navbar-default .navbar-brand.active {
+
+    color: #ccc;
+
+}
+
+
+
+.img { width: 100%; overflow: hidden; }
+
+.img img { width: 100%; height: auto }
+
+.logo-ne img {float: right;}
+
+
+
+#form-allowed-tags { display: none; }
+
+
+
+.dmbs-comments{
+
+	display: none !important;
+
+}
+
+
+
+.logo-ne{
+
+display: inline-block;
+
+    padding-top: 15px;
+
+}
+
+.main-header{
+
+    background: url(img/bgheadernh.jpg) no-repeat top center;
+
+    background-size: cover;
+
+    padding: 60px 0;
+
+}
+
+#home header{
+
+    position: absolute;
+
+    background: none;
+
+    width: 100%;
+
+    z-index: 1;
+
+    padding: 20px 0;
+
+}
+
+footer{
+
+    padding: 10px ;
+
+    background-color: #d9d9d9;
+
+}
+
+.assinatura{
+
+    font-size: 18px;
+
+    font-weight: 100;
+
+    padding-top: 15px;
+
+}
+
+
+
+.page-id-173 .bloco .img {
+
+    margin: auto;
+
+    max-width: 150px;
+
+}
+
+
+
+.page-id-173 .circles {
+
+    position: initial;
+
+    margin: 50px 0;
+
+    min-height: 370px;
+
+}
+
+
+
+.bt-voltar {
+
+    background-color: #ffffff;
+
+    border: none;
+
+    margin-bottom: 15px;
+
+    margin-right: 15px;
+
+    color: #46b0b8;
+
+    font-size: 18px;
+
+    padding: 5px 10px;
+
+    float: right;
+
+}
+
+
+
+p {
+
+    margin: 15px 0;
+
+}
+
+
+
+
+
+/******************
+
+MENU
+
+****************/
+
+
+
+/* MOBILE */
+
+
+
+.navbar-default .navbar-collapse {
+
+    border-color: rgba(255,255,255,.02);
+
+}
+
+
+
+.navbar-default .navbar-toggle .icon-bar {
+
+    background-color: #fff;
+
+}
+
+
+
+
+
+
+
+/* DESKTOP */
+
+
+
+.navbar-default .navbar-toggle:hover,
+
+.navbar-default .navbar-toggle:focus {
+
+    background-color: #B7CED0;
+
+}
+
+
+
+.navbar-default .nav li a {
+
+    text-transform: uppercase;
+
+    font-family: "visby",Helvetica,Arial,sans-serif;
+
+    font-weight: 400;
+
+    letter-spacing: 1px;
+
+    color: #fff;
+	
+    font-size:12px;
+}
+
+
+
+.navbar-default .nav li a:hover,
+
+.navbar-default .nav li a:focus {
+
+    outline: 0;
+
+    color: #333;
+
+}
+
+
+
+.navbar-default .navbar-nav>.active>a {
+
+    border-radius: 0;
+
+    color: #333;
+
+    background-color: #ccc;
+
+}
+
+
+
+.navbar-default .navbar-nav>.active>a:hover,
+
+.navbar-default .navbar-nav>.active>a:focus {
+
+    color: #fff;
+
+    background-color: #ccc;
+
+}
+
+html body div.npr{
+
+    padding-right: 0;
+
+}
+
+html body div.npl{
+
+    padding-left: 0;
+
+}
+
+html body div.npt{
+
+    padding-top: 0;
+
+}
+
+html body div.npb{
+
+    padding-bottom: 0;
+
+}
+
+html body div.np{
+
+    padding: 0;
+
+}
+
+
+
+.mapa iframe{
+
+    max-width: 100%;
+
+}
+
+
+
+#page-contato,#page,#page-home{
+
+    padding: 20px 0;
+
+}
+
+
+
+#page-contato .end p{
+
+    min-height: initial !important;
+
+    font-size: 16px !important;
+
+}
+
+
+
+#page-contato .end{
+
+    margin-top: 20px;
+
+}
+
+
+
+.perfilhome{
+
+    background: url(img/perfilhome.jpg) no-repeat center top;
+
+    background-size: cover;
+
+}
+
+
+
+.form-contato p{
+
+    font-weight: bold;
+
+}
+
+.form-contato span,
+
+.form-contato input,
+
+.form-contato textarea{
+
+    max-width: 100%;
+
+    border-radius: 3px;
+
+}
+
+.form-contato .wpcf7-submit{
+
+    background-color: transparent;
+
+    font-size: 18px;
+
+}
+
+.perfilhome{
+
+    padding: 100px 20px;
+
+    position: relative;
+
+    bottom: 140px;
+
+}
+
+.perfilhome h5{
+
+    font-size: 50px;
+
+    color: #fff;
+
+    font-weight: 100;
+
+    color: #fff;
+
+    font-family: 'Allura';
+
+    text-transform: capitalize;
+
+}
+
+.perfilhome span{
+
+    font-size: 20px;
+
+    font-family: 'visby',Helvetica,Arial,sans-serif;
+
+    color: #fff;
+
+}
+
+
+
+.perfilhome h5 strong{
+
+    font-family: 'Open Sans';
+
+    font-weight: 100;
+
+}
+
+.perfilhome button{
+
+    padding: 3px 5px;
+
+    text-transform: uppercase;
+
+    margin-top: 20px;
+
+    background-color: transparent;
+
+    color: #fff;
+
+    border: 1px solid #fff;
+
+    border-radius: 3px;
+
+    -webkit-transition: all .3s;
+
+       -moz-transition: all .3s;
+
+        -ms-transition: all .3s;
+
+         -o-transition: all .3s;
+
+            transition: all .3s;
+
+}
+
+
+
+.perfilhome button:hover{
+
+    background-color: #fff;
+
+    color: #008B95;
+
+}
+
+.colunistas .img-colunista {
+	width:100%;
+}
+
+.colunistas h2 {
+    font-size: 31px;
+    text-transform: initial;
+    color: #287178;
+    margin-bottom: 27px;
+}
+
+.colunista footer {
+    background:none;
+}
+
+
+.img-colunista {
+    margin-right: 17px;
+    border-radius: 100%;
+    margin-bottom: 32px;
+}
+
+.img-colunista img {
+    margin-right: 15px;
+    border-radius: 100%;
+
+}
+
+
+.bloco{
+
+    position: relative;
+
+}
+
+
+
+.end p a{
+
+    color: #1ba6b0;
+
+}
+
+
+
+.bloco h3{
+
+    position: absolute;
+
+    bottom: -20px;
+
+    background-color: #1ba6b0;
+
+    color: #fff;
+
+    font-size: 24px;
+
+    padding: 15px 10px;
+
+    left: -10px;
+
+}
+
+
+
+.hl h2{
+
+    color: #1ba6b0;
+
+    font-size: 96px;
+
+    position: relative;
+
+    right: 50px;
+
+}
+
+
+
+.sociais{
+
+    position: relative;
+
+    bottom: 55px;
+
+    color: #fff;
+
+    text-transform: uppercase;
+
+    font-size: 24px;
+
+}
+
+.sociais .icon{
+
+    display: inline-block;
+
+}
+
+.sociais .fa{
+
+    font-size: 18px;
+
+    position: relative;
+
+    bottom: 3px;
+
+    color: #fff;
+
+}
+
+.sociais .icon{
+
+    width: 35px;
+
+    height: 35px;
+
+    border: 2px solid #fff;
+
+    border-radius: 50%;
+
+}
+
+.sociais .icon{
+
+    margin-left: 15px;
+
+}
+
+
+
+
+
+
+
+
+
+/******************
+
+SECOES
+
+
+
+s1: ;
+
+s2: ;
+
+s3: ;
+
+****************/
+
+
+
+#s1 {
+
+    /*background: url(img/bg-s1.jpg) center top;*/
+
+    padding: 40px 0;
+
+    height: 250px;
+
+    background-color: #eee;
+
+}
+
+
+
+#s2 {
+
+    background: url(img/bgperfilhome.jpg) no-repeat center top;
+
+    padding: 0;
+
+    background-size: cover;
+
+}
+
+
+
+#s3 {
+
+    background: #eee;
+
+    padding: 40px 0;
+
+}
+
+
+
+#s4{
+
+    padding-bottom: 30px;
+
+}
+
+
+
+#ne img{
+
+    max-width: 240px;
+
+}
+
+
+.page-tratamentos .post-title{
+
+    font-size: 22px;
+
+    min-height: 48px;
+
+}
+
+.page-tratamentos .post-text p{
+
+    min-height: 80px;
+
+}
+
+.page-header{
+
+    text-transform: initial;
+
+    color: #1ba6b0;
+
+}
+
+
+
+.sectitle{
+
+    color: #1ba6b0;
+
+    background-color: #fff;
+
+    padding: 10px 15px;
+
+    position: relative;
+
+    top: 32px;
+
+    display: inline-block;
+
+    font-size: 28px;
+
+    text-transform: uppercase;
+
+}
+
+
+
+.tbox{
+
+    height: 105px;
+
+    width: 100%;
+
+    border: 1px solid #fff;
+
+    position: relative;
+
+    bottom: 155px;
+
+    border-bottom: 0;
+
+}
+
+
+
+.tbox:before{
+
+    content: "";
+
+    position: absolute;
+
+    border-bottom: 1px solid #fff;
+
+    width: 90px;
+
+    bottom: 0;
+
+}
+
+
+
+.tbox:after{
+
+    content: "";
+
+    position: absolute;
+
+    border-bottom: 1px solid #fff;
+
+    width: 90px;
+
+    right: 0;
+
+    bottom: 0;
+
+}
+
+
+
+#s1 .img{
+
+    max-width: 150px;
+
+    margin: auto;
+
+}
+
+
+
+.ends{
+
+    padding-top: 30px;
+
+    width: 100%;
+
+    float: left;
+
+    border-top: 2px solid #1ba6b0;
+
+}
+
+.bottom .img{
+
+    display: inline-block;
+
+    max-width: 45px;
+
+}
+
+.bottom .logo-ne .img{
+
+    max-width: 192px;
+
+}
+
+.end p:first-child{
+
+    color: #1ba6b0;
+
+    min-height: 56px;
+
+}
+
+.end p{
+
+font-size: 20px;
+
+font-weight: 100;
+
+color: #3a3a3a;
+
+}
+
+
+
+.end .midp{
+
+    min-height: 84px;
+
+}
+
+.safari .perfilhome{
+    bottom: 70px;
+}
+
+.safari .sociais{
+    bottom: 40px;
+}
+
+.post-text{
+    min-height: 75px;
+}
+
+a.moretag{
+    padding: 3px 4px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #1ba6b0;
+-webkit-transition: all .3s;
+   -moz-transition: all .3s;
+    -ms-transition: all .3s;
+     -o-transition: all .3s;
+        transition: all .3s;
+}
+
+a.moretag:hover{
+    color: #1ba6b0;
+    background-color: #fff;
+}
+
+#s3 .bloco .img {
+    max-height: 250px;
+}
+
+.page-id-307 .commentform label {
+    display: block;
+}
+.comment-form-comment label {
+    display: none !important;
+}
+.commentform button, input, select, textarea {
+    width: 100%;
+}
+ul.commentlist {
+    list-style: none;
+}
+.comment-author img {
+    display: none;
+}
+ul.commentlist li {
+    border-bottom: 1px solid #ccc;
+    padding: 20px 0;
+}
+.comment-author cite.fn {
+    font-family: 'visbyb',Helvetica,Arial,sans-serif;
+    font-style: normal;
+}
+
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 10px;
+}
+/*
+.single-imprensa img {
+    width: 100%;
+    height: auto;
+}
+*/
+.tratamentos-img {
+    max-height: 200px;
+}
+.single .tratamentos-img {
+    max-height: initial;
+}
+.post-type-archive-imprensa .post-box {
+    min-height: 400px;
+}
+
+
+/******************
+
+MOBILE
+
+****************/
+
+
+
+@media (min-width: 768px) and (max-width: 992px){
+
+    body { font-size: 12px; }
+
+
+
+    #menu-menu-principal{
+
+        float: none !important;
+
+        display: inline-block;
+
+    }
+
+    #menu{
+
+        text-align: center;
+
+    }
+
+}
+
+
+
+@media (min-width: 769px){
+
+    .form-contato{
+
+        padding-top: 50px;
+
+    }
+
+    .col-md-20{
+
+        width: 17%;
+
+        float: none;
+
+        position: relative;
+
+        min-height: 1px;
+
+        padding-right: 15px;
+
+        padding-left: 15px;
+
+        display: inline-block;
+
+    }
+
+}
+
+
+
+@media (max-width: 1200px){
+.post-text{
+    min-height: 95px;
+}
+    .nav>li>a {
+        padding: 10px 8px;
+    }
+    .navbar-default .nav li a {
+        font-size: 12px;
+    }
+    #s2 {
+
+        height: 480px;
+
+    }
+
+    .sociais {
+
+        bottom: 100px;
+
+    }
+
+    .tbox:before,
+
+    .tbox:after{
+
+        width: 70px;
+
+    }
+
+    .assinatura {
+
+        padding-top: 7px;
+
+        font-size: 15px;
+
+    }
+
+    .logo-ne {
+
+        padding-top: 10px;
+
+    }
+
+    .bottom .img {
+
+        max-width: 35px;
+
+    }
+
+    .circles {
+
+        bottom: 220px;
+
+    }
+
+    .end p:first-child {
+
+        color: #1ba6b0;
+
+        min-height: 44px;
+
+    }
+
+    .end .midp {
+
+        min-height: 66px;
+
+    }
+
+    .end p{
+
+        font-size: 16px;
+
+    }
+
+    .circles h2{
+
+        margin-top: 10px;
+
+        font-size: 22px;
+
+    }
+
+    .hl h2{
+
+        font-size: 74px;
+
+    }
+
+    .bloco h3{
+
+        font-size: 18px;
+
+    }
+
+}
+
+
+
+@media (max-width: 992px){
+    .safari .circles{
+        bottom: 100px;
+    }
+
+    .tbox:before, .tbox:after {
+
+        width: 30px;
+
+    }
+
+    header{
+
+        padding-bottom: 0;
+
+    }
+
+    .assinatura {
+
+        font-size: 12px;
+
+    }
+
+    .bottom .img {
+
+        max-width: 25px;
+
+    }
+
+    .end p {
+
+        font-size: 13px;
+
+    }
+
+    .bloco h3 {
+
+        font-size: 14px;
+
+    }
+
+    .hl h2 {
+
+        font-size: 54px;
+
+    }
+
+    #menu{
+
+        padding-top: 40px;
+
+    }
+
+    .circles {
+
+        bottom: 140px;
+        
+    }
+
+    .circles h2 {
+
+        font-size: 16px;
+
+        margin-top: 10px;
+
+    }
+
+    html body div.sm-center{
+
+        text-align: center;
+
+    }
+
+    #logo{
+
+        text-align: center;
+
+    }
+
+}
+
+
+
+@media (max-width: 768px){
+    .safari .circles {
+        bottom: 20px;
+    }
+    .navbar-default .nav li a {
+        font-size: 18px;
+    }
+    #page-contato .nav-tabs li {
+    float: left;
+    margin-bottom: -1px;
+    width: 100%;
+    text-align: center;
+    }
+    #page-contato .nav-tabs li a{
+        font-size: 20px;
+    }
+    #page-contato .nav-tabs li.active a,
+    #page-contato .nav-tabs li a:hover{
+        background-color: #44B4BD;
+        color: #fff;
+    }
+.page-id-173 .circles {
+    margin: 0;
+    min-height: initial;
+}
+    .page-id-173{
+        min-height: 100vh;
+    }
+
+    .safari #s1 .img{
+        max-width: 90px;
+    }
+
+    .safari .perfilhome {
+        bottom: 30px;
+    }
+
+    .safari .sociais {
+        bottom: 15px;
+    }
+
+    #s2{
+
+        height: initial;
+
+    }
+
+    #s1{
+
+        height: 180px;
+
+    }
+
+    .form-contato{
+
+        margin-top: 30px;
+
+    }
+
+    .circles{
+
+        text-align: center;
+
+    }
+
+    #s1 .b4,#s1 .b5{
+
+        float: none;
+
+        margin: auto;
+
+        display: inline-block;
+
+    }
+
+    .circles{
+
+        bottom: 80px;
+
+    }
+
+    .circles h2 {
+
+        font-size: 14px;
+
+        margin-top: 10px;
+
+        text-transform: capitalize;
+
+    }
+
+    .menu-button{
+
+    background-color: #fff;
+
+    font-size: 20px;
+
+    }
+
+    #home header{
+
+        background: url(img/bgheadernh.jpg) no-repeat top center;
+
+        background-size: cover;
+
+        position: initial;
+
+        padding-bottom: 0;
+
+    }
+
+    .sociais {
+
+        position: relative;
+
+        bottom: 10px;
+
+        color: #fff;
+
+        text-transform: uppercase;
+
+        font-size: 24px;
+
+    }
+
+    .perfilhome{
+
+        padding: 40px 10px;
+
+    bottom: 20px;
+
+    }
+
+    .perfilhome h5{
+
+        font-size: 22px;
+
+    }
+
+    .perfilhome span {
+
+        font-size: 10px;
+
+    }
+
+    #s3 .bloco{
+
+        margin-bottom: 30px;
+
+    }
+
+    #s4 .end{
+
+        margin-bottom: 25px;
+
+    }
+
+    .end p:first-child {
+
+        min-height: initial;
+
+    }
+
+    .end .midp {
+
+        min-height: initial;
+
+    }
+
+    .imgs{
+
+        margin: 10px 0;
+
+    }
+
+    html body div.xs-center{
+
+        text-align: center;
+
+    }
+
+    body { font-size: 12px; }
+
+    .xs-center { text-align: center; }
+
+    .logo-ne img { float: none;}
+
+
+
+    .navbar.navbar-default{
+
+        margin: 0 -15px;
+
+    }
+
+    #menu .navbar-toggle{
+
+        border-radius: 0;
+
+    }
+
+    .post-box{
+
+        margin-bottom: 40px;
+
+    }
+
+    #ne{
+
+        margin-top: 20px;
+
+    }
+
+
+
+}
+
+@media (max-width: 600px){
+    .circles{
+
+        bottom: 20px;
+
+    }
+
+}
