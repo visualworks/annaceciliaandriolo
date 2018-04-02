@@ -54,7 +54,7 @@ Template Name: Home
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12 text-left">
                 <div class="perfilhome">
-                    <h5>Dra. Anna<br>Cecília Andriolo<br><span>Dermatologia <strong>&</strong> Cosmiatria</span></h5>
+                    <h5>Dra. Anna<br>Cecília Andriolo<br><span>Dermatologia</span></h5>
                     <a href="<?php echo site_url();?>/perfil">
                         <button>
                             Visite o perfil
