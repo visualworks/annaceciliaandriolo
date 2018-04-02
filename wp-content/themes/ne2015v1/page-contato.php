@@ -31,6 +31,8 @@ Template Name: Contato
                     <div role="tabpanel" class="tab-pane active" id="home">
                         <div class="end end1">
                             <p>Clínica Professor Doutor<br>Walter Belda Junior</p>
+                            <p>Médico responsável: Dra Anna Cecília Andriolo</p>
+                            <p>CRM SP 141502<br />RQE SP 38665</p>
                             <p class="midp">Av. Açocê, 162<br>Moema - SP</p>
                             <p><a href="tel:50515141">(11) 5051 5141</a> | <a href="tel:50511921">(11) 5051 1921</a></p>
                         </div>
@@ -41,6 +43,8 @@ Template Name: Contato
                     <div role="tabpanel" class="tab-pane" id="profile">
                         <div class="end end2">
                             <p>Clínica Ruston</p>
+                            <p>Médico responsável: Dra Anna Cecília Andriolo</p>
+                            <p>CRM SP 141502<br />RQE SP 38665</p>
                             <p class="midp">Av. Engenheiro Oscar Americano, 60<br>Cidade Jardim - SP</p>
                             <p><a href="tel:30316360">(11) 3094-7474</a></p>
                         </div>
@@ -51,6 +55,8 @@ Template Name: Contato
                     <div role="tabpanel" class="tab-pane" id="messages">
                         <div class="end end3">
                             <p>Clínica Anna Cecília Andriolo</p>
+                            <p>Médico responsável: Dra Anna Cecília Andriolo</p>
+                            <p>CRM GO 12882<br />RQE GO 9653</p>
                             <p class="midp">Alameda Ricardo Paranhos, 799<br>lote1/4, quadra 243-A<br>Marista - GO</p>
                             <p><a href="tel:39990090">(62) 3999 0090</a> | <a href="tel:98089922">(62) 9808 9922</a></p>
                         </div>
