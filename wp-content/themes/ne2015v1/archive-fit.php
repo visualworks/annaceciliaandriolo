@@ -117,7 +117,7 @@ Template Name: Estilo Fit
 
                     <div class="col-sm-12 colunistas">
 
-                        <h2>Colunistas</h2>
+                        <!-- <h2>Colunistas</h2>
 
                         <?php
                         $args=array(
@@ -140,7 +140,7 @@ Template Name: Estilo Fit
                             <?php
                         endwhile;
                         ?>
-
+                        -->
                     </div>
 
                 </div>
