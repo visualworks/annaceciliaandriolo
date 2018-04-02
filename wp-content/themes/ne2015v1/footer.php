@@ -3,7 +3,8 @@
             <div class="row">
                 <div class="bottom">
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <p class="assinatura xs-center">Dra. Anna Cecília Andriolo - Todos os direitos reservados (2015 - <?php echo date('Y'); ?>)<br />CRM SP 141502 | RQE SP 38665<br />CRM GO 12882 | RQE GO 9653</p>
+                        <p class="assinatura xs-center">Dra. Anna Cecília Andriolo</p>
+                        <p style="font-size: .8em;">CRM SP 141502 | RQE SP 38665<br />CRM GO 12882 | RQE GO 9653</p>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -26,7 +27,8 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12 xs-center">
-                            Made with ❤ by <a href="https://www.visualworks.com.br" target="_blank" style="color: #999;">Visual Works</a>
+                            Made with ❤ by <a href="https://www.visualworks.com.br" target="_blank" style="color: #999;">Visual Works</a><br />
+                            Todos os direitos reservados - Anna Cecilia Andriolo &copy; 2015 - <?php echo date('Y'); ?>
                         </div>
                     </div>
                 </div>
