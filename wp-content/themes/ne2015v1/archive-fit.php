@@ -123,7 +123,7 @@ Template Name: Estilo Fit
                         $args=array(
                             'post_type' => 'colunista',
                             'posts_per_page' => -1,
-                            'orderby'=>'title',
+                            'orderby'=>'date',
                             'order'=>'ASC'
                         );
                         $loop = new WP_Query( $args );
