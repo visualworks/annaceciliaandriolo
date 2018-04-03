@@ -166,6 +166,10 @@ class Cache {
 			$engine_name = 'mirror';
 			break;
 
+		case 'netdna':
+			$engine_name = 'netdna';
+			break;
+
 		case 'maxcdn':
 			$engine_name = 'maxcdn';
 			break;

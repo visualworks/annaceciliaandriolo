@@ -33,7 +33,8 @@ class WPSEO_Register_Capabilities implements WPSEO_WordPress_Integration {
 		 * Respect MultiSite 'access' setting if set to 'super admins only'.
 		 * This means that local admins do not get the `wpseo_manage_options` capability.
 		 */
-		if ( WPSEO_Options::get( 'access' ) !== 'superadmins' ) {
+		$ms_options = WPSEO_Options::get_option( 'ms' );
+		if ( $ms_options['access'] !== 'superadmins' ) {
 			$manager->register( 'wpseo_manage_options', array( 'administrator' ) );
 		}
 	}

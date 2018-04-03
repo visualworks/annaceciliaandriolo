@@ -7,7 +7,6 @@
  * Database helper class.
  */
 class WPSEO_Link_Query {
-
 	/**
 	 * Determine if there are any unprocessed public posts.
 	 *
@@ -85,7 +84,9 @@ class WPSEO_Link_Query {
 		$post_types  = self::format_post_types( $post_types );
 
 		// @codingStandardsIgnoreStart
-		$query = 'SELECT posts.ID, posts.post_content
+		$results = $wpdb->get_results(
+			$wpdb->prepare( '
+				SELECT posts.ID, posts.post_content
 				  FROM ' . $wpdb->posts . ' AS posts
 			 LEFT JOIN ' . $count_table . ' AS yoast_meta
 			 		ON yoast_meta.object_id = posts.ID
@@ -93,12 +94,13 @@ class WPSEO_Link_Query {
 				   AND posts.post_type IN ( ' . $post_types . ' )
 				   AND yoast_meta.internal_link_count IS NULL
 				 LIMIT %d
-		';
+				',
+				$limit
+			)
+		);
 		// @codingStandardsIgnoreEnd
 
-		return $wpdb->get_results(
-			$wpdb->prepare( $query, $limit )
-		);
+		return $results;
 	}
 
 	/**
@@ -138,8 +140,10 @@ class WPSEO_Link_Query {
 	 * @return string
 	 */
 	protected static function get_count_table_name() {
-		$storage = new WPSEO_Meta_Storage();
-		return $storage->get_table_name();
+		$storage     = new WPSEO_Meta_Storage();
+		$count_table = $storage->get_table_name();
+
+		return $count_table;
 	}
 
 	/**
@@ -147,7 +151,7 @@ class WPSEO_Link_Query {
 	 *
 	 * @param array $post_types The post types to format.
 	 *
-	 * @return string Post types formatted for use in SQL statement.
+	 * @return array|string
 	 */
 	protected static function format_post_types( array $post_types ) {
 		$sanitized_post_types = array_map( 'esc_sql', $post_types );

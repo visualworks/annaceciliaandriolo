@@ -117,13 +117,13 @@ Template Name: Estilo Fit
 
                     <div class="col-sm-12 colunistas">
 
-                        <!-- <h2>Colunistas</h2>
+                        <h2>Colunistas</h2>
 
                         <?php
                         $args=array(
                             'post_type' => 'colunista',
                             'posts_per_page' => -1,
-                            'orderby'=>'date',
+                            'orderby'=>'title',
                             'order'=>'ASC'
                         );
                         $loop = new WP_Query( $args );
@@ -140,7 +140,7 @@ Template Name: Estilo Fit
                             <?php
                         endwhile;
                         ?>
-                        -->
+
                     </div>
 
                 </div>

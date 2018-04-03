@@ -28,12 +28,7 @@ class WPSEO_Primary_Term_Admin {
 	 * @return integer The post ID.
 	 */
 	protected function get_current_id() {
-		$post_id = filter_input( INPUT_GET, 'post', FILTER_SANITIZE_NUMBER_INT );
-		if ( empty( $post_id ) && isset( $GLOBALS['post_ID'] ) ) {
-			$post_id = filter_var( $GLOBALS['post_ID'], FILTER_SANITIZE_NUMBER_INT );
-		}
-
-		return $post_id;
+		return filter_input( INPUT_GET, 'post', FILTER_SANITIZE_NUMBER_INT );
 	}
 
 	/**

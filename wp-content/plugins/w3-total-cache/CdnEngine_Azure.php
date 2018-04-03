@@ -90,15 +90,10 @@ class CdnEngine_Azure extends CdnEngine_Base {
 		}
 
 		foreach ( $files as $file ) {
-			$remote_path = $file['remote_path'];
-			$local_path = $file['local_path'];
+			if ( !is_null( $timeout_time ) && time() > $timeout_time )
+				break;
 
-			// process at least one item before timeout so that progress goes on
-			if ( !empty( $results ) ) {
-				if ( !is_null( $timeout_time ) && time() > $timeout_time ) {
-					return 'timeout';
-				}
-			}
+			$remote_path = $file['remote_path'];
 
 			$results[] = $this->_upload( $file, $force_rewrite );
 		}

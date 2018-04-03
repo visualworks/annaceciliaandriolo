@@ -170,6 +170,7 @@ class SucuriScanAuditLogs
         $outdata = (array) $auditlogs['output_data'];
         $todaysDate = SucuriScan::datetime(null, 'M d, Y');
         $iterator_start = ($pageNumber - 1) * $maxPerPage;
+        $show_password = SucuriScanOption::isEnabled(':notify_failed_password');
         $total_items = count($outdata);
 
         usort($outdata, array('SucuriScanAuditLogs', 'sortByDate'));
@@ -185,7 +186,7 @@ class SucuriScanAuditLogs
 
             $audit_log = (array) $outdata[$i];
 
-            if (strpos($audit_log['message'], ";\x20password:")) {
+            if (!$show_password && strpos($audit_log['message'], ";\x20password:")) {
                 $idx = strpos($audit_log['message'], ";\x20password:");
                 $audit_log['message'] = substr($audit_log['message'], 0, $idx);
             }

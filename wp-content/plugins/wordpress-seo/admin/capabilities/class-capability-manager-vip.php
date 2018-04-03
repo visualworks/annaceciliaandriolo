@@ -19,7 +19,7 @@ final class WPSEO_Capability_Manager_VIP extends WPSEO_Abstract_Capability_Manag
 		}
 
 		foreach ( $role_capabilities as $role => $capabilities ) {
-			wpcom_vip_add_role_caps( $role, $capabilities );
+			wpcom_vip_add_role_caps( $role, array( $capabilities ) );
 		}
 	}
 
@@ -40,7 +40,7 @@ final class WPSEO_Capability_Manager_VIP extends WPSEO_Abstract_Capability_Manag
 		}
 
 		foreach ( $role_capabilities as $role => $capabilities ) {
-			wpcom_vip_remove_role_caps( $role, $capabilities );
+			wpcom_vip_remove_role_caps( $role, array( $capabilities ) );
 		}
 	}
 

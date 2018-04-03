@@ -179,15 +179,7 @@ class CdnEngine_Base {
 				break;
 
 			default:
-				if ( !isset( $domains[0] ) ) {
-					$scheme = $this->_get_scheme();
-					if ( 'https' == $scheme && isset( $domains['https_default'] ) ) {
-						return $domains['https_default'];
-					} else {
-						return isset( $domains['http_default'] ) ? $domains['http_default'] :
-							$domains['https_default'];
-					}
-				} elseif ( $count > 4 ) {
+				if ( $count > 4 ) {
 					$domain = $this->_get_domain( array_slice( $domains, 4 ),
 						$path );
 				} else {
@@ -587,10 +579,6 @@ class CdnEngine_Base {
 	 */
 	function _get_domain( $domains, $path ) {
 		$count = count( $domains );
-		if ( isset( $domains['http_default'] ) )
-			$count--;
-		if ( isset( $domains['https_default'] ) )
-			$count--;
 
 		if ( $count ) {
 			/**

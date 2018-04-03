@@ -80,9 +80,8 @@ class SucuriScanCache extends SucuriScan
     /**
      * Initializes the cache library.
      *
-     * @param  string $datastore   Name of the storage file.
-     * @param  bool   $auto_create Forces the creation of the storage file.
-     * @return void
+     * @param string $datastore   Name of the storage file.
+     * @param bool   $auto_create Forces the creation of the storage file.
      */
     public function __construct($datastore = '', $auto_create = true)
     {

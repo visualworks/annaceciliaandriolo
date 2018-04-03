@@ -1,8 +1,5 @@
-/**
- * Not really a tour, but uses the same library to introduce the plugin.
- * This should always show when the user has no slideshows
- */
-
+// Not really a tour, but uses the same library to introduce the plugin.
+// This should always show when the user has no slideshows
 var no_slideshows = new Shepherd.Tour({
     defaults: {
         classes: 'shepherd-theme-arrows shepherd-no-slideshows'
@@ -169,7 +166,7 @@ main_tour.on('cancel', function() {
     jQuery.ajax({
         url: metaslider.ajaxurl, 
         data: data,
-        type: 'POST',
+        method: 'POST',
         error: function(response) {
 
             // Error to the console (useful if we get support feedback

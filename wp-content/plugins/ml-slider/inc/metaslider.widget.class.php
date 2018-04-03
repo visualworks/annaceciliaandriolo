@@ -1,11 +1,12 @@
 <?php
+/**
+ * Adds MetaSlider widget.
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // disable direct access
 }
 
-/**
- * Adds MetaSlider widget.
- */
 class MetaSlider_Widget extends WP_Widget {
 
 	/**
@@ -24,8 +25,8 @@ class MetaSlider_Widget extends WP_Widget {
 	 *
 	 * @see WP_Widget::widget()
 	 *
-	 * @param array $args     Widget arguments.
-	 * @param array $instance Saved values from database.
+	 * @param array   $args     Widget arguments.
+	 * @param array   $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
 		extract( $args );
@@ -49,8 +50,8 @@ class MetaSlider_Widget extends WP_Widget {
 	 *
 	 * @see WP_Widget::update()
 	 *
-	 * @param array $new_instance Values just sent to be saved.
-	 * @param array $old_instance Previously saved values from database.
+	 * @param array   $new_instance Values just sent to be saved.
+	 * @param array   $old_instance Previously saved values from database.
 	 *
 	 * @return array Updated safe values to be saved.
 	 */
@@ -67,7 +68,7 @@ class MetaSlider_Widget extends WP_Widget {
 	 *
 	 * @see WP_Widget::form()
 	 *
-	 * @param array $instance Previously saved values from database.
+	 * @param array   $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
 		$selected_slider = 0;

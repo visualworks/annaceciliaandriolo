@@ -17,8 +17,7 @@ class MetaCoinSlider extends MetaSlider {
     /**
      * Enable the parameters that are accepted by the slider
      *
-     * @param  array $param Parameters
-     * @return boolean
+     * @return array enabled parameters
      */
     protected function get_param( $param ) {
         $params = array(

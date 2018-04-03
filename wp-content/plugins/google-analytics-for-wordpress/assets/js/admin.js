@@ -21,10 +21,10 @@
 			errors[ errors.length ] = [errorMsg, url, lineNumber];
 		else
 			dbjsError(errorMsg, url, lineNumber);
-	};
+	}
 
 	jQuery(document).ready( function(){
-		for ( var err in errors )
+		for ( err in errors )
 			dbjsError( errors[err][0], errors[err][1], errors[err][2] );
 
 	});
@@ -53,22 +53,13 @@
 })();
 
 jQuery( document ).ready( function( $ ) {
-	// Disable function
-	jQuery.fn.extend({
-		disable: function(state) {
-			return this.each(function() {
-				this.disabled = state;
-			});
-		}
-	});
-
-	jQuery("#screen-meta-links").prependTo("#monsterinsights-header-temp");
-	jQuery("#screen-meta").prependTo("#monsterinsights-header-temp");
+	$("#screen-meta-links").prependTo("#monsterinsights-header-temp");
+	$("#screen-meta").prependTo("#monsterinsights-header-temp");
 
 	// Tooltips
-	jQuery('.monsterinsights-help-tip').tooltip({
+	$('.monsterinsights-help-tip').tooltip({
 		content: function() {
-			return jQuery(this).prop('title');
+			return $(this).prop('title');
 		},
 		tooltipClass: 'monsterinsights-ui-tooltip',
 		position: {
@@ -84,26 +75,12 @@ jQuery( document ).ready( function( $ ) {
 		},
 	});
 
-	// Reports Tooltips
-	jQuery("body").tooltip({
-		selector: '.monsterinsights-reports-uright-tooltip',
-		items: "[data-tooltip-title], [data-tooltip-description]",
-		content: function() {
-			return '<div class="monsterinsights-reports-tooltip-title">' + jQuery(this).data("tooltip-title") + '</div>' +
-				   '<div class="monsterinsights-reports-tooltip-content">' + jQuery(this).data("tooltip-description") + '</div>';
-		},
-		tooltipClass: 'monsterinsights-reports-ui-tooltip',
-		position: { my: "right-10 top", at: "left top", collision: "flipfit" },
-		hide: {duration: 200},
-		show: {duration: 200},
-	});
-
 	/**
 	* Copy to Clipboard
 	*/
 	if ( typeof Clipboard !== 'undefined' ) {
 		var monsterinsights_clipboard = new Clipboard( '.monsterinsights-copy-to-clipboard' );
-		jQuery( document ).on( 'click', '.monsterinsights-copy-to-clipboard', function( e ) {
+		$( document ).on( 'click', '.monsterinsights-copy-to-clipboard', function( e ) {
 			e.preventDefault();
 		} );
 
@@ -133,7 +110,7 @@ jQuery( document ).ready( function( $ ) {
 			data.parentText = data.parentText || "";
 
 			// Always return the object if there is nothing to compare
-			if (jQuery.trim(params.term) === '') {
+			if ($.trim(params.term) === '') {
 				return data;
 			}
 
@@ -181,14 +158,14 @@ jQuery( document ).ready( function( $ ) {
 
 
 	// Setup Select2
-		jQuery('.monsterinsights-select300').select300();
+		$('.monsterinsights-select300').select300();
 
 		var fields_changed = false;
-		jQuery(document).on('change', '#monsterinsights-settings :input', function(){
+		$(document).on('change', '#monsterinsights-settings :input', function(){
 			fields_changed = true;
 		});
 		
-		jQuery(document).on('click', 'a:not(.monsterinsights-settings-click-excluded)', function( e ){ 
+		$(document).on('click', 'a:not(.monsterinsights-settings-click-excluded)', function( e ){ 
 
 			if ( fields_changed ) { 
 				var answer = confirm( monsterinsights_admin.settings_changed_confirm );
@@ -201,221 +178,137 @@ jQuery( document ).ready( function( $ ) {
 				}
 			} 
 		});
-
-
-	// Auth Actions
-		// Auth and Reauth
-			jQuery('#monsterinsights-google-authenticate-submit').on( "click", function( e ) {
-				e.preventDefault();
-				swal({
-				  type: 'info',
-				  title: monsterinsights_admin.redirect_loading_title_text,
-				  text: monsterinsights_admin.redirect_loading_text_text,
-				  allowOutsideClick: false,
-				  allowEscapeKey: false,
-				  allowEnterKey: false,
-				  onOpen: function () {
-					swal.showLoading();
-				  }
-				}).catch(swal.noop);
-				var data = { 
-					'action': 'monsterinsights_maybe_authenticate', 
-					'nonce':  monsterinsights_admin.admin_nonce,
-					'isnetwork': monsterinsights_admin.isnetwork
-				};
-				jQuery.post(ajaxurl, data, function( response ) {
-					if ( response.success ) {
-						window.location = response.data.redirect;
-					} else {
-						swal({
-							type: 'error',
-							  title: monsterinsights_admin.redirect_loading_error_title,
-							  text: response.data.message,
-							  confirmButtonText: monsterinsights_admin.ok_text,
-						  }).catch(swal.noop);
-					}
-				}).fail( function(xhr, textStatus, errorThrown) {
-					var message = jQuery(xhr.responseText).text();
-					message = message.substring(0, message.indexOf("Call Stack"));
-					swal({
-						type: 'error',
-						  title: monsterinsights_admin.redirect_loading_error_title,
-						  text: message,
-						  confirmButtonText: monsterinsights_admin.ok_text,
-					  }).catch(swal.noop);
-				});
+		
+		$('#monsterinsights-google-authenticate-submit').on( "click", function( e ) {
+			e.preventDefault();
+			$('<div id="monsterinsights_google_auth_view" class="monsterinsights-hideme"></div>').prependTo('body');
+			$('<div id="monsterinsights_google_auth_block_view" class="monsterinsights-hideme"></div>').prependTo('body');
+			var data = {
+				'action': 'monsterinsights_google_view',
+				'view': 'prestart',
+				'reauth': false
+			};
+			jQuery.post(ajaxurl, data, function(response) {
+				$('#monsterinsights_google_auth_view').html(response);
+				$('#monsterinsights_google_auth_view').removeClass('monsterinsights-hideme');
+				$('#monsterinsights_google_auth_block_view').removeClass('monsterinsights-hideme');
+				$('#wpadminbar').addClass('monsterinsights-hideme');
+				document.body.style.overflowY = "hidden";
+				document.body.style.overflowX = "hidden";
+				window.scrollTo( 0, 0 );
+				$('#adminmenumain').addClass('monsterinsights_opacity_60');
+			}).fail( function(xhr, textStatus, errorThrown) {
+				var message = $(xhr.responseText).text();
+				message = message.substring(0, message.indexOf("Call Stack"));
+				console.log( message );
 			});
-
-		// Reauth
-			jQuery('#monsterinsights-google-reauthenticate-submit').on( "click", function( e ) {
-				e.preventDefault();
-				swal({
-				  type: 'info',
-				  title: monsterinsights_admin.redirect_loading_title_text,
-				  text: monsterinsights_admin.redirect_loading_text_text,
-				  allowOutsideClick: false,
-				  allowEscapeKey: false,
-				  allowEnterKey: false,
-				  onOpen: function () {
-					swal.showLoading();
-				  }
-				}).catch(swal.noop);
-				var data = { 
-					'action': 'monsterinsights_maybe_reauthenticate',
-					'nonce':  monsterinsights_admin.admin_nonce,
-					'isnetwork': monsterinsights_admin.isnetwork
-				};
-				jQuery.post(ajaxurl, data, function( response ) {
-					if ( response.success ) {
-						window.location = response.data.redirect;
-					} else {
-						swal({
-							type: 'error',
-							  title: monsterinsights_admin.redirect_loading_error_title,
-							  text: response.data.message,
-							  confirmButtonText: monsterinsights_admin.ok_text,
-						  }).catch(swal.noop);
-					}
-				}).fail( function(xhr, textStatus, errorThrown) {
-					var message = jQuery(xhr.responseText).text();
-					message = message.substring(0, message.indexOf("Call Stack"));
-					swal({
-						type: 'error',
-						  title: monsterinsights_admin.redirect_loading_error_title,
-						  text: message,
-						  confirmButtonText: monsterinsights_admin.ok_text,
-					  }).catch(swal.noop);
-				});
-			});
-
-		// Verify
-			jQuery('#monsterinsights-google-verify-submit').on( "click", function( e ) {
-				e.preventDefault();
-				swal({
-				  type: 'info',
-				  title: monsterinsights_admin.verify_loading_title_text,
-				  text: monsterinsights_admin.verify_loading_text_text,
-				  allowOutsideClick: false,
-				  allowEscapeKey: false,
-				  allowEnterKey: false,
-				  onOpen: function () {
-					swal.showLoading();
-				  }
-				}).catch(swal.noop);
-				var data = { 
-					'action': 'monsterinsights_maybe_verify',
-					'nonce':  monsterinsights_admin.admin_nonce,
-					'isnetwork': monsterinsights_admin.isnetwork
-				};
-				jQuery.post(ajaxurl, data, function( response ) {
-				if ( response.success ) {
-					swal({
-						type: 'success',
-						  title: monsterinsights_admin.verify_success_title_text,
-						  text: monsterinsights_admin.verify_success_text_text,
-						  confirmButtonText: monsterinsights_admin.ok_text,
-					  }).catch(swal.noop);
-				} else {
-					swal({
-						type: 'error',
-						  title: monsterinsights_admin.verify_loading_error_title,
-						  text: response.data.message,
-						  confirmButtonText: monsterinsights_admin.ok_text,
-					  }).catch(swal.noop);
-				}
-				}).fail( function(xhr, textStatus, errorThrown) {
-					var message = jQuery(xhr.responseText).text();
-					message = message.substring(0, message.indexOf("Call Stack"));
-					swal({
-						type: 'error',
-						  title: monsterinsights_admin.verify_loading_error_title,
-						  text: message,
-						  confirmButtonText: monsterinsights_admin.ok_text,
-					  }).catch(swal.noop);
-				});
-			});
-
-		// Delete
-			jQuery(document).on('click','#monsterinsights-google-deauthenticate-submit', function( e ){
-				e.preventDefault();
-				monsterinsights_delete_auth( $(this), false );
-			});
-
-		// Force Delete
-			jQuery(document).on('click','#monsterinsights-google-force-deauthenticate-submit', function( e ){
-				e.preventDefault();
-				monsterinsights_delete_auth( $(this), true );
-			});
-
-			function monsterinsights_delete_auth( buttonObject, force ) {
-				swal({
-				  type: 'info',
-				  title: monsterinsights_admin.deauth_loading_title_text,
-				  text: monsterinsights_admin.deauth_loading_text_text,
-				  allowOutsideClick: false,
-				  allowEscapeKey: false,
-				  allowEnterKey: false,
-				  onOpen: function () {
-					swal.showLoading();
-				  }
-				}).catch(swal.noop);
-				var data = { 
-					'action': 'monsterinsights_maybe_delete', 
-					'nonce':  monsterinsights_admin.admin_nonce,
-					'isnetwork': monsterinsights_admin.isnetwork,
-					'forcedelete' : force.toString(),
-				};
-				jQuery.post(ajaxurl, data, function( response ) {
-				if ( response.success ) {
-					swal({
-						type: 'success',
-						  title: monsterinsights_admin.deauth_success_title_text,
-						  text: monsterinsights_admin.deauth_success_text_text,
-						  confirmButtonText: monsterinsights_admin.ok_text,
-						  allowOutsideClick: false,
-						  allowEscapeKey: false,
-						  allowEnterKey: false,
-					  }).then(function () {
-						location.reload();
-					  }).catch(swal.noop);
-				} else {
-					if ( ! force ) {
-						// Replace name, ID, value
-						buttonObject.attr('name', 'monsterinsights-google-force-deauthenticate-submit' );
-						buttonObject.attr('id', 'monsterinsights-google-force-deauthenticate-submit' );
-						buttonObject.attr('value', monsterinsights_admin.force_deauth_button_text );
-					}
-					swal({
-						type: 'error',
-						  title: monsterinsights_admin.deauth_loading_error_title,
-						  text: response.data.message,
-						  confirmButtonText: monsterinsights_admin.ok_text,
-					  }).catch(swal.noop);
-				}
-				}).fail( function(xhr, textStatus, errorThrown) {
-					var message = jQuery(xhr.responseText).text();
-					message = message.substring(0, message.indexOf("Call Stack"));
-					swal({
-						type: 'error',
-						title: monsterinsights_admin.deauth_loading_error_title,
-						text: message,
-						confirmButtonText: monsterinsights_admin.ok_text,
-					}).catch(swal.noop);
-				});
+		});
+		$('#monsterinsights-google-reauthenticate-submit').on( "click", function( e ) {
+			e.preventDefault();
+			$('<div id="monsterinsights_google_auth_view" class="monsterinsights_google_auth_reauth monsterinsights-hideme"></div>').prependTo('body');
+			$('<div id="monsterinsights_google_auth_block_view" class="monsterinsights-hideme"></div>').prependTo('body');
+			var data = {
+				'action': 'monsterinsights_google_view',
+				'view': 'prestart',
+				'reauth': true
 			};
 
+			jQuery.post(ajaxurl, data, function(response) {
+				$('#monsterinsights_google_auth_view').html(response);
+				$('#monsterinsights_google_auth_view').removeClass('monsterinsights-hideme');
+				$('#monsterinsights_google_auth_block_view').removeClass('monsterinsights-hideme');
+				$('#wpadminbar').addClass('monsterinsights-hideme');
+				document.body.style.overflowY = "hidden";
+				document.body.style.overflowX = "hidden";
+				window.scrollTo( 0, 0 );
+				$('#adminmenumain').addClass('monsterinsights_opacity_60');
+			}).fail( function(xhr, textStatus, errorThrown) {
+				var message = $(xhr.responseText).text();
+				message = message.substring(0, message.indexOf("Call Stack"));
+				console.log( message );
+			});
+		});
+		$( document ).on( "click", '#monsterinsights_google_auth_box_next', function( e ) {
+			e.preventDefault();
+			var stepdata = '';
+			if ( document.getElementById('monsterinsights_step_data') != null ) {
+				stepdata = document.getElementById('monsterinsights_step_data').value;
+			}
+
+			var data = {
+				'action': 'monsterinsights_google_view',
+				'view': document.getElementById('monsterinsightsview').value,
+				'reauth': document.getElementById('monsterinsightsreauth').value,
+				'stepdata': stepdata,
+			};
+			
+			$('#monsterinsights_google_auth_box_footer').html( '<div class="monsterinsights-google-loading">' + monsterinsights_admin.loadingtext + '</div>' );
+			$('.monsterinsights_google_auth_box_cancel').hide();
+
+			jQuery.post(ajaxurl, data, function(response) {
+
+				$('#monsterinsights_google_auth_view').html(response);
+				$('#monsterinsights_google_auth_view').removeClass('monsterinsights-hideme');
+				$('#monsterinsights_google_auth_block_view').removeClass('monsterinsights-hideme');
+
+				var view = document.getElementById('monsterinsightsview').value;
+				if ( view == 'selectprofile' ) {
+					$('.monsterinsights_select_ga_profile').select300({matcher: modelMatcher});
+					monsterinsights_closepopupwindow();
+				}
+			}).fail( function(xhr, textStatus, errorThrown) {
+				var message = $(xhr.responseText).text();
+				message = message.substring(0, message.indexOf("Call Stack"));
+				console.log( message );
+			});
+		});
+		$( document ).on( "click", '.monsterinsights_google_auth_box_done', function( e ) {
+			e.preventDefault();
+			location.reload();
+		});
+		$( document ).on( "click", '.monsterinsights_google_auth_box_cancel_error', function( e ) {
+			e.preventDefault();
+			location.reload();
+		});
+		$( document ).on( "click", '.monsterinsights_google_auth_box_cancel', function( e ) {
+			e.preventDefault();
+			var stepdata = '';
+			if ( document.getElementById('monsterinsights_step_data') != null ) {
+				stepdata = document.getElementById('monsterinsights_step_data').value;
+			}
+			var data = {
+				'action': 'monsterinsights_google_cancel',
+				'view': document.getElementById('monsterinsightsview').value,
+				'reauth': document.getElementById('monsterinsightsreauth').value,
+				'stepdata': stepdata,
+			};
+			jQuery.post(ajaxurl, data, function(response) {
+				document.body.style.overflowY = "visible";
+				document.body.style.overflowX = "visible";
+				$('#monsterinsights_google_auth_view').html('');
+				$('#monsterinsights_google_auth_view').addClass('monsterinsights-hideme');
+				$('#monsterinsights_google_auth_block_view').addClass('monsterinsights-hideme');
+				$('#adminmenumain').removeClass('monsterinsights_opacity_60');
+				$('#wpadminbar').removeClass('monsterinsights-hideme');
+			}).fail( function(xhr, textStatus, errorThrown) {
+				var message = $(xhr.responseText).text();
+				message = message.substring(0, message.indexOf("Call Stack"));
+				console.log( message );
+			});
+		}); 
+
 		// Tools JS
-		jQuery('#monsterinsights-url-builder input').keyup(monsterinsights_update_campaign_url);
-		jQuery('#monsterinsights-url-builder input').click(monsterinsights_update_campaign_url);
+		$('#monsterinsights-url-builder input').keyup(monsterinsights_update_campaign_url);
+		$('#monsterinsights-url-builder input').click(monsterinsights_update_campaign_url);
 
 		function monsterinsights_update_campaign_url() {
-				var domain   = jQuery('#monsterinsights-url-builer-domain').val().trim();
-				var source   = jQuery('#monsterinsights-url-builer-source').val().trim();
-				var medium   = jQuery('#monsterinsights-url-builer-medium').val().trim();
-				var term     = jQuery('#monsterinsights-url-builer-term').val().trim();
-				var content  = jQuery('#monsterinsights-url-builer-content').val().trim();
-				var name     = jQuery('#monsterinsights-url-builer-name').val().trim();
-				var fragment = jQuery('#monsterinsights-url-builer-fragment').is(':checked');
+				var domain   = $('#monsterinsights-url-builer-domain').val().trim();
+				var source   = $('#monsterinsights-url-builer-source').val().trim();
+				var medium   = $('#monsterinsights-url-builer-medium').val().trim();
+				var term     = $('#monsterinsights-url-builer-term').val().trim();
+				var content  = $('#monsterinsights-url-builer-content').val().trim();
+				var name     = $('#monsterinsights-url-builer-name').val().trim();
+				var fragment = $('#monsterinsights-url-builer-fragment').is(':checked');
 				var file     = domain.substring(domain.lastIndexOf("/") + 1);
 
 				if ( fragment && file.length > 0 && file.indexOf('#') > -1 ) {
@@ -432,30 +325,30 @@ jQuery( document ).ready( function( $ ) {
 				var html     = domain + fragment + 'utm_source=' + encodeURIComponent(source);
 
 				if (medium) {
-					html = html + '&utm_medium=' + encodeURIComponent(medium);
+					var html = html + '&utm_medium=' + encodeURIComponent(medium);
 				}                
 				if (name) {
-					html = html + '&utm_campaign=' + encodeURIComponent(name);
+					var html = html + '&utm_campaign=' + encodeURIComponent(name);
 				}
 				if (term) {
-					html = html + '&utm_term=' + encodeURIComponent(term);
+					var html = html + '&utm_term=' + encodeURIComponent(term);
 				}
 				if (content) {
-					html = html + '&utm_content=' + encodeURIComponent(content);
+					var html = html + '&utm_content=' + encodeURIComponent(content);
 				}
 
 
 				if ( domain && source ) {
-					jQuery('#monsterinsights-url-builer-url').html(html.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
+					$('#monsterinsights-url-builer-url').html(html.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
 				} else {
-					jQuery('#monsterinsights-url-builer-url').html('');
+					$('#monsterinsights-url-builer-url').html('');
 				}         
 		}
 
-		jQuery( document ).on( 'click', '#monsterinsights-shorten-url', function( e ) {
+		$( document ).on( 'click', '#monsterinsights-shorten-url', function( e ) {
 			e.preventDefault();
-			jQuery("#monsterinsights-shorten-url").text( monsterinsights_admin.working );
-			var url = decodeURIComponent( jQuery('#monsterinsights-url-builer-url').val() );
+			$("#monsterinsights-shorten-url").text( monsterinsights_admin.working );
+			var url = decodeURIComponent( $('#monsterinsights-url-builer-url').val() );
 			var data = {
 				'action': 'monsterinsights_get_shortlink',
 				'url'   : url,
@@ -463,70 +356,70 @@ jQuery( document ).ready( function( $ ) {
 
 			};
 			jQuery.post(ajaxurl, data, function(response) {
-				jQuery('#monsterinsights-url-builer-url').html(response.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
-				jQuery("#monsterinsights-shorten-url").text( monsterinsights_admin.shortened );
+				$('#monsterinsights-url-builer-url').html(response.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
+				$("#monsterinsights-shorten-url").text( monsterinsights_admin.shortened );
 				window.setTimeout(function() {
-					jQuery("#monsterinsights-shorten-url").text( monsterinsights_admin.shorten );
+					$("#monsterinsights-shorten-url").text( monsterinsights_admin.shorten );
 				}, 2000);
 			}).fail( function(xhr, textStatus, errorThrown) {
-				jQuery("#monsterinsights-shorten-url").text( monsterinsights_admin.failed );
+				$("#monsterinsights-shorten-url").text( monsterinsights_admin.failed );
 				window.setTimeout(function() {
-					jQuery("#monsterinsights-shorten-url").text( monsterinsights_admin.shorten );
+					$("#monsterinsights-shorten-url").text( monsterinsights_admin.shorten );
 				}, 2000);
 			});
 		} );
 
 		// Addons JS
 			// Addon background color
-				if ( jQuery( "#monsterinsights-addons" ).length !== 0 ) {
-					jQuery( "#wpbody").css("background-color", "#f1f1f1");
-					jQuery( "body").css("background-color", "#f1f1f1");
-					jQuery( "#wpfooter").css("background-color", "#f1f1f1");
-					jQuery( "#wpbody-content").css("padding-bottom", "0px");
+				if ( $( "#monsterinsights-addons" ).length !== 0 ) {
+					$( "#wpbody").css("background-color", "#f1f1f1");
+					$( "body").css("background-color", "#f1f1f1");
+					$( "#wpfooter").css("background-color", "#f1f1f1");
+					$( "#wpbody-content").css("padding-bottom", "0px");
 				}
 
 			// Addons Search
 			var addon_search_timeout;
-			jQuery( 'form#add-on-search input#add-on-searchbox' ).on( 'keyup', function() {
+			$( 'form#add-on-search input#add-on-searchbox' ).on( 'keyup', function() {
 
 				// Clear timeout
 				clearTimeout( addon_search_timeout );
 
 				// Get the search input, heading, results and cancel elements
-				var search          = jQuery( this ),
-					search_terms    = jQuery( search ).val().toLowerCase(),
-					search_heading  = jQuery( search ).data( 'heading' ),
-					search_results  = jQuery( search ).data( 'results' ),
-					search_cancel   = jQuery( search ).data( 'cancel' );
+				var search          = $( this ),
+					search_terms    = $( search ).val().toLowerCase(),
+					search_heading  = $( search ).data( 'heading' ),
+					search_results  = $( search ).data( 'results' ),
+					search_cancel   = $( search ).data( 'cancel' );
 
 				// Show the Spinner
-				jQuery( 'form#add-on-search .spinner' ).css( 'visibility', 'visible' );
+				$( 'form#add-on-search .spinner' ).css( 'visibility', 'visible' );
 
 				// If the search terms is less than 3 characters, show all Addons
 				if ( search_terms.length < 3 ) {
-					jQuery( 'div.monsterinsights-addon' ).fadeIn( 'fast', function() {
+					$( 'div.monsterinsights-addon' ).fadeIn( 'fast', function() {
 						// Hide the Spinner
-						jQuery( 'form#add-on-search .spinner' ).css( 'visibility', 'hidden' );
+						$( 'form#add-on-search .spinner' ).css( 'visibility', 'hidden' );
 					} );
 					return;
 				}
 
 				// Iterate through the Addons, showing or hiding them depending on whether they 
 				// match the given search terms.
-				jQuery( 'div.monsterinsights-addon' ).each( function() {
-					if ( jQuery( 'h3.monsterinsights-addon-title', jQuery( this ) ).text().toLowerCase().search( search_terms ) >= 0 ) {
+				$( 'div.monsterinsights-addon' ).each( function() {
+					if ( $( 'h3.monsterinsights-addon-title', $( this ) ).text().toLowerCase().search( search_terms ) >= 0 ) {
 						// This Addon's title does match the search terms
 						// Show
-						jQuery( this ).fadeIn();
+						$( this ).fadeIn();
 					} else {
 						// This Addon's title does not match the search terms
 						// Hide
-						jQuery( this ).fadeOut();
+						$( this ).fadeOut();
 					}
 				} );
 
 				// Hide the Spinner
-				jQuery( 'form#add-on-search .spinner' ).css( 'visibility', 'hidden' );
+				$( 'form#add-on-search .spinner' ).css( 'visibility', 'hidden' );
 
 			} );
 
@@ -537,23 +430,23 @@ jQuery( document ).ready( function( $ ) {
 			var monsterinsights_addons_unlicensed_sorting = new List( 'monsterinsights-addons-unlicensed', {
 				valueNames: [ 'monsterinsights-addon-title' ]
 			} );
-			jQuery( 'select#monsterinsights-filter-select' ).on( 'change', function() {
+			$( 'select#monsterinsights-filter-select' ).on( 'change', function() {
 				if ( typeof monsterinsights_addons_licensed_sorting.sort !== 'undefined' ) {
 					monsterinsights_addons_licensed_sorting.sort( 'monsterinsights-addon-title', {
-						order: jQuery( this ).val(),
+						order: $( this ).val(),
 					} );
 				}
 				if ( typeof monsterinsights_addons_unlicensed_sorting.sort !== 'undefined' ) {
 					monsterinsights_addons_unlicensed_sorting.sort( 'monsterinsights-addon-title', {
-						order: jQuery( this ).val(),
+						order: $( this ).val(),
 					} );
 				}
 			} );
 
 		// Re-enable install button if user clicks on it, needs creds but tries to install another addon instead.
-			jQuery('#monsterinsights-addons').on('click.refreshInstallAddon', '.monsterinsights-addon-action-button', function(e) {
-				var el      = jQuery(this);
-				var buttons = jQuery('#monsterinsights-addons').find('.monsterinsights-addon-action-button');
+			$('#monsterinsights-addons').on('click.refreshInstallAddon', '.monsterinsights-addon-action-button', function(e) {
+				var el      = $(this);
+				var buttons = $('#monsterinsights-addons').find('.monsterinsights-addon-action-button');
 				$.each(buttons, function(i, element) {
 					if ( el == element ) {
 						return true;
@@ -564,18 +457,18 @@ jQuery( document ).ready( function( $ ) {
 			});
 
 		// Activate Addon
-			jQuery('#monsterinsights-addons').on('click.activateAddon', '.monsterinsights-activate-addon', function(e) {
+			$('#monsterinsights-addons').on('click.activateAddon', '.monsterinsights-activate-addon', function(e) {
 				e.preventDefault();
-				var $this = jQuery(this);
+				var $this = $(this);
 
 				// Remove any leftover error messages, output an icon and get the plugin basename that needs to be activated.
-				jQuery('.monsterinsights-addon-error').remove();
-				jQuery(this).html('<i class="monsterinsights-toggle-on"></i> ' + monsterinsights_admin.activating);
-				jQuery(this).next().css({'display' : 'inline-block', 'margin-top' : '0px'});
-				var button  = jQuery(this);
-				var plugin  = jQuery(this).attr('rel');
-				var el      = jQuery(this).parent().parent();
-				var message = jQuery(this).parent().parent().find('.addon-status');
+				$('.monsterinsights-addon-error').remove();
+				$(this).html('<i class="monsterinsights-toggle-on"></i> ' + monsterinsights_admin.activating);
+				$(this).next().css({'display' : 'inline-block', 'margin-top' : '0px'});
+				var button  = $(this);
+				var plugin  = $(this).attr('rel');
+				var el      = $(this).parent().parent();
+				var message = $(this).parent().parent().find('.addon-status');
 
 				// Process the Ajax to perform the activation.
 				var opts = {
@@ -593,24 +486,24 @@ jQuery( document ).ready( function( $ ) {
 					success: function(response) {
 						// If there is a WP Error instance, output it here and quit the script.
 						if ( response && true !== response ) {
-							jQuery(el).slideDown('normal', function() {
-								jQuery(this).after('<div class="monsterinsights-addon-error"><strong>' + response.error + '</strong></div>');
+							$(el).slideDown('normal', function() {
+								$(this).after('<div class="monsterinsights-addon-error"><strong>' + response.error + '</strong></div>');
 								$this.next().hide();
-								jQuery('.monsterinsights-addon-error').delay(3000).slideUp();
+								$('.monsterinsights-addon-error').delay(3000).slideUp();
 							});
 							return;
 						}
 
 						// The Ajax request was successful, so let's update the output.
 						if ( monsterinsights_admin.isnetwork ) {
-							jQuery(button).html('<i class="monsterinsights-toggle-on"></i> ' + monsterinsights_admin.networkdeactivate).removeClass('monsterinsights-activate-addon').addClass('monsterinsights-deactivate-addon');
+							$(button).html('<i class="monsterinsights-toggle-on"></i> ' + monsterinsights_admin.networkdeactivate).removeClass('monsterinsights-activate-addon').addClass('monsterinsights-deactivate-addon');
 						} else {
-							jQuery(button).html('<i class="monsterinsights-toggle-on"></i> ' + monsterinsights_admin.deactivate).removeClass('monsterinsights-activate-addon').addClass('monsterinsights-deactivate-addon');
+							$(button).html('<i class="monsterinsights-toggle-on"></i> ' + monsterinsights_admin.deactivate).removeClass('monsterinsights-activate-addon').addClass('monsterinsights-deactivate-addon');
 						}
 
-						jQuery(message).text(monsterinsights_admin.active);
+						$(message).text(monsterinsights_admin.active);
 						// Trick here to wrap a span around he last word of the status
-						var heading = jQuery(message), word_array, last_word, first_part;
+						var heading = $(message), word_array, last_word, first_part;
 
 						word_array = heading.html().split(/\s+/); // split on spaces
 						last_word = word_array.pop();             // pop the last word
@@ -618,30 +511,30 @@ jQuery( document ).ready( function( $ ) {
 
 						heading.html([first_part, ' <span>', last_word, '</span>'].join(''));
 						// Proceed with CSS changes
-						jQuery(el).removeClass('monsterinsights-addon-inactive').addClass('monsterinsights-addon-active');
+						$(el).removeClass('monsterinsights-addon-inactive').addClass('monsterinsights-addon-active');
 						$this.next().hide();
 					},
 					error: function(xhr, textStatus ,e) {
 						$this.next().hide();
 						return;
 					}
-				};
+				}
 				$.ajax(opts);
 			});
 
 		// Deactivate Addon
-			jQuery('#monsterinsights-addons').on('click.deactivateAddon', '.monsterinsights-deactivate-addon', function(e) {
+			$('#monsterinsights-addons').on('click.deactivateAddon', '.monsterinsights-deactivate-addon', function(e) {
 				e.preventDefault();
-				var $this = jQuery(this);
+				var $this = $(this);
 
 				// Remove any leftover error messages, output an icon and get the plugin basename that needs to be activated.
-				jQuery('.monsterinsights-addon-error').remove();
-				jQuery(this).html('<i class="monsterinsights-toggle-on"></i> ' + monsterinsights_admin.deactivating);
-				jQuery(this).next().css({'display' : 'inline-block', 'margin-top' : '0px'});
-				var button  = jQuery(this);
-				var plugin  = jQuery(this).attr('rel');
-				var el      = jQuery(this).parent().parent();
-				var message = jQuery(this).parent().parent().find('.addon-status');
+				$('.monsterinsights-addon-error').remove();
+				$(this).html('<i class="monsterinsights-toggle-on"></i> ' + monsterinsights_admin.deactivating);
+				$(this).next().css({'display' : 'inline-block', 'margin-top' : '0px'});
+				var button  = $(this);
+				var plugin  = $(this).attr('rel');
+				var el      = $(this).parent().parent();
+				var message = $(this).parent().parent().find('.addon-status');
 
 				// Process the Ajax to perform the activation.
 				var opts = {
@@ -659,25 +552,25 @@ jQuery( document ).ready( function( $ ) {
 					success: function(response) {
 						// If there is a WP Error instance, output it here and quit the script.
 						if ( response && true !== response ) {
-							jQuery(el).slideDown('normal', function() {
-								jQuery(this).after('<div class="monsterinsights-addon-error"><strong>' + response.error + '</strong></div>');
+							$(el).slideDown('normal', function() {
+								$(this).after('<div class="monsterinsights-addon-error"><strong>' + response.error + '</strong></div>');
 								$this.next().hide();
-								jQuery('.monsterinsights-addon-error').delay(3000).slideUp();
+								$('.monsterinsights-addon-error').delay(3000).slideUp();
 							});
 							return;
 						}
 
 						// The Ajax request was successful, so let's update the output.
 						if ( monsterinsights_admin.isnetwork ) {
-							jQuery(button).html('<i class="monsterinsights-toggle-on"></i> ' + monsterinsights_admin.networkactivate).removeClass('monsterinsights-deactivate-addon').addClass('monsterinsights-activate-addon');
+							$(button).html('<i class="monsterinsights-toggle-on"></i> ' + monsterinsights_admin.networkactivate).removeClass('monsterinsights-deactivate-addon').addClass('monsterinsights-activate-addon');
 						} else {
-							jQuery(button).html('<i class="monsterinsights-toggle-on"></i> ' + monsterinsights_admin.activate).removeClass('monsterinsights-deactivate-addon').addClass('monsterinsights-activate-addon');
+							$(button).html('<i class="monsterinsights-toggle-on"></i> ' + monsterinsights_admin.activate).removeClass('monsterinsights-deactivate-addon').addClass('monsterinsights-activate-addon');
 						}
 
-						jQuery(message).text(monsterinsights_admin.inactive);
+						$(message).text(monsterinsights_admin.inactive);
 
 						// Trick here to wrap a span around he last word of the status
-						var heading = jQuery(message), word_array, last_word, first_part;
+						var heading = $(message), word_array, last_word, first_part;
 
 						word_array = heading.html().split(/\s+/); // split on spaces
 						last_word = word_array.pop();             // pop the last word
@@ -685,30 +578,30 @@ jQuery( document ).ready( function( $ ) {
 
 						heading.html([first_part, ' <span>', last_word, '</span>'].join(''));
 						// Proceed with CSS changes
-						jQuery(el).removeClass('monsterinsights-addon-active').addClass('monsterinsights-addon-inactive');
+						$(el).removeClass('monsterinsights-addon-active').addClass('monsterinsights-addon-inactive');
 						$this.next().hide();
 					},
 					error: function(xhr, textStatus ,e) {
 						$this.next().hide();
 						return;
 					}
-				};
+				}
 				$.ajax(opts);
 			});
 
 		// Install Addon
-			jQuery('#monsterinsights-addons').on('click.installAddon', '.monsterinsights-install-addon', function(e) {
+			$('#monsterinsights-addons').on('click.installAddon', '.monsterinsights-install-addon', function(e) {
 				e.preventDefault();
-				var $this = jQuery(this);
+				var $this = $(this);
 
 				// Remove any leftover error messages, output an icon and get the plugin basename that needs to be activated.
-				jQuery('.monsterinsights-addon-error').remove();
-				jQuery(this).html('<i class="monsterinsights-cloud-download"></i> ' + monsterinsights_admin.installing);
-				jQuery(this).next().css({'display' : 'inline-block', 'margin-top' : '0px'});
-				var button  = jQuery(this);
-				var plugin  = jQuery(this).attr('rel');
-				var el      = jQuery(this).parent().parent();
-				var message = jQuery(this).parent().parent().find('.addon-status');
+				$('.monsterinsights-addon-error').remove();
+				$(this).html('<i class="monsterinsights-cloud-download"></i> ' + monsterinsights_admin.installing);
+				$(this).next().css({'display' : 'inline-block', 'margin-top' : '0px'});
+				var button  = $(this);
+				var plugin  = $(this).attr('rel');
+				var el      = $(this).parent().parent();
+				var message = $(this).parent().parent().find('.addon-status');
 
 				// Process the Ajax to perform the activation.
 				var opts = {
@@ -725,11 +618,11 @@ jQuery( document ).ready( function( $ ) {
 					success: function(response) {
 						// If there is a WP Error instance, output it here and quit the script.
 						if ( response.error ) {
-							jQuery(el).slideDown('normal', function() {
-								jQuery(button).parent().parent().after('<div class="monsterinsights-addon-error"><div class="xinterior"><p><strong>' + response.error + '</strong></p></div></div>');
-								jQuery(button).html('<i class="monsterinsights-cloud-download"></i> ' + monsterinsights_admin.install);
+							$(el).slideDown('normal', function() {
+								$(button).parent().parent().after('<div class="monsterinsights-addon-error"><div class="xinterior"><p><strong>' + response.error + '</strong></p></div></div>');
+								$(button).html('<i class="monsterinsights-cloud-download"></i> ' + monsterinsights_admin.install);
 								$this.next().hide();
-								jQuery('.monsterinsights-addon-error').delay(4000).slideUp();
+								$('.monsterinsights-addon-error').delay(4000).slideUp();
 							});
 							return;
 						}
@@ -737,27 +630,27 @@ jQuery( document ).ready( function( $ ) {
 						// If we need more credentials, output the form sent back to us.
 						if ( response.form ) {
 							// Display the form to gather the users credentials.
-							jQuery(el).slideDown('normal', function() {
-								jQuery(this).after('<div class="monsterinsights-addon-error">' + response.form + '</div>');
+							$(el).slideDown('normal', function() {
+								$(this).after('<div class="monsterinsights-addon-error">' + response.form + '</div>');
 								$this.next().hide();
 							});
 
 							// Add a disabled attribute the install button if the creds are needed.
-							jQuery(button).attr('disabled', true);
+							$(button).attr('disabled', true);
 
-							jQuery('#monsterinsights-addons').on('click.installCredsAddon', '#upgrade', function(e) {
+							$('#monsterinsights-addons').on('click.installCredsAddon', '#upgrade', function(e) {
 								// Prevent the default action, let the user know we are attempting to install again and go with it.
 								e.preventDefault();
 								$this.next().hide();
-								jQuery(this).html('<i class="monsterinsights-cloud-download"></i> ' + monsterinsights_admin.installing);
-								jQuery(this).next().css({'display' : 'inline-block', 'margin-top' : '0px'});
+								$(this).html('<i class="monsterinsights-cloud-download"></i> ' + monsterinsights_admin.installing);
+								$(this).next().css({'display' : 'inline-block', 'margin-top' : '0px'});
 
 								// Now let's make another Ajax request once the user has submitted their credentials.
-								var hostname  = jQuery(this).parent().parent().find('#hostname').val();
-								var username  = jQuery(this).parent().parent().find('#username').val();
-								var password  = jQuery(this).parent().parent().find('#password').val();
-								var proceed   = jQuery(this);
-								var connect   = jQuery(this).parent().parent().parent().parent();
+								var hostname  = $(this).parent().parent().find('#hostname').val();
+								var username  = $(this).parent().parent().find('#username').val();
+								var password  = $(this).parent().parent().find('#password').val();
+								var proceed   = $(this);
+								var connect   = $(this).parent().parent().parent().parent();
 								var cred_opts = {
 									url:      ajaxurl,
 									type:     'post',
@@ -775,39 +668,39 @@ jQuery( document ).ready( function( $ ) {
 									success: function(response) {
 										// If there is a WP Error instance, output it here and quit the script.
 										if ( response.error ) {
-											jQuery(el).slideDown('normal', function() {
-												jQuery(button).parent().parent().after('<div class="monsterinsights-addon-error"><strong>' + response.error + '</strong></div>');
-												jQuery(button).html('<i class="monsterinsights-cloud-download"></i> ' + monsterinsights_admin.install);
+											$(el).slideDown('normal', function() {
+												$(button).parent().parent().after('<div class="monsterinsights-addon-error"><strong>' + response.error + '</strong></div>');
+												$(button).html('<i class="monsterinsights-cloud-download"></i> ' + monsterinsights_admin.install);
 												$this.next().hide();
-												jQuery('.monsterinsights-addon-error').delay(4000).slideUp();
+												$('.monsterinsights-addon-error').delay(4000).slideUp();
 											});
 											return;
 										}
 
 										if ( response.form ) {
 											$this.next().hide();
-											jQuery('.monsterinsights-inline-error').remove();
-											jQuery(proceed).val(monsterinsights_admin.proceed);
-											jQuery(proceed).after('<span class="monsterinsights-inline-error">' + monsterinsights_admin.connect_error + '</span>');
+											$('.monsterinsights-inline-error').remove();
+											$(proceed).val(monsterinsights_admin.proceed);
+											$(proceed).after('<span class="monsterinsights-inline-error">' + monsterinsights_admin.connect_error + '</span>');
 											return;
 										}
 
 										// The Ajax request was successful, so let's update the output.
-										jQuery(connect).remove();
-										jQuery(button).show();
+										$(connect).remove();
+										$(button).show();
 
 										if ( monsterinsights_admin.isnetwork ) {
-											jQuery(button).text(monsterinsights_admin.networkactivate).removeClass('monsterinsights-install-addon').addClass('monsterinsights-activate-addon');
+											$(button).text(monsterinsights_admin.networkactivate).removeClass('monsterinsights-install-addon').addClass('monsterinsights-activate-addon');
 										} else {
-											jQuery(button).text(monsterinsights_admin.activate).removeClass('monsterinsights-install-addon').addClass('monsterinsights-activate-addon');
+											$(button).text(monsterinsights_admin.activate).removeClass('monsterinsights-install-addon').addClass('monsterinsights-activate-addon');
 										}
 
-										jQuery(button).attr('rel', response.plugin);
-										jQuery(button).removeAttr('disabled');
-										jQuery(message).text(monsterinsights_admin.inactive);
+										$(button).attr('rel', response.plugin);
+										$(button).removeAttr('disabled');
+										$(message).text(monsterinsights_admin.inactive);
 										
 										// Trick here to wrap a span around he last word of the status
-										var heading = jQuery(message), word_array, last_word, first_part;
+										var heading = $(message), word_array, last_word, first_part;
 
 										word_array = heading.html().split(/\s+/); // split on spaces
 										last_word = word_array.pop();             // pop the last word
@@ -815,14 +708,14 @@ jQuery( document ).ready( function( $ ) {
 
 										heading.html([first_part, ' <span>', last_word, '</span>'].join(''));
 										// Proceed with CSS changes
-										jQuery(el).removeClass('monsterinsights-addon-not-installed').addClass('monsterinsights-addon-inactive');
+										$(el).removeClass('monsterinsights-addon-not-installed').addClass('monsterinsights-addon-inactive');
 										$this.next().hide();
 									},
 									error: function(xhr, textStatus ,e) {
 										$this.next().hide();
 										return;
 									}
-								};
+								}
 								$.ajax(cred_opts);
 							});
 
@@ -832,15 +725,15 @@ jQuery( document ).ready( function( $ ) {
 
 						// The Ajax request was successful, so let's update the output.
 						if ( monsterinsights_admin.isnetwork ) {
-							jQuery(button).html('<i class="monsterinsights-toggle-on"></i> ' + monsterinsights_admin.networkactivate).removeClass('monsterinsights-install-addon').addClass('monsterinsights-activate-addon');
+							$(button).html('<i class="monsterinsights-toggle-on"></i> ' + monsterinsights_admin.networkactivate).removeClass('monsterinsights-install-addon').addClass('monsterinsights-activate-addon');
 						} else {
-							jQuery(button).html('<i class="monsterinsights-toggle-on"></i> ' + monsterinsights_admin.activate).removeClass('monsterinsights-install-addon').addClass('monsterinsights-activate-addon');
+							$(button).html('<i class="monsterinsights-toggle-on"></i> ' + monsterinsights_admin.activate).removeClass('monsterinsights-install-addon').addClass('monsterinsights-activate-addon');
 						}
-						jQuery(button).attr('rel', response.plugin);
-						jQuery(message).text(monsterinsights_admin.inactive);
+						$(button).attr('rel', response.plugin);
+						$(message).text(monsterinsights_admin.inactive);
 
 						// Trick here to wrap a span around he last word of the status
-						var heading = jQuery(message), word_array, last_word, first_part;
+						var heading = $(message), word_array, last_word, first_part;
 
 						word_array = heading.html().split(/\s+/); // split on spaces
 						last_word = word_array.pop();             // pop the last word
@@ -848,48 +741,27 @@ jQuery( document ).ready( function( $ ) {
 
 						heading.html([first_part, ' <span>', last_word, '</span>'].join(''));
 						// Proceed with CSS changes
-						jQuery(el).removeClass('monsterinsights-addon-not-installed').addClass('monsterinsights-addon-inactive');
+						$(el).removeClass('monsterinsights-addon-not-installed').addClass('monsterinsights-addon-inactive');
 						$this.next().hide();
 					},
 					error: function(xhr, textStatus ,e) {
 						$this.next().hide();
 						return;
 					}
-				};
+				}
 				$.ajax(opts);
 			});
 
 		// Function to clear any disabled buttons and extra text if the user needs to add creds but instead tries to install a different addon.
 			function monsterinsightsAddonRefresh(element) {
-				if ( jQuery(element).attr('disabled') ) {
-					jQuery(element).removeAttr('disabled');
+				if ( $(element).attr('disabled') ) {
+					$(element).removeAttr('disabled');
 				}
 
-				if ( jQuery(element).parent().parent().hasClass('monsterinsights-addon-not-installed') ) {
-					jQuery(element).text( monsterinsights_admin.install );
+				if ( $(element).parent().parent().hasClass('monsterinsights-addon-not-installed') ) {
+					$(element).text( monsterinsights_admin.install );
 				}
 			}
-
-			jQuery(document).ready(function($) {
-				monsterinsights_equalheight2column();
-			});
-
-
-	jQuery(document).on('click', ".monsterinsights-reports-show-selector-group > .btn", function( e ){
-		e.preventDefault();
-		var id = jQuery(this).attr("data-tid");
-		jQuery(this).addClass("active").disable(true).siblings().removeClass("active").disable(false);
-		if ( jQuery(this).hasClass("ten") ) {
-			jQuery("#" + id + " .monsterinsights-reports-pages-list > .monsterinsights-listing-table-row").slice(10,50).hide();
-			jQuery("#" + id + " .monsterinsights-reports-pages-list > .monsterinsights-listing-table-row").slice(0,10).show();
-		} else if ( jQuery(this).hasClass("twentyfive") ) {
-			jQuery("#" + id + " .monsterinsights-reports-pages-list > .monsterinsights-listing-table-row").slice(25,50).hide();
-			jQuery("#" + id + " .monsterinsights-reports-pages-list > .monsterinsights-listing-table-row").slice(0,25).show();
-		} else if ( jQuery(this).hasClass("fifty") ) {
-			jQuery("#" + id + " .monsterinsights-reports-pages-list > .monsterinsights-listing-table-row").slice(0,50).show();
-		}
-	});
-
 	/**
 	 * Handles tabbed interfaces within MonsterInsights:
 	 * - Settings Page
@@ -897,20 +769,11 @@ jQuery( document ).ready( function( $ ) {
 	 * - Tools Page
 	 */
 	/* @todo: remove this comment, convert other comments to multiline (reduction safe), and namespace all variables (reduction safe) */
-		// Reports graph tabs
-		jQuery(document).on('click', '.monsterinsights-tabbed-nav > .monsterinsights-tabbed-nav-tab-title', function( e ){
-			e.preventDefault();
-			var tabname = jQuery(this).attr("data-tab");
-			jQuery(this).addClass("active").siblings().removeClass("active");
-			jQuery('.monsterinsights-tabbed-nav-panel').hide();
-			jQuery('.monsterinsights-tabbed-nav-panel.' + tabname ).show();
-		});
-
-		jQuery( function() {
+		$( function() {
 			MonsterInsightsTriggerTabs( true );
 		});
 
-		jQuery( window ).on( "hashchange", function( e ) {
+		$( window ).on( "hashchange", function( e ) {
 			e.preventDefault();
 			MonsterInsightsTriggerTabs( false );
 		});
@@ -931,7 +794,7 @@ jQuery( document ).ready( function( $ ) {
 				if ( window_hash.indexOf( '?' ) < 1 ) {
 					 // No ?, but there is a #
 					current_tab         = window_hash;
-					var firstchildclick = jQuery( sub_tabs_nav );
+					var firstchildclick = $( sub_tabs_nav );
 
 					// If there's no subtab defined, let's see if the page has subtabs, and if so select the first one.
 					if ( "0" in firstchildclick && "firstElementChild" in firstchildclick[0] && "hash" in firstchildclick[0].firstElementChild ) {
@@ -950,72 +813,66 @@ jQuery( document ).ready( function( $ ) {
 				// If we fallback, we should clear the sub_tab so we ensure we land on the first subtab of the new
 				// tab, if that pages has subtabs.
 
-				jQuery( tab_nav ).find( '.monsterinsights-active' ).removeClass( 'monsterinsights-active' );
-				jQuery( tabs_section ).find( '.monsterinsights-active' ).removeClass( 'monsterinsights-active' );
-				jQuery( sub_tabs_nav ).find( '.monsterinsights-active' ).removeClass( 'monsterinsights-active' );
-				jQuery( sub_tabs_section ).find( '.monsterinsights-active' ).removeClass( 'monsterinsights-active' );
+				$( tab_nav ).find( '.monsterinsights-active' ).removeClass( 'monsterinsights-active' );
+				$( tabs_section ).find( '.monsterinsights-active' ).removeClass( 'monsterinsights-active' );
+				$( sub_tabs_nav ).find( '.monsterinsights-active' ).removeClass( 'monsterinsights-active' );
+				$( sub_tabs_section ).find( '.monsterinsights-active' ).removeClass( 'monsterinsights-active' );
 
-				jQuery( tab_nav ).find( 'a[href="' + current_tab + '"]' ).addClass( 'monsterinsights-active' );
-				jQuery( tabs_section ).find( current_tab ).addClass( 'monsterinsights-active' );  
+				$( tab_nav ).find( 'a[href="' + current_tab + '"]' ).addClass( 'monsterinsights-active' );
+				$( tabs_section ).find( current_tab ).addClass( 'monsterinsights-active' );  
 
 				// Check to make sure the subtab given in the url exists, and then open it.
-				if ( jQuery( sub_tabs_nav ).find( 'a[href="' + current_sub_tab + '"]' ).length == 1 ) {
-					jQuery( sub_tabs_nav ).find( 'a[href="' + current_sub_tab + '"]' ).addClass( 'monsterinsights-active' );
-					jQuery( sub_tabs_section ).find( current_sub_tab_div ).addClass( 'monsterinsights-active' ); 
+				if ( $( sub_tabs_nav ).find( 'a[href="' + current_sub_tab + '"]' ).length == 1 ) {
+					$( sub_tabs_nav ).find( 'a[href="' + current_sub_tab + '"]' ).addClass( 'monsterinsights-active' );
+					$( sub_tabs_section ).find( current_sub_tab_div ).addClass( 'monsterinsights-active' ); 
 				} else { 
 				   // If the subtab given in the URL doesn't exist, let's see if the page has subtabs, and if so select the first one. 
-					var firstchildclick = jQuery( sub_tabs_nav );
+					var firstchildclick = $( sub_tabs_nav );
 					if ( "0" in firstchildclick && "firstElementChild" in firstchildclick[0] && "hash" in firstchildclick[0].firstElementChild ) {
-						jQuery( sub_tabs_nav ).find( 'a[href="#' + (firstchildclick[0].firstElementChild.hash).split( '?' )[1] + '"]' ).addClass( 'monsterinsights-active' );
-						jQuery( sub_tabs_section ).find( '#' + (firstchildclick[0].firstElementChild.hash).split( '?' )[1] ).addClass( 'monsterinsights-active' );
+						$( sub_tabs_nav ).find( 'a[href="#' + (firstchildclick[0].firstElementChild.hash).split( '?' )[1] + '"]' ).addClass( 'monsterinsights-active' );
+						$( sub_tabs_section ).find( '#' + (firstchildclick[0].firstElementChild.hash).split( '?' )[1] ).addClass( 'monsterinsights-active' );
 					}
 				}
 
-				if ( jQuery('.monsterinsights-main-nav-tabs .monsterinsights-main-nav-tab:not(".monsterinsights-active") .monsterinsights-tab-settings-notices .monsterinsights-notice' ).length > 0 ) {
-					jQuery('.monsterinsights-main-nav-tabs .monsterinsights-main-nav-tab:not(".monsterinsights-active") .monsterinsights-tab-settings-notices .monsterinsights-notice' ).remove();
+				if ( $('.monsterinsights-main-nav-tabs .monsterinsights-main-nav-tab:not(".monsterinsights-active") .monsterinsights-tab-settings-notices .monsterinsights-notice' ).length > 0 ) {
+					$('.monsterinsights-main-nav-tabs .monsterinsights-main-nav-tab:not(".monsterinsights-active") .monsterinsights-tab-settings-notices .monsterinsights-notice' ).remove();
 				}
 
-				if ( jQuery('.monsterinsights-sub-nav-tabs .monsterinsights-sub-nav-tab:not("' + current_sub_tab_div + '") .monsterinsights-subtab-settings-notices .monsterinsights-notice' ).length > 0 ) {
-					 jQuery('.monsterinsights-sub-nav-tabs .monsterinsights-sub-nav-tab:not("' + current_sub_tab_div + '") .monsterinsights-subtab-settings-notices .monsterinsights-notice' ).remove();
+				if ( $('.monsterinsights-sub-nav-tabs .monsterinsights-sub-nav-tab:not("' + current_sub_tab_div + '") .monsterinsights-subtab-settings-notices .monsterinsights-notice' ).length > 0 ) {
+					 $('.monsterinsights-sub-nav-tabs .monsterinsights-sub-nav-tab:not("' + current_sub_tab_div + '") .monsterinsights-subtab-settings-notices .monsterinsights-notice' ).remove();
 				}
 
 				if ( current_tab !== '#monsterinsights-main-tab-tracking' ) {
-					if ( jQuery('.monsterinsights-sub-nav-tabs .monsterinsights-sub-nav-tab .monsterinsights-subtab-settings-notices .monsterinsights-notice' ).length > 0 ) {
-						 jQuery('.monsterinsights-sub-nav-tabs .monsterinsights-sub-nav-tab  .monsterinsights-subtab-settings-notices .monsterinsights-notice' ).remove();
+					if ( $('.monsterinsights-sub-nav-tabs .monsterinsights-sub-nav-tab .monsterinsights-subtab-settings-notices .monsterinsights-notice' ).length > 0 ) {
+						 $('.monsterinsights-sub-nav-tabs .monsterinsights-sub-nav-tab  .monsterinsights-subtab-settings-notices .monsterinsights-notice' ).remove();
 					} 
 				}
 				 // Is the window taller than the #adminmenuwrap?
-				  if (jQuery(window).height() > jQuery("#adminmenuwrap").height()) {
+				  if ($(window).height() > $("#adminmenuwrap").height()) {
 					 // ...if so, make the #adminmenuwrap fixed
-					 jQuery('#adminmenuwrap').css('position', 'fixed'); 
+					 $('#adminmenuwrap').css('position', 'fixed'); 
 					
 				  } else {
 					 //...otherwise, leave it relative        
-					 jQuery('#adminmenuwrap').css('position', 'relative'); 
+					 $('#adminmenuwrap').css('position', 'relative'); 
 
 				  }
-			} else if ( init ) {
-				// If we have a default open, else open one
-				if ( jQuery(tab_nav + " .monsterinsights-active").length > 0 ){  
-					return;
-				}
-				jQuery(tab_nav).find('a:first').addClass( 'monsterinsights-active' );
-				jQuery( tabs_section ).find('div:first').addClass( 'monsterinsights-active' );
-				jQuery(sub_tabs_nav).find('a:first').addClass( 'monsterinsights-active' );
-				jQuery( sub_tabs_section ).find('div:first').addClass( 'monsterinsights-active' );
-			}
+			}   
 		}
 });
 
-function monsterinsights_equalheight2column(){
-	jQuery('.monsterinsights-reports-2-column-container').each(function(i, elem) {
-		jQuery(elem)
-			.find('.monsterinsights-reports-data-table-tbody')   // Only children of this row
-			.matchHeight({byRow: false}); // Row detection gets confused so disable it
-		jQuery(elem)
-			.find('.monsterinsights-reports-2-column-panel')   // Only children of this row
-			.matchHeight({byRow: true}); // Row detection gets confused so disable it
-	});
+function monsterinsights_popupwindow(url, w, h) {
+	'use strict';
+	monsterinsights_closepopupwindow();
+	var left = (screen.width/2)-(w/2);
+	var top = (screen.height/8);
+	monsterinsights_authwindow = window.open(url, 'monsterinsights_ga_auth_window', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+}
+
+function monsterinsights_closepopupwindow() {
+	if( monsterinsights_authwindow ){
+		monsterinsights_authwindow.close();
+	}
 }
 
 function monsterinsights_show_manual( ){
@@ -1023,99 +880,4 @@ function monsterinsights_show_manual( ){
 }
 
 var uorigindetected = 'no';
-
-// Reports:
-// Thanks ChartJS for making us have to do this nonsense.
-
-// A huge Thanks ChartJS for making us have to do this nonsense. Why ChartJS can't just fix non-initalization on hidden elements (or at least
-// give a generic action to re-fire initialization for in-view charts generically is beyond me)
-jQuery(document).ready(function($) {
-	var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
-
-	jQuery.fn.attrchange = function(callback) {
-		if (MutationObserver) {
-			var options = {
-				subtree: false,
-				attributes: true,
-				attributeName: "class",
-			};
-
-			var observer = new MutationObserver(function(mutations) {
-				mutations.forEach(function(e) {
-					callback.call(e.target, e.attributeName);
-				});
-			});
-
-			return this.each(function() {
-				observer.observe(this, options);
-			});
-		}
-	};
-	
-	jQuery('#monsterinsights-reports-page-main-nav .monsterinsights-main-nav-item.monsterinsights-nav-item').attrchange(function(attrName) {
-		if ( attrName != 'class' ){
-			return;
-		}
-	
-		// Blur report shown
-		jQuery( "#monsterinsights-reports-pages" ).addClass( "monsterinsights-mega-blur" );
-
-		// Which report?
-		var reportname = jQuery("#monsterinsights-reports-pages").find( "div.monsterinsights-main-nav-tab.monsterinsights-active" ).attr("id").replace("monsterinsights-main-tab-", "" );
-		var reportid   = jQuery("#monsterinsights-reports-pages").find( "div.monsterinsights-main-nav-tab.monsterinsights-active" ).attr("id");
-		var start      = moment( moment().subtract(30, 'days') ).utc().format('YYYY-MM-DD');
-		var end        = moment( moment().subtract( 1, 'days' ) ).utc().format('YYYY-MM-DD');
-
-		swal({
-		  type: 'info',
-		  title: monsterinsights_admin.refresh_report_title,
-		  text: monsterinsights_admin.refresh_report_text,
-		  allowOutsideClick: false,
-		  allowEscapeKey: false,
-		  allowEnterKey: false,
-		  onOpen: function () {
-			swal.showLoading();
-
-			var data = { 
-				'action'   : 'monsterinsights_refresh_reports', 
-				'security' :  monsterinsights_admin.admin_nonce,
-				'isnetwork':  monsterinsights_admin.isnetwork,
-				'start'    :  start,
-				'end'      :  end,
-				'report'   :  reportname,
-			};
-			
-			jQuery.post(ajaxurl, data, function( response ) {
-
-				if ( response.success && response.data.html ) {
-					// Insert new data here
-					jQuery("#monsterinsights-main-tab-" + reportname + " > .monsterinsights-reports-wrap").html( response.data.html );
-
-					// Resize divs
-					monsterinsights_equalheight2column();
-					swal.close();
-				} else {
-					swal({
-						type: 'error',
-						  title: monsterinsights_admin.refresh_report_failure_title,
-						  text: response.data.message,
-					  }).catch(swal.noop);
-				}
-			}).then(function (result) {
-				// Unblur reports
-				jQuery( "#monsterinsights-reports-pages" ).removeClass( "monsterinsights-mega-blur" );
-			}).fail( function(xhr, textStatus, errorThrown) {
-				var message = jQuery(xhr.responseText).text();
-				message = message.substring(0, message.indexOf("Call Stack"));
-				swal({
-					type: 'error',
-					  title: monsterinsights_admin.refresh_report_failure_title,
-					  text: message,
-				  }).catch(swal.noop);
-				// Unblur reports
-				jQuery( "#monsterinsights-reports-pages" ).removeClass( "monsterinsights-mega-blur" );
-			});
-		  }
-		});
-	});
-});
+var monsterinsights_authwindow;

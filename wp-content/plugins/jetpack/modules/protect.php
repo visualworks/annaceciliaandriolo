@@ -268,8 +268,7 @@ class Jetpack_Protect_Module {
 	 *
 	 * @return void
 	 */
-	function log_failed_attempt( $login_user = null ) {
-
+	function log_failed_attempt() {
 		/**
 		 * Fires before every failed login attempt.
 		 *
@@ -277,12 +276,9 @@ class Jetpack_Protect_Module {
 		 *
 		 * @since 3.4.0
 		 *
-		 * @param array Information about failed login attempt
-		 *   [
-		 *     'login' => (string) Username or email used in failed login attempt
-		 *   ]
+		 * @param string jetpack_protect_get_ip IP stored by Protect.
 		 */
-		do_action( 'jpp_log_failed_attempt', array( 'login' => $login_user ) );
+		do_action( 'jpp_log_failed_attempt', jetpack_protect_get_ip() );
 
 		if ( isset( $_COOKIE['jpp_math_pass'] ) ) {
 
@@ -435,7 +431,7 @@ class Jetpack_Protect_Module {
 		/**
 		 * JETPACK_ALWAYS_PROTECT_LOGIN will always disable the login page, and use a page provided by Jetpack.
 		 */
-		if ( Jetpack_Constants::is_true( 'JETPACK_ALWAYS_PROTECT_LOGIN' ) ) {
+		if ( defined( 'JETPACK_ALWAYS_PROTECT_LOGIN' ) && JETPACK_ALWAYS_PROTECT_LOGIN ) {
 			$this->kill_login();
 		}
 

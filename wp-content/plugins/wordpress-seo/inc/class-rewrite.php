@@ -83,7 +83,9 @@ class WPSEO_Rewrite {
 	 * @return array
 	 */
 	public function query_vars( $query_vars ) {
-		if ( WPSEO_Options::get( 'stripcategorybase' ) === true ) {
+		$options = WPSEO_Options::get_option( 'wpseo_permalinks' );
+
+		if ( $options['stripcategorybase'] === true ) {
 			$query_vars[] = 'wpseo_category_redirect';
 		}
 

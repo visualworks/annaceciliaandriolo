@@ -240,15 +240,9 @@ class Util_Rule {
 		if ( $data === false )
 			$data = '';
 
-		if ( empty( $rules ) ) {
-			$rules_present = ( strpos( $data, $start ) !==  false );
-			if ( !$rules_present )
-				return;
-		} else {
-			$rules_missing = ( strstr( Util_Rule::clean_rules( $data ), Util_Rule::clean_rules( $rules ) ) === false );
-			if ( !$rules_missing )
-				return;
-		}
+		$rules_missing = !empty( $rules ) && ( strstr( Util_Rule::clean_rules( $data ), Util_Rule::clean_rules( $rules ) ) === false );
+		if ( !$rules_missing )
+			return;
 
 		$replace_start = strpos( $data, $start );
 		$replace_end = strpos( $data, $end );

@@ -571,19 +571,14 @@ class Extension_FragmentCache_WpObjectCache {
 	 * @return string
 	 */
 	public function w3tc_footer_comment( $strings ) {
-		$append = ( $this->cache_reject_reason != '' ?
-			sprintf( ' (%s)', $this->cache_reject_reason ) :'' );
-
-		$strings[] = sprintf(
-			__( 'Fragment Caching %d/%d fragments using %s%s', 'w3-total-cache' ),
-			$this->cache_hits, $this->cache_total,
-			Cache::engine_name( $this->_config->get_string( array( 'fragmentcache', 'engine' ) ) ),
-			$append );
-
 		if ( $this->_config->get_boolean( array( 'fragmentcache', 'debug' ) ) ) {
-			$strings[] = '';
-			$strings[] = 'Fragment Cache debug info:';
+			$strings[] = "Fragment Cache debug info:";
+			$strings[] = sprintf( "%s%s", str_pad( 'Engine: ', 20 ), Cache::engine_name( $this->_config->get_string( array( 'fragmentcache', 'engine' ) ) ) );
 			$strings[] = sprintf( "%s%s", str_pad( 'Caching: ', 20 ), ( $this->_caching ? 'enabled' : 'disabled' ) );
+
+			if ( !$this->_caching ) {
+				$strings[] = sprintf( "%s%s", str_pad( 'Reject reason: ', 20 ), $this->cache_reject_reason );
+			}
 
 			$strings[] = sprintf( "%s%d", str_pad( 'Total calls: ', 20 ), $this->cache_total );
 			$strings[] = sprintf( "%s%d", str_pad( 'Cache hits: ', 20 ), $this->cache_hits );
@@ -614,7 +609,15 @@ class Extension_FragmentCache_WpObjectCache {
 					str_pad( ( $debug['group'] == 'transient' ? 'site' : 'network' ), 10, ' ', STR_PAD_LEFT ),
 					$debug['id'] );
 			}
-			$strings[] = '';
+		} else {
+			$append = ( $this->cache_reject_reason != '' ?
+				sprintf( ' (%s)', $this->cache_reject_reason ) :'' );
+
+			$strings[] = sprintf(
+				__( 'Fragment Caching %d/%d fragments using %s%s', 'w3-total-cache' ),
+				$this->cache_hits, $this->cache_total,
+				Cache::engine_name( $this->_config->get_string( array( 'fragmentcache', 'engine' ) ) ),
+				$append );
 		}
 
 		return $strings;

@@ -61,7 +61,7 @@ class AS3CF_Local_To_S3 extends AS3CF_Filter {
 		$cache    = $this->get_post_cache( $post->ID );
 		$to_cache = array();
 
-		if ( is_array( $pages ) && 1 === count( $pages ) && ! empty( $pages[0] ) ) {
+		if ( 1 === count( $pages ) && ! empty( $pages[0] ) ) {
 			// Post already filtered and available on global $page array, continue
 			$post->post_content = $pages[0];
 		} else {
@@ -113,42 +113,17 @@ class AS3CF_Local_To_S3 extends AS3CF_Filter {
 	 * @return bool
 	 */
 	protected function url_needs_replacing( $url ) {
-		if ( str_replace( $this->get_bare_upload_base_urls(), '', $url ) === $url ) {
-			// Remote URL, no replacement needed
-			return false;
-		}
-
-		// Local URL, perform replacement
-		return true;
-	}
-
-	/**
-	 * Get an array of bare base_urls that can be used for uploaded items.
-	 *
-	 * @return array
-	 */
-	private function get_bare_upload_base_urls() {
-		$base_urls = array();
-
 		$uploads  = wp_upload_dir();
 		$base_url = $this->as3cf->maybe_fix_local_subsite_url( $uploads['baseurl'] );
 		$base_url = AS3CF_Utils::remove_scheme( $base_url );
-		$domain   = AS3CF_Utils::parse_url( $uploads['baseurl'], PHP_URL_HOST );
 
-		/**
-		 * Allow alteration of the local domains that can be matched on.
-		 *
-		 * @param array $domains
-		 */
-		$domains = apply_filters( 'as3cf_local_domains', (array) $domain );
-
-		if ( ! empty( $domains ) ) {
-			foreach ( array_unique( $domains ) as $match_domain ) {
-				$base_urls[] = substr_replace( $base_url, $match_domain, 2, strlen( $domain ) );
-			}
+		if ( false !== strpos( $url, $base_url ) ) {
+			// Local URL, perform replacement
+			return true;
 		}
 
-		return $base_urls;
+		// Remote URL, no replacement needed
+		return false;
 	}
 
 	/**
@@ -191,7 +166,9 @@ class AS3CF_Local_To_S3 extends AS3CF_Filter {
 			return $this->query_cache[ $full_url ];
 		}
 
-		$path = $this->as3cf->decode_filename_in_path( ltrim( str_replace( $this->get_bare_upload_base_urls(), '', $full_url ), '/' ) );
+		$upload_dir = wp_upload_dir();
+		$base_url   = AS3CF_Utils::remove_scheme( $upload_dir['baseurl'] );
+		$path       = $this->as3cf->decode_filename_in_path( ltrim( str_replace( $base_url, '', $full_url ), '/' ) );
 
 		$sql = $wpdb->prepare( "
 			SELECT post_id FROM {$wpdb->postmeta}
@@ -233,6 +210,9 @@ class AS3CF_Local_To_S3 extends AS3CF_Filter {
 			$urls = array( $urls );
 		}
 
+		$upload_dir = wp_upload_dir();
+		$base_url   = AS3CF_Utils::remove_scheme( $upload_dir['baseurl'] );
+
 		$paths     = array();
 		$full_urls = array();
 
@@ -246,7 +226,7 @@ class AS3CF_Local_To_S3 extends AS3CF_Filter {
 				continue;
 			}
 
-			$path = $this->as3cf->decode_filename_in_path( ltrim( str_replace( $this->get_bare_upload_base_urls(), '', $full_url ), '/' ) );
+			$path = $this->as3cf->decode_filename_in_path( ltrim( str_replace( $base_url, '', $full_url ), '/' ) );
 
 			$paths[ $path ]         = $full_url;
 			$full_urls[ $full_url ] = $url;
@@ -331,22 +311,5 @@ class AS3CF_Local_To_S3 extends AS3CF_Filter {
 		$base_url = AS3CF_Utils::remove_scheme( $uploads['baseurl'] );
 
 		return $this->remove_aws_query_strings( $content, $base_url );
-	}
-
-	/**
-	 * Each time a URL is replaced this function is called to allow for logging or further updates etc.
-	 *
-	 * @param string $find    URL with no scheme.
-	 * @param string $replace URL with no scheme.
-	 * @param string $content
-	 *
-	 * @return string
-	 */
-	protected function url_replaced( $find, $replace, $content ) {
-		if ( (bool) $this->as3cf->get_setting( 'force-https' ) ) {
-			$content = str_replace( 'http:' . $replace, 'https:' . $replace, $content );
-		}
-
-		return $content;
 	}
 }

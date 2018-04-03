@@ -235,27 +235,23 @@ class SucuriScanFileInfo extends SucuriScan
                     continue;
                 }
 
-                try {
-                    /* check only files */
-                    if ($fifo->isFile()
-                        && $filterby === 'file'
-                        && !$this->ignoreFile($filepath)
-                        && !$this->ignoreFolder($filepath)
-                    ) {
-                        $files[] = $filepath;
-                        continue;
-                    }
+                /* check only files */
+                if ($fifo->isFile()
+                    && $filterby === 'file'
+                    && !$this->ignoreFile($filepath)
+                    && !$this->ignoreFolder($filepath)
+                ) {
+                    $files[] = $filepath;
+                    continue;
+                }
 
-                    /* check only directories */
-                    if ($fifo->isDir()
-                        && $filterby === 'directory'
-                        && !$this->ignoreFolder($filepath)
-                    ) {
-                        $files[] = $filepath;
-                        continue;
-                    }
-                } catch (RuntimeException $e) {
-                    SucuriScanEvent::reportCriticalEvent($e->getMessage());
+                /* check only directories */
+                if ($fifo->isDir()
+                    && $filterby === 'directory'
+                    && !$this->ignoreFolder($filepath)
+                ) {
+                    $files[] = $filepath;
+                    continue;
                 }
             }
 
@@ -297,13 +293,7 @@ class SucuriScanFileInfo extends SucuriScan
             $filesize = @filesize($filepath);
 
             if ($as_array) {
-                $basename = $filepath;
-
-                if (strlen($abspath . '/') > 1) {
-                    /* convert absolute path into relative path */
-                    $basename = str_replace($abspath . '/', '', $filepath);
-                }
-
+                $basename = str_replace($abspath . '/', '', $filepath);
                 $signatures[$basename] = array(
                     'filepath' => $filepath,
                     'checksum' => $file_checksum,

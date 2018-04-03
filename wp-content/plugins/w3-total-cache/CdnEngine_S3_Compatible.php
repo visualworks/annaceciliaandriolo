@@ -33,8 +33,6 @@ class CdnEngine_S3_Compatible extends CdnEngine_Base {
 
 		$this->_s3 = new \S3( $config['key'], $config['secret'], false,
 			$config['api_host'] );
-		$this->_s3->setSignatureVersion( 'v2' );
-
 		parent::__construct( $config );
 	}
 
@@ -74,15 +72,11 @@ class CdnEngine_S3_Compatible extends CdnEngine_Base {
 		$error = null;
 
 		foreach ( $files as $file ) {
+			if ( !is_null( $timeout_time ) && time() > $timeout_time )
+				break;
+
 			$local_path = $file['local_path'];
 			$remote_path = $file['remote_path'];
-
-			// process at least one item before timeout so that progress goes on
-			if ( !empty( $results ) ) {
-				if ( !is_null( $timeout_time ) && time() > $timeout_time ) {
-					return 'timeout';
-				}
-			}
 
 			$results[] = $this->_upload( $file, $force_rewrite );
 

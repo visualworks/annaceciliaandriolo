@@ -14,14 +14,17 @@ class Cdn_Util {
 				'att',
 				'azure',
 				'cf',
+				'cloudfront_fsd',
 				'cf2',
 				'cotendo',
 				'edgecast',
+				'maxcdn_fsd',
 				'ftp',
 				'google_drive',
 				'highwinds',
 				'maxcdn',
 				'mirror',
+				'netdna',
 				'rscf',
 				'rackspace_cdn',
 				's3',
@@ -37,12 +40,25 @@ class Cdn_Util {
 	 */
 	static public function is_engine_mirror( $engine ) {
 		return in_array( $engine, array(
-				'mirror', 'maxcdn', 'cotendo', 'cf2', 'akamai',
+				'mirror', 'netdna', 'maxcdn', 'cotendo', 'cf2', 'akamai',
 				'edgecast', 'att', 'highwinds', 'rackspace_cdn' ) );
 	}
 
+	/**
+	 * Returns true if CDN engine is mirror
+	 *
+	 * @param string  $engine
+	 * @return bool
+	 */
+	static public function is_engine_fsd( $engine ) {
+		return in_array( $engine, array(
+				'cloudfront_fsd',
+				'maxcdn_fsd'
+			) );
+	}
+
 	static public function is_engine_push( $engine ) {
-		return !self::is_engine_mirror( $engine );
+		return !self::is_engine_mirror( $engine ) && !self::is_engine_fsd( $engine );
 	}
 
 	/**
@@ -56,8 +72,10 @@ class Cdn_Util {
 				'att',
 				'cotendo',
 				'edgecast',
+				'maxcdn_fsd',
 				'highwinds',
 				'maxcdn',
+				'netdna',
 			) );
 	}
 
@@ -74,11 +92,14 @@ class Cdn_Util {
 				'azure',
 				'cf',
 				'cf2',
+				'cloudfront_fsd',
 				'cotendo',
 				'edgecast',
+				'maxcdn_fsd',
 				'ftp',
 				'highwinds',
 				'maxcdn',
+				'netdna',
 				'rscf',
 				's3',
 				's3_compatible',

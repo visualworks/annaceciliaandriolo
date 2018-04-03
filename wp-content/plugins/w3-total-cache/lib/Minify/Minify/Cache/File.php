@@ -48,7 +48,7 @@ class Minify_Cache_File {
 			// retry with make dir
 			\W3TC\Util_File::mkdir_from_safe(dirname($path), W3TC_CACHE_DIR);
 
-			if (!@file_put_contents($path, $data['content'], $flag))
+			if (!@file_put_contents($path, $data, $flag))
 				return false;
 		}
 
@@ -152,8 +152,7 @@ class Minify_Cache_File {
 					@flock($fp, LOCK_UN);
 					@fclose($fp);
 
-					$data['content'] = $ret;
-					return $data;
+					return $ret;
 				}
 			} else {
 				$data['content'] = @file_get_contents($path);

@@ -47,6 +47,11 @@ $A2A_SHARE_SAVE_services = array(
 		"icon" => "whatsapp",
 		"color" => "12AF0A",
 	),
+	"aim" => array(
+		"name" => "AIM",
+		"icon" => "aim",
+		"color" => "00C2FF",
+	),
 	"amazon_wish_list" => array(
 		"name" => "Amazon Wish List",
 		"icon" => "amazon",
@@ -77,8 +82,8 @@ $A2A_SHARE_SAVE_services = array(
 		"icon" => "blinklist",
 		"color" => "3D3C3B",
 	),
-	"blogger" => array(
-		"name" => "Blogger",
+	"blogger_post" => array(
+		"name" => "Blogger Post",
 		"icon" => "blogger",
 		"color" => "FDA352",
 	),
@@ -96,6 +101,11 @@ $A2A_SHARE_SAVE_services = array(
 		"name" => "Box.net",
 		"icon" => "box",
 		"color" => "1A74B0",
+	),
+	"buddymarks" => array(
+		"name" => "BuddyMarks",
+		"icon" => "buddymarks",
+		"color" => "96C044",
 	),
 	"buffer" => array(
 		"name" => "Buffer",
@@ -141,6 +151,11 @@ $A2A_SHARE_SAVE_services = array(
 		"name" => "Digg",
 		"icon" => "digg",
 		"color" => "2A2A2A",
+	),
+	"dihitt" => array(
+		"name" => "diHITT",
+		"icon" => "dihitt",
+		"color" => "FF6300",
 	),
 	"diigo" => array(
 		"name" => "Diigo",
@@ -222,6 +237,11 @@ $A2A_SHARE_SAVE_services = array(
 		"icon" => "instapaper",
 		"color" => "2A2A2A",
 	),
+	"jamespot" => array(
+		"name" => "Jamespot",
+		"icon" => "jamespot",
+		"color" => "FF9E2C",
+	),
 	"kakao" => array(
 		"name" => "Kakao",
 		"icon" => "kakao",
@@ -277,10 +297,25 @@ $A2A_SHARE_SAVE_services = array(
 		"icon" => "myspace",
 		"color" => "2A2A2A",
 	),
+	"netlog" => array(
+		"name" => "Netlog",
+		"icon" => "netlog",
+		"color" => "2A2A2A",
+	),
 	"netvouz" => array(
 		"name" => "Netvouz",
 		"icon" => "netvouz",
 		"color" => "6C3",
+	),
+	"newsvine" => array(
+		"name" => "NewsVine",
+		"icon" => "newsvine",
+		"color" => "055D00",
+	),
+	"nujij" => array(
+		"name" => "NUjij",
+		"icon" => "nujij",
+		"color" => "D40000",
 	),
 	"odnoklassniki" => array(
 		"name" => "Odnoklassniki",
@@ -362,6 +397,11 @@ $A2A_SHARE_SAVE_services = array(
 		"icon" => "renren",
 		"color" => "005EAC",
 	),
+	"segnalo" => array(
+		"name" => "Segnalo",
+		"icon" => "segnalo",
+		"color" => "FF6500",
+	),
 	"sina_weibo" => array(
 		"name" => "Sina Weibo",
 		"icon" => "sina_weibo",
@@ -396,6 +436,11 @@ $A2A_SHARE_SAVE_services = array(
 		"name" => "StumbleUpon",
 		"icon" => "stumbleupon",
 		"color" => "EF4E23",
+	),
+	"stumpedia" => array(
+		"name" => "Stumpedia",
+		"icon" => "stumpedia",
+		"color" => "FFC808",
 	),
 	"svejo" => array(
 		"name" => "Svejo",
@@ -457,6 +502,11 @@ $A2A_SHARE_SAVE_services = array(
 		"icon" => "wanelo",
 		"color" => "9cb092",
 	),
+	"webnews" => array(
+		"name" => "Webnews",
+		"icon" => "webnews",
+		"color" => "CC2512",
+	),
 	"wechat" => array(
 		"name" => "WeChat",
 		"icon" => "wechat",
@@ -496,6 +546,11 @@ $A2A_SHARE_SAVE_services = array(
 		"name" => "Yoolink",
 		"icon" => "yoolink",
 		"color" => "A2C538",
+	),
+	"youmob" => array(
+		"name" => "YouMob",
+		"icon" => "youmob",
+		"color" => "3B599D",
 	),
 	"yummly" => array(
 		"name" => "Yummly",
@@ -573,17 +628,11 @@ $A2A_FOLLOW_services = array(
 		'icon' => 'linkedin',
 		'color' => '007BB5',
 	),
-	'medium' => array( 
-		'name' => 'Medium', 
-		'href' => 'https://medium.com/@${id}',	
-		'icon' => 'medium',
-		'color' => '2A2A2A',
-	),
 	'snapchat' => array( 
 		'name' => 'Snapchat', 
 		'href' => 'https://www.snapchat.com/add/${id}',	
 		'icon' => 'snapchat',
-		'color' => '2A2A2A',
+		'color' => '',
 	),
 	'tumblr' => array( 
 		'name' => 'Tumblr', 

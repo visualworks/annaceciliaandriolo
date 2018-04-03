@@ -98,6 +98,15 @@ class MonsterInsights_Updater {
     public $info = false;
 
     /**
+     * Holds the base class object.
+     *
+     * @since 6.0.0
+     *
+     * @var object
+     */
+    public $base;
+
+    /**
      * Primary class constructor.
      *
      * @since 6.0.0
@@ -105,6 +114,10 @@ class MonsterInsights_Updater {
      * @param array $config Array of updater config args.
      */
     public function __construct( array $config ) {
+
+        // Load the base class object.
+        $this->base = MonsterInsights();
+
         // Set class properties.
         $accepted_args = array(
             'plugin_name',
@@ -121,11 +134,6 @@ class MonsterInsights_Updater {
 
         // If the user cannot update plugins, stop processing here.
         if ( ! current_user_can( 'update_plugins' ) && ( ! defined( 'DOING_CRON' ) || ! DOING_CRON ) ) {
-            return;
-        }
-
-        // If it's our site, then return so we don't redirect loop.
-        if ( strpos( site_url(), 'monsterinsights.com' ) !== false ) {
             return;
         }
 

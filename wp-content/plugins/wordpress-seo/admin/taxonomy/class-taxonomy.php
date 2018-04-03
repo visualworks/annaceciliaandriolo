@@ -213,7 +213,7 @@ class WPSEO_Taxonomy {
 		$taxonomy = get_taxonomy( $term->taxonomy );
 
 		$term_formatter = new WPSEO_Metabox_Formatter(
-			new WPSEO_Term_Metabox_Formatter( $taxonomy, $term )
+			new WPSEO_Term_Metabox_Formatter( $taxonomy, $term, WPSEO_Options::get_option( 'wpseo_titles' ) )
 		);
 
 		return $term_formatter->get_values();
@@ -275,9 +275,10 @@ class WPSEO_Taxonomy {
 	 * @return bool
 	 */
 	private function show_metabox() {
-		$option_key = 'display-metabox-tax-' . $this->taxonomy;
+		$options    = WPSEO_Options::get_option( 'wpseo_titles' );
+		$option_key = 'hideeditbox-tax-' . $this->taxonomy;
 
-		return WPSEO_Options::get( $option_key );
+		return ( empty( $options[ $option_key ] ) );
 	}
 
 	/**
@@ -341,4 +342,50 @@ class WPSEO_Taxonomy {
 
 		add_action( "{$this->taxonomy}_term_edit_form_top", array( $this, 'custom_category_description_editor' ) );
 	}
+
+	/********************** DEPRECATED METHODS **********************/
+
+	// @codeCoverageIgnoreStart
+	/**
+	 * @deprecated 3.2
+	 *
+	 * Retrieves the title template.
+	 *
+	 * @param object $term Taxonomy term.
+	 *
+	 * @return string
+	 */
+	public static function get_title_template( $term ) {
+		_deprecated_function( __METHOD__, 'WPSEO 3.2', 'WPSEO_Term_Scraper::get_title_template' );
+
+		return '';
+	}
+
+	/**
+	 * @deprecated 3.2
+	 *
+	 * Retrieves the metadesc template.
+	 *
+	 * @param object $term Taxonomy term.
+	 *
+	 * @return string
+	 */
+	public static function get_metadesc_template( $term ) {
+		_deprecated_function( __METHOD__, 'WPSEO 3.2', 'WPSEO_Term_Scraper::get_metadesc_template' );
+
+		return '';
+	}
+
+	/**
+	 * @deprecated 3.2
+	 *
+	 * Translate options text strings for use in the select fields.
+	 *
+	 * {@internal IMPORTANT: if you want to add a new string (option) somewhere, make sure you add
+	 * that array key to the main options definition array in the class WPSEO_Taxonomy_Meta() as well!!!!}}
+	 */
+	public function translate_meta_options() {
+		_deprecated_function( __METHOD__, 'WPSEO 3.2', 'WPSEO_Taxonomy_Settings_Fields::translate_meta_options' );
+	}
+	// @codeCoverageIgnoreEnd
 }

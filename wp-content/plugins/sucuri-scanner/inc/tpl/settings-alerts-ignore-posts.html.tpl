@@ -22,35 +22,29 @@
 
         <hr>
 
-        <button class="button button-primary sucuriscan-show-section" section="sucuriscan-ignorerules" on="Show Post-Types Table" off="Hide Post-Types Table">Show Post-Types Table</button>
+        <form action="%%SUCURI.URL.Settings%%#alerts" method="post">
+            <input type="hidden" name="sucuriscan_page_nonce" value="%%SUCURI.PageNonce%%" />
+            <input type="hidden" name="sucuriscan_ignorerule_action" value="batch" />
 
-        <div class="sucuriscan-hidden" id="sucuriscan-ignorerules">
-            <hr>
+            <table class="wp-list-table widefat sucuriscan-table sucuriscan-settings-ignorerules">
+                <thead>
+                    <tr>
+                        <td id="cb" class="manage-column column-cb check-column">
+                            <label class="screen-reader-text" for="cb-select-all-1">Select All</label>
+                            <input id="cb-select-all-1" type="checkbox">
+                        </td>
+                        <th class="manage-column">Post Type</th>
+                        <th class="manage-column">Post Type ID</th>
+                        <th class="manage-column">Ignored At (optional)</th>
+                    </tr>
+                </thead>
 
-            <form action="%%SUCURI.URL.Settings%%#alerts" method="post">
-                <input type="hidden" name="sucuriscan_page_nonce" value="%%SUCURI.PageNonce%%" />
-                <input type="hidden" name="sucuriscan_ignorerule_action" value="batch" />
+                <tbody>
+                    %%%SUCURI.PostTypes.List%%%
+                </tbody>
+            </table>
 
-                <table class="wp-list-table widefat sucuriscan-table sucuriscan-settings-ignorerules">
-                    <thead>
-                        <tr>
-                            <td id="cb" class="manage-column column-cb check-column">
-                                <label class="screen-reader-text" for="cb-select-all-1">Select All</label>
-                                <input id="cb-select-all-1" type="checkbox">
-                            </td>
-                            <th class="manage-column">Post Type</th>
-                            <th class="manage-column">Post Type ID</th>
-                            <th class="manage-column">Ignored At (optional)</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        %%%SUCURI.PostTypes.List%%%
-                    </tbody>
-                </table>
-
-                <button type="submit" class="button button-primary">Submit</button>
-            </form>
-        </div>
+            <button type="submit" class="button button-primary">Submit</button>
+        </form>
     </div>
 </div>

@@ -499,25 +499,24 @@ class Generic_Plugin {
 				if ( Util_Environment::is_preview_mode() )
 					$buffer .= "\r\n<!-- W3 Total Cache used in preview mode -->";
 
-                $strings = array();
+				if ( $this->_config->get_string( 'common.support' ) != '' ||
+					$this->_config->get_boolean( 'common.tweeted' ) ) {
+					$buffer .= sprintf( "\r\n<!-- Served from: %s @ %s by W3 Total Cache -->",
+						Util_Content::escape_comment( $host ), $date );
+				} else {
+					$strings = array();
+					$strings = apply_filters( 'w3tc_footer_comment', $strings );
 
-                if ( $this->_config->get_string( 'common.support' ) == '' &&
-                    !$this->_config->get_boolean( 'common.tweeted' ) ) {
-                    $strings[] = 'Performance optimized by W3 Total Cache. Learn more: https://www.w3-edge.com/products/';
-                	$strings[] = '';
-                }
+					$buffer .= "\r\n<!-- Performance optimized by W3 Total Cache. Learn more: https://www.w3-edge.com/products/\r\n";
 
-                $strings = apply_filters( 'w3tc_footer_comment', $strings );
+					if ( count( $strings ) ) {
+						$buffer .= "\r\n" .
+							Util_Content::escape_comment( implode( "\r\n", $strings ) ) .
+							"\r\n";
+					}
 
-                if ( count( $strings ) ) {
-                	$strings[] = '';
-                	$strings[] = sprintf( "Served from: %s @ %s by W3 Total Cache",
-                            Util_Content::escape_comment( $host ), $date );
-
-                    $buffer .= "\r\n<!--\r\n" .
-                    	Util_Content::escape_comment( implode( "\r\n", $strings ) ) .
-                    	"\r\n-->";
-                }
+					$buffer .= sprintf( "\r\n Served from: %s @ %s by W3 Total Cache -->", Util_Content::escape_comment( $host ), $date );
+				}
 
 				$buffer = apply_filters( 'w3tc_process_content', $buffer );
 			}

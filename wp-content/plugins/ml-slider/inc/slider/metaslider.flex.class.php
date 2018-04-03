@@ -18,12 +18,6 @@ class MetaFlexSlider extends MetaSlider {
      *
      * @param integer $id slideshow ID
      */
-    /**
-     * Constructor
-     *
-     * @param int   $id                 ID
-     * @param array $shortcode_settings Short code settings
-     */
     public function __construct( $id, $shortcode_settings ) {
         parent::__construct( $id, $shortcode_settings );
 
@@ -36,8 +30,8 @@ class MetaFlexSlider extends MetaSlider {
     /**
      * Adjust the slider parameters so they're comparible with the carousel mode
      *
-     * @param array   $options   Slider options
-     * @param integer $slider_id Slider ID
+     * @param array   $options
+     * @param integer $slider_id
      * @return array $options
      */
     public function enable_carousel_mode( $options, $slider_id ) {
@@ -62,8 +56,8 @@ class MetaFlexSlider extends MetaSlider {
     /**
      * Ensure CSS transitions are disabled when easing is enabled.
      *
-     * @param array   $options   Slider options
-     * @param integer $slider_id Slider ID
+     * @param array   $options
+     * @param integer $slider_id
      * @return array $options
      */
     public function manage_easing( $options, $slider_id ) {
@@ -84,12 +78,12 @@ class MetaFlexSlider extends MetaSlider {
     }
 
     /**
-     * Add a 'nav-hidden' class to slideshows where the navigation is hidde
+     * Add a 'nav-hidden' class to slideshows where the navigation is hidden.
      *
-     * @param  string $class    Slider class
-     * @param  int    $id       Slider ID
-     * @param  array  $settings Slider Settings
-     * @return string
+     * @param string  $css
+     * @param array   $settings
+     * @param integer $slider_id
+     * @return string $css
      */
     public function remove_bottom_margin( $class, $id, $settings ) {
         if ( isset( $settings["navigation"] ) && $settings['navigation'] == 'false' ) {
@@ -105,9 +99,9 @@ class MetaFlexSlider extends MetaSlider {
     /**
      * Return css to ensure our slides are rendered correctly in the carousel
      *
-     * @param string  $css       Css
-     * @param array   $settings  Css settings
-     * @param integer $slider_id SliderID
+     * @param string  $css
+     * @param array   $settings
+     * @param integer $slider_id
      * @return string $css
      */
     public function get_carousel_css( $css, $settings, $slider_id ) {
@@ -125,7 +119,7 @@ class MetaFlexSlider extends MetaSlider {
     /**
      * Enable the parameters that are accepted by the slider
      *
-     * @param  string $param Parameters
+     * @param string  $param
      * @return array|boolean enabled parameters (false if parameter doesn't exist)
      */
     protected function get_param( $param ) {

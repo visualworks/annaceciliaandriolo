@@ -97,9 +97,10 @@ class WPSEO_Option_Tabs {
 	 * Display the tabs
 	 *
 	 * @param Yoast_Form $yform   Yoast Form needed in the views.
+	 * @param array      $options Options needed in the views.
 	 */
-	public function display( Yoast_Form $yform ) {
+	public function display( Yoast_Form $yform, $options = array() ) {
 		$formatter = new WPSEO_Option_Tabs_Formatter();
-		$formatter->run( $this, $yform );
+		$formatter->run( $this, $yform, $options );
 	}
 }

@@ -30,7 +30,6 @@ class CdnEngine_S3 extends CdnEngine_Base {
 				'key' => '',
 				'secret' => '',
 				'bucket' => '',
-				'bucket_location' => '',
 				'cname' => array(),
 			), $config );
 
@@ -84,19 +83,7 @@ class CdnEngine_S3 extends CdnEngine_Base {
 			return false;
 		}
 
-		if ( empty( $this->_config['bucket_location'] ) ) {
-			$region = '';
-			$endpoint = 's3.amazonaws.com';
-		} else {
-			$region = $this->_config['bucket_location'];
-			$endpoint = 's3.dualstack.' . $region . '.amazonaws.com';
-		}
-
-		$this->_s3 = new \S3( $this->_config['key'], $this->_config['secret'],
-			false, $endpoint, $region );
-		if ( empty( $region ) ) {
-			$this->_s3->setSignatureVersion( 'v2' );
-		}
+		$this->_s3 = new \S3( $this->_config['key'], $this->_config['secret'], false );
 
 		return true;
 	}
@@ -120,15 +107,11 @@ class CdnEngine_S3 extends CdnEngine_Base {
 		}
 
 		foreach ( $files as $file ) {
+			if ( !is_null( $timeout_time ) && time() > $timeout_time )
+				break;
+
 			$local_path = $file['local_path'];
 			$remote_path = $file['remote_path'];
-
-			// process at least one item before timeout so that progress goes on
-			if ( !empty( $results ) ) {
-				if ( !is_null( $timeout_time ) && time() > $timeout_time ) {
-					return 'timeout';
-				}
-			}
 
 			$results[] = $this->_upload( $file, $force_rewrite );
 
@@ -184,14 +167,10 @@ class CdnEngine_S3 extends CdnEngine_Base {
 				W3TC_CDN_RESULT_OK, 'OK', $file );
 		}
 
-		if ( strpos( $this->_get_last_error(), 'AWS4-HMAC-SHA256' ) !== false ) {
-			$error = "Bucket location region is incorrect. Please select the right one.";
-		} else {
-			$error = sprintf( 'Unable to put object (%s).', $this->_get_last_error() );
-		}
-
 		return $this->_get_result( $local_path, $remote_path,
-			W3TC_CDN_RESULT_ERROR, $error, $file );
+			W3TC_CDN_RESULT_ERROR,
+			sprintf( 'Unable to put object (%s).', $this->_get_last_error() ),
+			$file );
 	}
 
 	/**
@@ -256,14 +235,10 @@ class CdnEngine_S3 extends CdnEngine_Base {
 				W3TC_CDN_RESULT_OK, 'OK', $file );
 		}
 
-		if ( strpos( $this->_get_last_error(), 'AWS4-HMAC-SHA256' ) !== false ) {
-			$error = "Bucket location region is incorrect. Please select the right one.";
-		} else {
-			$error = sprintf( 'Unable to put object (%s).', $this->_get_last_error() );
-		}
-
 		return $this->_get_result( $local_path, $remote_path,
-			W3TC_CDN_RESULT_ERROR, $error, $file );
+			W3TC_CDN_RESULT_ERROR,
+			sprintf( 'Unable to put object (%s).', $this->_get_last_error() ),
+			$file );
 	}
 
 	/**
@@ -362,11 +337,7 @@ class CdnEngine_S3 extends CdnEngine_Base {
 		}
 
 		if ( !@$this->_s3->putObjectString( $string, $this->_config['bucket'], $string, \S3::ACL_PUBLIC_READ ) ) {
-			if ( strpos( $this->_get_last_error(), 'AWS4-HMAC-SHA256' ) !== false ) {
-				$error = "Bucket location region is incorrect. Please select the right one.";
-			} else {
-				$error = sprintf( 'Unable to put object (%s).', $this->_get_last_error() );
-			}
+			$error = sprintf( 'Unable to put object (%s).', $this->_get_last_error() );
 
 			$this->_restore_error_handler();
 

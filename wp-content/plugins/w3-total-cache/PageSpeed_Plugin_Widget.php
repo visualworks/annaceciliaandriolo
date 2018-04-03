@@ -91,9 +91,8 @@ class PageSpeed_Plugin_Widget {
 
 		$config = Dispatcher::config();
 		$key = $config->get_string( 'widget.pagespeed.key' );
-		$ref = $config->get_string( 'widget.pagespeed.key.restrict.referrer' );
 
- 		$w3_pagespeed = new PageSpeed_Api( $key, $ref );
+		$w3_pagespeed = new PageSpeed_Api( $key );
 		$r = $w3_pagespeed->analyze( get_home_url() );
 
 		if ( !$r ) {
@@ -133,8 +132,7 @@ class PageSpeed_Plugin_Widget {
 
 		$config = Dispatcher::config();
 		$key = $config->get_string( 'widget.pagespeed.key' );
-		$ref = $config->get_string( 'widget.pagespeed.key.restrict.referrer' );
-		$w3_pagespeed = new PageSpeed_Api( $key, $ref );
+		$w3_pagespeed = new PageSpeed_Api( $key );
 
 		$r = $w3_pagespeed->analyze( $url );
 

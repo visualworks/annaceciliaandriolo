@@ -201,7 +201,7 @@ function monsterinsights_ajax_dismiss_notice() {
         wp_die();
     }
 
-    // If here, an error occurred
+    // If here, an error occured
     echo json_encode( false );
     wp_die();
 

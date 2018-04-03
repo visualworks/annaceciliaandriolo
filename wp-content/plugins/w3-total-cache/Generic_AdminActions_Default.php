@@ -317,8 +317,7 @@ class Generic_AdminActions_Default {
 			}
 
 			// todo: move to cdn module
-			$engine = $this->_config->get_string( 'cdn.engine' );
-			if ( $engine == 'maxcdn' ) {
+			if ( in_array( $engine = $this->_config->get_string( 'cdn.engine' ), array( 'netdna', 'maxcdn' ) ) ) {
 				require_once W3TC_LIB_NETDNA_DIR . '/NetDNA.php';
 				$keys = explode( '+', $this->_config->get_string( 'cdn.'.$engine.'.authorization_key' ) );
 				if ( sizeof( $keys ) == 3 ) {
@@ -549,13 +548,11 @@ class Generic_AdminActions_Default {
 				break;
 
 			case 'maxcdn':
-				$v = $config->get( 'cdn.maxcdn.domain' );
-				if ( isset( $v['http_default'] ) )
-					$cdn_domains['http_default'] = $v['http_default'];
-				if ( isset( $v['https_default'] ) )
-					$cdn_domains['https_default'] = $v['https_default'];
-
 				$config->set( 'cdn.maxcdn.domain', $cdn_domains );
+				break;
+
+			case 'netdna':
+				$config->set( 'cdn.netdna.domain', $cdn_domains );
 				break;
 
 			case 'cotendo':
@@ -743,7 +740,7 @@ class Generic_AdminActions_Default {
 				array_map( 'stripslashes_deep', $request_value );
 			else
 				$request_value = stripslashes( $request_value );
-			if ( strpos( $request_key, 'memcached__servers' ) || strpos( $request_key, 'redis__servers' ) )
+			if ( strpos( $request_key, 'memcached_servers' ) )
 				$request_value = explode( ',', $request_value );
 
 			$key = Util_Ui::config_key_from_http_name( $request_key );

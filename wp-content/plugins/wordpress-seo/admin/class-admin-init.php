@@ -9,6 +9,13 @@
 class WPSEO_Admin_Init {
 
 	/**
+	 * Holds the Yoast SEO Options
+	 *
+	 * @var array
+	 */
+	private $options;
+
+	/**
 	 * Holds the global `$pagenow` variable's value.
 	 *
 	 * @var string
@@ -26,6 +33,8 @@ class WPSEO_Admin_Init {
 	 * Class constructor
 	 */
 	public function __construct() {
+		$this->options = WPSEO_Options::get_option( 'wpseo_xml' );
+
 		$GLOBALS['wpseo_admin'] = new WPSEO_Admin();
 
 		$this->pagenow = $GLOBALS['pagenow'];
@@ -296,8 +305,8 @@ class WPSEO_Admin_Init {
 	/**
 	 * Build Yoast SEO suggested plugins notification.
 	 *
-	 * @param string $name            The plugin name to use for the unique ID.
-	 * @param array  $plugin          The plugin to retrieve the data from.
+	 * @param string $name   The plugin name to use for the unique ID.
+	 * @param array  $plugin The plugin to retrieve the data from.
 	 * @param string $dependency_name The name of the dependency.
 	 *
 	 * @return Yoast_Notification The notification containing the suggested plugin.
@@ -346,9 +355,9 @@ class WPSEO_Admin_Init {
 	/**
 	 * Build Yoast SEO compatibility problem notification
 	 *
-	 * @param string $name   The plugin name to use for the unique ID.
+	 * @param string $name The plugin name to use for the unique ID.
 	 * @param array  $plugin The plugin to retrieve the data from.
-	 * @param string $level  The severity level to use for the notification.
+	 * @param string $level The severity level to use for the notification.
 	 *
 	 * @return Yoast_Notification
 	 */
@@ -379,7 +388,6 @@ class WPSEO_Admin_Init {
 
 		if ( filter_input( INPUT_GET, 'recalculate' ) === '1' ) {
 			update_option( 'wpseo_dismiss_recalculate', '1' );
-
 			return;
 		}
 
@@ -468,9 +476,7 @@ class WPSEO_Admin_Init {
 	 * Loads admin page class for all admin pages starting with `wpseo_`.
 	 */
 	private function load_admin_user_class() {
-		if ( in_array( $this->pagenow, array( 'user-edit.php', 'profile.php' ), true )
-			&& current_user_can( 'edit_users' )
-		) {
+		if ( in_array( $this->pagenow, array( 'user-edit.php', 'profile.php' ), true ) && current_user_can( 'edit_users' ) ) {
 			new WPSEO_Admin_User_Profile();
 		}
 	}
@@ -509,7 +515,7 @@ class WPSEO_Admin_Init {
 	 */
 	private function register_premium_upsell_admin_block() {
 		if ( ! WPSEO_Utils::is_yoast_seo_premium() ) {
-			$upsell_block = new WPSEO_Premium_Upsell_Admin_Block( 'wpseo_admin_promo_footer' );
+			$upsell_block = new Premium_Upsell_Admin_Block( 'wpseo_admin_promo_footer' );
 			$upsell_block->register_hooks();
 		}
 	}
@@ -547,7 +553,6 @@ class WPSEO_Admin_Init {
 
 		if ( $message ) {
 			$notification_center->add_notification( $notification );
-
 			return;
 		}
 
@@ -558,7 +563,7 @@ class WPSEO_Admin_Init {
 	 * See if we should start our XML Sitemaps Admin class
 	 */
 	private function load_xml_sitemaps_admin() {
-		if ( WPSEO_Options::get( 'enable_xml_sitemap', false ) ) {
+		if ( $this->options['enablexmlsitemap'] === true ) {
 			new WPSEO_Sitemaps_Admin();
 		}
 	}
@@ -584,45 +589,29 @@ class WPSEO_Admin_Init {
 
 		// WordPress hooks that have been deprecated since a Yoast SEO version.
 		$deprecated_filters = array(
-			'wpseo_metadesc_length'            => array(
+			'wpseo_metadesc_length'        => array(
 				'version'     => '3.0',
 				'alternative' => 'javascript',
 			),
-			'wpseo_metadesc_length_reason'     => array(
+			'wpseo_metadesc_length_reason' => array(
 				'version'     => '3.0',
 				'alternative' => 'javascript',
 			),
-			'wpseo_body_length_score'          => array(
+			'wpseo_body_length_score'      => array(
 				'version'     => '3.0',
 				'alternative' => 'javascript',
 			),
-			'wpseo_linkdex_results'            => array(
+			'wpseo_linkdex_results'        => array(
 				'version'     => '3.0',
 				'alternative' => 'javascript',
 			),
-			'wpseo_snippet'                    => array(
+			'wpseo_snippet'                => array(
 				'version'     => '3.0',
 				'alternative' => 'javascript',
 			),
-			'wp_seo_get_bc_title'              => array(
+			'wp_seo_get_bc_title'          => array(
 				'version'     => '5.8',
 				'alternative' => 'wpseo_breadcrumb_single_link_info',
-			),
-			'wpseo_metakey'                    => array(
-				'version'     => '6.3',
-				'alternative' => null,
-			),
-			'wpseo_metakeywords'               => array(
-				'version'     => '6.3',
-				'alternative' => null,
-			),
-			'wpseo_stopwords'                  => array(
-				'version'     => '7.0',
-				'alternative' => null,
-			),
-			'wpseo_redirect_orphan_attachment' => array(
-				'version'     => '7.0',
-				'alternative' => null,
 			),
 		);
 
@@ -661,5 +650,30 @@ class WPSEO_Admin_Init {
 	 */
 	private function has_postname_in_permalink() {
 		return ( false !== strpos( get_option( 'permalink_structure' ), '%postname%' ) );
+	}
+
+	/********************** DEPRECATED METHODS **********************/
+
+	/**
+	 * Returns whether or not the user has seen the tagline notice
+	 *
+	 * @deprecated 3.3
+	 * @codeCoverageIgnore
+	 *
+	 * @return bool
+	 */
+	public function seen_tagline_notice() {
+		_deprecated_function( __METHOD__, 'WPSEO 3.3.0' );
+		return false;
+	}
+
+	/**
+	 * Redirect first time or just upgraded users to the about screen.
+	 *
+	 * @deprecated 3.5
+	 * @codeCoverageIgnore
+	 */
+	public function after_update_notice() {
+		_deprecated_function( __METHOD__, 'WPSEO 3.5' );
 	}
 }

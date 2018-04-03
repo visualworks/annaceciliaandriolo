@@ -187,7 +187,7 @@ abstract class Upgrade {
 			return false;
 		}
 
-		if ( ! $this->as3cf->is_plugin_setup( true ) ) {
+		if ( ! $this->as3cf->is_plugin_setup() ) {
 			return false;
 		}
 

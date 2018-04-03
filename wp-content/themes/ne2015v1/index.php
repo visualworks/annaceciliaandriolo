@@ -6,23 +6,12 @@ Index - Posts
 
 <?php get_header(); ?>
 
-<?php
-global $post;
-$post_type = get_post_type($post->ID);
-if ($post_type === "fit") {
-    $post_type = "Estilo Fit";
-} else {
-    $post_type = "Highlights";
-}
-?>
-
-
 <section id="page-home">
   <div class="container">
 
     <div class="row">
       <div class="col-md-12">
-          <h1 class="page-header"><?php echo $post_type; ?></h1>
+          <h1 class="page-header">Highlights</h1>
       </div>
       <button onclick="goBack()" class="bt-voltar">&larr; Voltar</button>
       <script>
@@ -31,7 +20,7 @@ if ($post_type === "fit") {
       }
       </script>
     </div>
-
+    
     <div class="row">
 
       <div class="col-md-8">

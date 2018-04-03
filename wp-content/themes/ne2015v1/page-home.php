@@ -28,20 +28,20 @@ Template Name: Home
             <div class="circles text-center">
                 <div class="col-md-4 col-sm-4 col-xs-4 bloco b1 text-center">
                     <a href='<?php echo get_site_url(); ?>/tipo-tratamento/clinica/'>
-                        <div class="img"><!-- <img src="<?php echo get_template_directory_uri(); ?>/img/clinica.png" alt="Tratamentos Faciais"> --></div>
+                        <div class="img"><img src="<?php echo get_template_directory_uri(); ?>/img/clinica.png" alt="Tratamentos Faciais"></div>
                         <h2>Clínica</h2>
                     </a>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-4 bloco b2 text-center">
                     <a href='<?php echo get_site_url(); ?>/tipo-tratamento/estetica/'>
-                        <div class="img"><!-- <img src="<?php echo get_template_directory_uri(); ?>/img/estetica.png" alt="Tratamentos Corporais"> --></div>
+                        <div class="img"><img src="<?php echo get_template_directory_uri(); ?>/img/estetica.png" alt="Tratamentos Corporais"></div>
                         <h2>Estética</h2>
                     </a>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-4 bloco b3 text-center">
-                    <a href='<?php echo get_site_url(); ?>/tipo-tratamento/cuidado-com-os-cabelos/'>
-                        <div class="img"><!-- <img src="<?php echo get_template_directory_uri(); ?>/img/tricologia.png" alt="Cuidado com os cabelos"> --></div>
-                        <h2>Cuidado com os cabelos</h2>
+                    <a href='<?php echo get_site_url(); ?>/tipo-tratamento/tricologia/'>
+                        <div class="img"><img src="<?php echo get_template_directory_uri(); ?>/img/tricologia.png" alt="Tricologia"></div>
+                        <h2>Tricologia</h2>
                     </a>
                 </div>
             </div>
@@ -54,7 +54,7 @@ Template Name: Home
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12 text-left">
                 <div class="perfilhome">
-                    <h5>Dra. Anna<br>Cecília Andriolo<br><span>Dermatologia</span></h5>
+                    <h5>Dra. Anna<br>Cecília Andriolo<br><span>Dermatologia <strong>&</strong> Cosmiatria</span></h5>
                     <a href="<?php echo site_url();?>/perfil">
                         <button>
                             Visite o perfil

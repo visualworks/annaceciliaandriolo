@@ -209,9 +209,7 @@ class Cdn_Core_Admin {
             WHERE
                 p.post_type = "attachment"  AND (pm.meta_value IS NOT NULL OR pm2.meta_value IS NOT NULL)
             GROUP BY
-            	p.ID
- 			ORDER BY
- 				p.ID', $wpdb->prefix, $wpdb->prefix, $wpdb->prefix );
+            	p.ID', $wpdb->prefix, $wpdb->prefix, $wpdb->prefix );
 
 			if ( $limit ) {
 				$sql .= sprintf( ' LIMIT %d', $limit );
@@ -717,12 +715,10 @@ WHERE p.post_type = "attachment" AND (pm.meta_value IS NOT NULL OR pm2.meta_valu
 	}
 
 	/**
-	 * Changes settings on MaxCDN site
+	 * Changes settings on MaxCDN/NetDNA site
 	 */
 	function change_canonical_header() {
-		$cdn_engine = $this->_config->get_string( 'cdn.engine' );
-
-		if ( $cdn_engine == 'maxcdn' ) {
+		if ( in_array( $cdn_engine = $this->_config->get_string( 'cdn.engine' ), array( 'maxcdn', 'netdna' ) ) ) {
 			require_once W3TC_LIB_NETDNA_DIR . '/NetDNA.php';
 			$authorization_key = $this->_config->get_string( "cdn.$cdn_engine.authorization_key" );
 			if ( $authorization_key ) {
@@ -777,6 +773,10 @@ WHERE p.post_type = "attachment" AND (pm.meta_value IS NOT NULL OR pm2.meta_valu
 			break;
 
 		case ( $cdn_engine == 'mirror' && !count( $this->_config->get_array( 'cdn.mirror.domain' ) ) ):
+			$running = false;
+			break;
+
+		case ( $cdn_engine == 'netdna' ):
 			$running = false;
 			break;
 

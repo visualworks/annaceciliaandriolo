@@ -100,11 +100,8 @@ class Enterprise_CacheFlush_MakeSnsEvent extends Enterprise_SnsBase {
 	 * @param unknown $post_id
 	 * @return boolean
 	 */
-	function flush_post( $post_id, $extras = null ) {
-		return $this->_prepare_message( array(
-			'action' => 'flush_post',
-			'post_id' => $post_id,
-			'extras' => $extras ) );
+	function flush_post( $post_id ) {
+		return $this->_prepare_message( array( 'action' => 'flush_post', 'post_id' => $post_id ) );
 	}
 
 	/**
@@ -137,11 +134,8 @@ class Enterprise_CacheFlush_MakeSnsEvent extends Enterprise_SnsBase {
 	 * @param string  $url
 	 * @return boolean
 	 */
-	function flush_url( $url, $extras ) {
-		return $this->_prepare_message( array(
-			'action' => 'flush_url',
-			'url' => $url,
-			'extras' => $extras ) );
+	function flush_url( $url ) {
+		return $this->_prepare_message( array( 'action' => 'flush_url', 'url' => $url ) );
 	}
 
 	/**

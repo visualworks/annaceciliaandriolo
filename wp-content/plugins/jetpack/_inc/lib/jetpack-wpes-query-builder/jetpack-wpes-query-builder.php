@@ -23,28 +23,28 @@
 
 class Jetpack_WPES_Query_Builder {
 
-	protected $es_filters = array();
+	public $es_filters = array();
 
 	// Custom boosting with function_score
-	protected $functions = array();
-	protected $decays    = array();
-	protected $scripts   = array();
-	protected $functions_max_boost  = 2.0;
-	protected $functions_score_mode = 'multiply';
-	protected $query_bool_boost     = null;
+	public $functions = array();
+	public $decays    = array();
+	public $scripts   = array();
+	public $functions_max_boost  = 2.0;
+	public $functions_score_mode = 'multiply';
+	public $query_bool_boost     = null;
 
 	// General aggregations for buckets and metrics
-	protected $aggs_query = false;
-	protected $aggs       = array();
+	public $aggs_query = false;
+	public $aggs       = array();
 
 	// The set of top level text queries to combine
-	protected $must_queries    = array();
-	protected $should_queries  = array();
-	protected $dis_max_queries = array();
+	public $must_queries    = array();
+	public $should_queries  = array();
+	public $dis_max_queries = array();
 
-	protected $diverse_buckets_query = false;
-	protected $bucket_filters        = array();
-	protected $bucket_sub_aggs       = array();
+	public $diverse_buckets_query = false;
+	public $bucket_filters        = array();
+	public $bucket_sub_aggs       = array();
 
 	////////////////////////////////////
 	// Methods for building a query
@@ -169,7 +169,7 @@ class Jetpack_WPES_Query_Builder {
 		$this->bucket_sub_aggs = array_merge( $this->bucket_sub_aggs, $agg );
 	}
 
-	protected function _add_bucket_filter( $name, $filter ) {
+	public function _add_bucket_filter( $name, $filter ) {
 		$this->diverse_buckets_query   = true;
 		$this->bucket_filters[ $name ] = $filter;
 	}
@@ -285,7 +285,7 @@ class Jetpack_WPES_Query_Builder {
 	/**
 	 * Assemble the 'filter' portion of an ES query, from all registered filters
 	 *
-	 * @return array|null Combined ES filters, or null if none have been defined
+	 * @return array|null Combiled ES filters, or null if none have been defined
 	 */
 	public function build_filter() {
 		if ( empty( $this->es_filters ) ) {
@@ -304,9 +304,9 @@ class Jetpack_WPES_Query_Builder {
 	/**
 	 * Assemble the 'aggregation' portion of an ES query, from all general aggregations.
 	 *
-	 * @return array An aggregation query as an array of topics, filters, and bucket names
+	 * @return an aggregation query as an array of topics, filters, and bucket names
 	 */
-	public function build_aggregation() {
+	function build_aggregation() {
 		if ( empty( $this->bucket_sub_aggs ) && empty( $this->aggs_query ) ) {
 			return array();
 		}

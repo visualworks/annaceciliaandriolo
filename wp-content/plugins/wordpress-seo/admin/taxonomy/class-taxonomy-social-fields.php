@@ -7,17 +7,15 @@
  * This class parses all the values for the social tab in the Yoast SEO settings metabox
  */
 class WPSEO_Taxonomy_Social_Fields extends WPSEO_Taxonomy_Fields {
-	/** @var array List of social networks */
-	protected $networks;
 
 	/**
 	 * Setting the class properties
 	 *
 	 * @param stdClass|WP_Term $term    The current taxonomy.
+	 * @param array            $options The options.
 	 */
-	public function __construct( $term ) {
-		parent::__construct( $term );
-
+	public function __construct( $term, array $options = null ) {
+		parent::__construct( $term, $options );
 		$this->networks = $this->get_social_networks();
 	}
 
@@ -27,7 +25,7 @@ class WPSEO_Taxonomy_Social_Fields extends WPSEO_Taxonomy_Fields {
 	 * @return bool
 	 */
 	public function show_social() {
-		return ( WPSEO_Options::get( 'opengraph', false ) || WPSEO_Options::get( 'twitter', false ) );
+		return ( $this->options['opengraph'] === true || $this->options['twitter'] === true );
 	}
 
 	/**
@@ -101,8 +99,9 @@ class WPSEO_Taxonomy_Social_Fields extends WPSEO_Taxonomy_Fields {
 				__( '%1$s by %2$s', 'wordpress-seo' ), '1024', '512'
 			) ),
 		);
+		$social_networks = $this->filter_social_networks( $social_networks );
 
-		return $this->filter_social_networks( $social_networks );
+		return $social_networks;
 	}
 
 	/**
@@ -131,7 +130,7 @@ class WPSEO_Taxonomy_Social_Fields extends WPSEO_Taxonomy_Fields {
 	 */
 	private function filter_social_networks( array $social_networks ) {
 		foreach ( $social_networks as $social_network => $settings ) {
-			if ( WPSEO_Options::get( $social_network, false ) === false ) {
+			if ( empty( $this->options[ $social_network ] ) ) {
 				unset( $social_networks[ $social_network ] );
 			}
 		}

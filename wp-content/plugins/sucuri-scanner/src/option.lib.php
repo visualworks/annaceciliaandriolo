@@ -82,6 +82,7 @@ class SucuriScanOption extends SucuriScanRequest
             'sucuriscan_notify_available_updates' => 'disabled',
             'sucuriscan_notify_bruteforce_attack' => 'disabled',
             'sucuriscan_notify_failed_login' => 'enabled',
+            'sucuriscan_notify_failed_password' => 'disabled',
             'sucuriscan_notify_plugin_activated' => 'enabled',
             'sucuriscan_notify_plugin_change' => 'enabled',
             'sucuriscan_notify_plugin_deactivated' => 'disabled',
@@ -114,7 +115,7 @@ class SucuriScanOption extends SucuriScanRequest
             'sucuriscan_use_wpmail' => 'enabled',
         );
 
-        return (array) apply_filters('sucuriscan_option_defaults', $defaults);
+        return $defaults;
     }
 
     /**
@@ -178,12 +179,6 @@ class SucuriScanOption extends SucuriScanRequest
      */
     public static function getAllOptions()
     {
-        $options = wp_cache_get('alloptions', SUCURISCAN);
-
-        if ($options && is_array($options)) {
-            return $options;
-        }
-
         $options = array();
         $fpath = self::optionsFilePath();
 
@@ -203,8 +198,6 @@ class SucuriScanOption extends SucuriScanRequest
             }
         }
 
-        wp_cache_set('alloptions', $options, SUCURISCAN);
-
         return $options;
     }
 
@@ -216,8 +209,6 @@ class SucuriScanOption extends SucuriScanRequest
      */
     public static function writeNewOptions($options = array())
     {
-        wp_cache_delete('alloptions', SUCURISCAN);
-
         $fpath = self::optionsFilePath();
         $content = "<?php exit(0); ?>\n";
         $content .= @json_encode($options) . "\n";

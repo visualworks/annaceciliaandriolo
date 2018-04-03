@@ -341,7 +341,6 @@ $keys = array(
 		'type' => 'boolean',
 		'default' => false
 	),
-	// name backwards-compatible. in reality works for apache too
 	'pgcache.cache.nginx_handle_xml' => array(
 		'type' => 'boolean',
 		'default' => false
@@ -430,22 +429,6 @@ $keys = array(
 			'wp-.*\.php',
 			'index\.php'
 		)
-	),
-	'pgcache.reject.categories' => array(
-		'type' => 'array',
-		'default' => array()
-	),
-	'pgcache.reject.tags' => array(
-		'type' => 'array',
-		'default' => array()
-	),
-	'pgcache.reject.authors' => array(
-		'type' => 'array',
-		'default' => array()
-	),
-	'pgcache.reject.custom' => array(
-		'type' => 'array',
-		'default' => array()
 	),
 	'pgcache.reject.ua' => array(
 		'type' => 'array',
@@ -548,38 +531,6 @@ $keys = array(
 	'pgcache.prime.post.enabled' => array(
 		'type' => 'boolean',
 		'default' => false
-	),
-	'pgcache.cookiegroups.enabled' => array(
-		'type' => 'boolean',
-		'default' => false
-	),
-	'pgcache.cookiegroups.groups' => array(
-		'type' => 'array',
-		'default' => array(
-			'mobile' => array(
-				'enabled' => false,
-				'cache' => true,
-				'cookies' => array(
-					'wptouch-pro-view=mobile',
-					'wptouch-pro-cache-state=mobile'
-				)
-			),
-			'loggedin' => array(
-				'enabled' => false,
-				'cache' => true,
-				'cookies' => array(
-					'wordpress_logged_in_.*'
-				)
-			),
-			'subscribers' => array(
-				'enabled' => false,
-				'cache' => true,
-				'cookies' => array(
-					'role=subscriber',
-					'role=member'
-				)
-			)
-		)
 	),
 
 	'stats.enabled' => array(
@@ -993,7 +944,7 @@ $keys = array(
 	),
 	'cdn.theme.files' => array(
 		'type' => 'string',
-		'default' => '*.css;*.js;*.gif;*.png;*.jpg;*.ico;*.ttf;*.otf;*.woff;*.woff2;*.less'
+		'default' => '*.css;*.js;*.gif;*.png;*.jpg;*.ico;*.ttf;*.otf,*.woff,*.less'
 	),
 	'cdn.minify.enable' => array(
 		'type' => 'boolean',
@@ -1045,14 +996,6 @@ $keys = array(
 	'cdn.canonical_header' => array(
 		'type' => 'boolean',
 		'default' => false
-	),
-	'cdn.admin.media_library' => array(
- 		'type' => 'boolean',
- 		'default' => false
- 	),
-	'cdn.cors_header' => array(
-		'type' => 'boolean',
-		'default' => true
 	),
 
 	'cdn.ftp.host' => array(
@@ -1142,10 +1085,6 @@ $keys = array(
 		'type' => 'string',
 		'default' => ''
 	),
-	'cdn.s3.bucket.location' => array(
-		'type' => 'string',
-		'default' => 'us-east-1'
-	),
 	'cdn.s3.cname' => array(
 		'type' => 'array',
 		'default' => array()
@@ -1171,10 +1110,6 @@ $keys = array(
 	'cdn.cf.bucket' => array(
 		'type' => 'string',
 		'default' => ''
-	),
-	'cdn.cf.bucket.location' => array(
-		'type' => 'string',
-		'default' => 'us-east-1'
 	),
 	'cdn.cf.id' => array(
 		'type' => 'string',
@@ -1292,6 +1227,34 @@ $keys = array(
 	'cdn.mirror.ssl' => array(
 		'type' => 'string',
 		'default' => 'auto'
+	),
+	'cdn.netdna.alias' => array(
+		'type' => 'string',
+		'default' => ''
+	),
+	'cdn.netdna.consumerkey' => array(
+		'type' => 'string',
+		'default' => ''
+	),
+	'cdn.netdna.consumersecret' => array(
+		'type' => 'string',
+		'default' => ''
+	),
+	'cdn.netdna.authorization_key' => array(
+		'type' => 'string',
+		'default' => ''
+	),
+	'cdn.netdna.domain' => array(
+		'type' => 'array',
+		'default' => array()
+	),
+	'cdn.netdna.ssl' => array(
+		'type' => 'string',
+		'default' => 'auto'
+	),
+	'cdn.netdna.zone_id' => array(
+		'type' => 'integer',
+		'default' => 0
 	),
 	'cdn.maxcdn.authorization_key' => array(
 		'type' => 'string',
@@ -1421,19 +1384,6 @@ $keys = array(
 		'type' => 'boolean',
 		'default' => false
 	),
-	'cdnfsd.enabled' => array(
-		'type' => 'boolean',
-		'default' => false
-	),
-	'cdnfsd.engine' => array(
-		'type' => 'string',
-		'default' => ''
-	),
-	'cdnfsd.debug' => array(
-		'type' => 'boolean',
-		'default' => false
-	),
-
 	'varnish.configuration_overloaded' => array(
 		'type' => 'boolean',
 		'default' => false
@@ -1488,7 +1438,7 @@ $keys = array(
 	),
 	'browsercache.cssjs.expires' => array(
 		'type' => 'boolean',
-		'default' => true
+		'default' => false
 	),
 	'browsercache.cssjs.lifetime' => array(
 		'type' => 'integer',
@@ -1496,7 +1446,7 @@ $keys = array(
 	),
 	'browsercache.cssjs.nocookies' => array(
 		'type' => 'boolean',
-		'default' => true
+		'default' => false
 	),
 	'browsercache.cssjs.cache.control' => array(
 		'type' => 'boolean',
@@ -1508,7 +1458,7 @@ $keys = array(
 	),
 	'browsercache.cssjs.etag' => array(
 		'type' => 'boolean',
-		'default' => true
+		'default' => false
 	),
 	'browsercache.cssjs.w3tc' => array(
 		'type' => 'boolean',
@@ -1548,7 +1498,7 @@ $keys = array(
 	),
 	'browsercache.html.etag' => array(
 		'type' => 'boolean',
-		'default' => true
+		'default' => false
 	),
 	'browsercache.html.w3tc' => array(
 		'type' => 'boolean',
@@ -1568,7 +1518,7 @@ $keys = array(
 	),
 	'browsercache.other.expires' => array(
 		'type' => 'boolean',
-		'default' => true
+		'default' => false
 	),
 	'browsercache.other.lifetime' => array(
 		'type' => 'integer',
@@ -1576,7 +1526,7 @@ $keys = array(
 	),
 	'browsercache.other.nocookies' => array(
 		'type' => 'boolean',
-		'default' => true
+		'default' => false
 	),
 	'browsercache.other.cache.control' => array(
 		'type' => 'boolean',
@@ -1588,7 +1538,7 @@ $keys = array(
 	),
 	'browsercache.other.etag' => array(
 		'type' => 'boolean',
-		'default' => true
+		'default' => false
 	),
 	'browsercache.other.w3tc' => array(
 		'type' => 'boolean',
@@ -1785,13 +1735,17 @@ $keys = array(
 	),
 
 
+	'common.edge' => array(
+		'type' => 'boolean',
+		'default' => false
+	),
 	'common.support' => array(
 		'type' => 'string',
 		'default' => ''
 	),
 	'common.track_usage' => array(
 		'type' => 'boolean',
-		'default' => false
+		'default' => true
 	),
 	'common.tweeted' => array(
 		'type' => 'boolean',
@@ -1818,10 +1772,6 @@ $keys = array(
 		'default' => true
 	),
 	'widget.pagespeed.key' => array(
-		'type' => 'string',
-		'default' => ''
-	),
-	'widget.pagespeed.key.restrict.referrer' => array(
 		'type' => 'string',
 		'default' => ''
 	),

@@ -43,7 +43,7 @@ jQuery(function($) {
 				var name = $(this).attr('name');
 				var type = $(this).attr('type');
 				if (type == 'radio') {
-					if (!$(this).prop('checked'))
+					if (!$(this).attr('checked'))
 						return;
 				}
 

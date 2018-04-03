@@ -28,10 +28,12 @@ class WPSEO_Term_Metabox_Formatter implements WPSEO_Metabox_Formatter_Interface 
 	 *
 	 * @param stdClass         $taxonomy Taxonomy.
 	 * @param WP_Term|stdClass $term     Term.
+	 * @param array            $options  Options with WPSEO_Titles.
 	 */
-	public function __construct( $taxonomy, $term ) {
+	public function __construct( $taxonomy, $term, array $options ) {
 		$this->term     = $term;
 		$this->taxonomy = $taxonomy;
+		$this->options  = $options;
 	}
 
 	/**
@@ -86,7 +88,8 @@ class WPSEO_Term_Metabox_Formatter implements WPSEO_Metabox_Formatter_Interface 
 	private function base_url_for_js() {
 
 		$base_url = home_url( '/', null );
-		if ( ! WPSEO_Options::get( 'stripcategorybase', false ) ) {
+		$options  = WPSEO_Options::get_option( 'wpseo_permalinks' );
+		if ( ! $options['stripcategorybase'] ) {
 			$base_url = trailingslashit( $base_url . $this->taxonomy->rewrite['slug'] );
 		}
 
@@ -131,6 +134,10 @@ class WPSEO_Term_Metabox_Formatter implements WPSEO_Metabox_Formatter_Interface 
 	 */
 	private function get_template( $template_option_name ) {
 		$needed_option = $template_option_name . '-tax-' . $this->term->taxonomy;
-		return WPSEO_Options::get( $needed_option, '' );
+		if ( isset( $this->options[ $needed_option ] ) && $this->options[ $needed_option ] !== '' ) {
+			return $this->options[ $needed_option ];
+		}
+
+		return '';
 	}
 }

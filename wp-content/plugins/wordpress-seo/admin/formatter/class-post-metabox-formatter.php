@@ -14,6 +14,11 @@ class WPSEO_Post_Metabox_Formatter implements WPSEO_Metabox_Formatter_Interface 
 	private $post;
 
 	/**
+	 * @var array Array with the WPSEO_Titles options.
+	 */
+	protected $options;
+
+	/**
 	 * @var string The permalink to follow.
 	 */
 	private $permalink;
@@ -27,6 +32,7 @@ class WPSEO_Post_Metabox_Formatter implements WPSEO_Metabox_Formatter_Interface 
 	 */
 	public function __construct( $post, array $options, $structure ) {
 		$this->post      = $post;
+		$this->options   = $options;
 		$this->permalink = $structure;
 	}
 
@@ -176,8 +182,8 @@ class WPSEO_Post_Metabox_Formatter implements WPSEO_Metabox_Formatter_Interface 
 	private function get_template( $template_option_name ) {
 		$needed_option = $template_option_name . '-' . $this->post->post_type;
 
-		if ( WPSEO_Options::get( $needed_option, '' ) !== '' ) {
-			return WPSEO_Options::get( $needed_option );
+		if ( isset( $this->options[ $needed_option ] ) && $this->options[ $needed_option ] !== '' ) {
+			return $this->options[ $needed_option ];
 		}
 
 		return '';
@@ -204,8 +210,9 @@ class WPSEO_Post_Metabox_Formatter implements WPSEO_Metabox_Formatter_Interface 
 	 * @return bool
 	 */
 	private function is_show_date_enabled() {
-		$key = sprintf( 'showdate-%s', $this->post->post_type );
+		$post_type = $this->post->post_type;
+		$key       = sprintf( 'showdate-%s', $post_type );
 
-		return WPSEO_Options::get( $key, true );
+		return isset( $this->options[ $key ] ) && true === $this->options[ $key ];
 	}
 }

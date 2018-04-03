@@ -29,30 +29,7 @@ class Config {
 	 * Reads config from file and returns it's content as array (or null)
 	 * Stored in this class to limit class loading
 	 */
-	static public function util_array_from_storage( $blog_id, $preview ) {
-		if ( !defined( 'W3TC_CONFIG_CACHE_ENGINE' ) ) {
-			return self::_util_array_from_storage( $blog_id, $preview );
-		}
-
-		// config cache enabled
-		$config = ConfigCache::util_array_from_storage( $blog_id, $preview );
-		if ( !is_null( $config ) ) {
-			return $config;
-		}
-
-		$config = self::_util_array_from_storage( $blog_id, $preview );
-		ConfigCache::save_item( $blog_id, $preview, $config );
-		return $config;
-	}
-
-
-
-	static private function _util_array_from_storage( $blog_id, $preview ) {
-		if ( defined( 'W3TC_CONFIG_DATABASE' ) && W3TC_CONFIG_DATABASE ) {
-			return ConfigDbStorage::util_array_from_storage( $blog_id, $preview );
-		}
-
-		$filename = self::util_config_filename( $blog_id, $preview );
+	static public function util_array_from_file( $filename ) {
 		if ( file_exists( $filename ) && is_readable( $filename ) ) {
 			// including file directly instead of read+eval causes constant
 			// problems with APC, ZendCache, and WSOD in a case of
@@ -60,9 +37,8 @@ class Config {
 			$content = @file_get_contents( $filename );
 			$config = @json_decode( substr( $content, 14 ), true );
 
-			if ( is_array( $config ) ) {
+			if ( is_array( $config ) )
 				return $config;
-			}
 		}
 
 		return null;
@@ -84,6 +60,20 @@ class Config {
 	}
 
 
+
+	/*
+     * Returns config filename
+     * Stored in this class to limit class loading
+     * v<0.9.5
+     */
+	static public function util_config_filename_legacy_v1( $blog_id, $preview ) {
+		$postfix = ( $preview ? '-preview' : '' ) . '.php';
+
+		if ( $blog_id <= 0 )
+			return W3TC_CONFIG_DIR . '/master' . $postfix;
+		else
+			return W3TC_CONFIG_DIR . '/' . sprintf( '%06d', $blog_id ) . $postfix;
+	}
 
 	/*
      * Returns config filename
@@ -238,8 +228,6 @@ class Config {
 		$this->set( 'extensions.active_frontend', $a );
 	}
 
-
-
 	/**
 	 * Sets config value.
 	 * Method to override
@@ -261,8 +249,6 @@ class Config {
 		return $value;
 	}
 
-
-
 	/**
 	 * Check if we are in preview mode
 	 */
@@ -270,16 +256,12 @@ class Config {
 		return $this->_preview;
 	}
 
-
-
 	/**
 	 * Returns true if we edit master config
 	 */
 	public function is_master() {
 		return $this->_is_master;
 	}
-
-
 
 	public function is_compiled() {
 		return $this->_compiled;
@@ -342,20 +324,11 @@ class Config {
 	 */
 	public function import( $filename ) {
 		if ( file_exists( $filename ) && is_readable( $filename ) ) {
-			$content = file_get_contents( $filename );
-			if ( substr( $content, 0, 14 ) == '<?php exit; ?>' ) {
-				$content = substr( $content, 14 );
-			}
+			$data = file_get_contents( $filename );
+			$config = @json_decode( $data, true );
 
-			$data = @json_decode( $content, true );
-			if ( is_array( $data ) ) {
-				if ( !isset( $data['version'] ) || $data['version'] != W3TC_VERSION ) {
-					$c = new ConfigCompiler( $this->_blog_id, false );
-					$c->load( $data );
-					$data = $c->get_data();
-				}
-
-				foreach ( $data as $key => $value )
+			if ( is_array( $config ) ) {
+				foreach ( $config as $key => $value )
 					$this->set( $key, $value );
 
 				return true;
@@ -382,15 +355,17 @@ class Config {
 	 * correctly
 	 */
 	public function load() {
-		$data = Config::util_array_from_storage( 0, $this->_preview );
+		$master_filename = Config::util_config_filename( 0, $this->_preview );
+		$data = Config::util_array_from_file( $master_filename );
 
 		// config file assumed is not up to date, use slow version
 		if ( !isset( $data['version'] ) || $data['version'] != W3TC_VERSION )
 			return $this->load_full();
 
 		if ( !$this->is_master() ) {
-			$child_data = Config::util_array_from_storage( $this->_blog_id,
+			$child_filename = Config::util_config_filename( $this->_blog_id,
 				$this->_preview );
+			$child_data = Config::util_array_from_file( $child_filename );
 
 			if ( !is_null( $child_data ) ) {
 				if ( !isset( $data['version'] ) || $data['version'] != W3TC_VERSION )

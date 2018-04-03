@@ -132,14 +132,12 @@
     position: relative;
     float: right;
     padding: 0px;
-    padding-left: 5px;
-    margin-right: 0;
     color: #a9a9a9;
-    line-height: 20px; 
-    right: 0; 
-    width: 155px; 
-    text-align: right; 
+    line-height: 20px;
+    bottom: 22px;
+    right: 0;
 }
+
 .rtl .metaslider .left table tr.slide .tabs-content .new_window {
     position: relative;
     float: left;
@@ -148,65 +146,15 @@
 .metaslider .left table tr.slide .tabs-content .new_window input {
     margin-left: 3px
 }
+
 .rtl .metaslider .left table tr.slide .tabs-content .new_window input {
-    margin-right: 0px
+    margin-right: 3px
 }
+
 .metaslider .left table tr.slide .tabs-content .new_window label {
+    width: 120px;
     text-align: right;
     font-size: 11px;
-}
-
-/* small label */
-.metaslider .input-label.right {
-    float: right;
-    color: #a9a9a9;
-    font-size: 11px;
-}
-.metaslider .tabs-content .input-label.right input{
-    margin-right: 0;
-}
-
-/* Caption */
-.metaslider .tabs-content .caption {
-	position: relative;
-}
-.metaslider .tabs-content .caption label {
-}
-
-
-.metaslider .tabs-content .can-inherit textarea,
-.metaslider .tabs-content .can-inherit input[type=text] {
-	display: block;
-}
-
-.metaslider .tabs-content .default {
-	display: none;
-    width: 100%;
-    overflow: hidden;
-    padding: 2px 5px;
-    border: 1px solid #cccccc;
-    background: #eeeeee;
-    line-height: 16px;
-    font-size: 11px;
-}
-.metaslider .tabs-content .caption .default {
-    height: 60px;
-    overflow: auto;
-    margin: 0 0 5px 0;
-    font-size: 12px;
-}
-.metaslider .tabs-content .caption.inherit-from-image textarea {
-	display: none;
-}
-.metaslider .tabs-content .inherit-from-image input[type=text] {
-	display: none;
-}
-.metaslider .tabs-content .inherit-from-image .default {
-	display: block;
-} 
-.metaslider .tabs-content .default .no-content {
-    opacity: 0.3;
-    font-style: italic;
 }
 
 .metaslider tr.radio {
@@ -533,8 +481,11 @@ input[type=radio]:checked + label {
     padding: 5px 10px;
 }
 
-.metaslider input::placeholder,
-.metaslider textarea::placeholder {
+input:-ms-input-placeholder {
+    color: LightGray;
+}
+
+textarea:-ms-input-placeholder {
     color: LightGray;
 }
 
@@ -544,8 +495,7 @@ input[type=radio]:checked + label {
 
 .metaslider .tabs-content,
 .metaslider .tabs-content ul,
-.metaslider .tabs-content li,
-.metaslider .tabs-content textarea {
+.metaslider .tabs-content li {
     font-size: 12px;
 }
 
@@ -592,10 +542,6 @@ input[type=radio]:checked + label {
 .metaslider .tabs-content .row input[type=text] {
     width: 100%;
 }
-.metaslider .tabs-content .row.has-right-checkbox > input[type=text] {
-	width: calc( 100% - 155px );
-}
-
 
 .metaslider .tabs-content ul {
     margin: 0;
@@ -853,7 +799,6 @@ input[type=radio]:checked + label {
     margin: 0 auto;
 }
 .metaslider-ui .metaslider-inner {
-    background: rgba(224, 224, 224, 0.25);
     border: 1px solid #ccc;
     border-top: 0;
     box-sizing: border-box;
@@ -873,52 +818,21 @@ input[type=radio]:checked + label {
     font-weight: normal;
     margin: 0 0.5rem 0 0;
 }
-
+.metaslider-ui .slider-title .metaslider-shortcode {
+    border: 0;
+    white-space: nowrap;
+    min-width: 250px;
+    box-shadow: none;
+    font-family: monospace;
+    margin: 0;
+    color: #de6826;
+    cursor: pointer;
+}
 .metaslider-ui .slider-title .add-slide {
     padding-top: 1px !important;
     position: absolute !important;
     right: 0px;
     top: 12px;
-}
-
-/* Shortcode Instructions */
-.metaslider-ui .metaslider-shortcode {
-    padding: 7px 7px 7px 12px;
-    line-height: 15px;
-    margin: 0;
-    color: #cccccc;
-}
-.metaslider-ui .metaslider-shortcode .ms-shortcode::-moz-selection,
-.metaslider-ui .metaslider-shortcode pre::-moz-selection {
-    color: #444;
-    background: #acd8fc;
-}
-.metaslider-ui .metaslider-shortcode .ms-shortcode::selection,
-.metaslider-ui .metaslider-shortcode pre::selection {
-    color: #444;
-    background: #acd8fc;
-}
-.metaslider-ui .metaslider-shortcode p {
-    margin-top:0;
-    color: #444;
-}
-.metaslider-ui .metaslider-shortcode .ms-shortcode {
-    color: #de6826;
-    cursor: pointer;
-}
-.metaslider-ui .metaslider-shortcode .ml-button.ms-copy-all {
-    position: relative;
-    color: #0073aa;
-    padding: 0;
-    float: right;
-}
-.metaslider-ui .metaslider-shortcode .ml-button.ms-copy-all:hover {
-    color: #de6826;
-}
-.metaslider-ui .metaslider-shortcode .ml-button.ms-copy-all i {
-    position: relative;
-    top: 2px;
-    left: -2px;
 }
 
 /* Slide Listing */
@@ -1063,14 +977,6 @@ input[type=radio]:checked + label {
 }
 
 /* Navigation */
-.nav-tab-wrapper {
-    border-bottom: 1px solid #ccc;
-    margin: 0;
-    padding-top: 9px;
-    padding-bottom: 0;
-    line-height: inherit;
-    overflow: hidden;
-}
 .metaslider-ui .nav-tab * {
     box-sizing: border-box;
 }
@@ -1084,7 +990,6 @@ input[type=radio]:checked + label {
     text-overflow: ellipsis;
     overflow: hidden;
     outline: 0;
-    float: left;
 }
 
 .metaslider-ui .nav-tab:active,
@@ -1298,10 +1203,6 @@ input[type=radio]:checked + label {
     line-height: 1;
 }
 
-input[type="radio"] {
-    margin-right: 4px;
-}
-
 .metaslider-ui .settings .disabled {
     color:#bbb;
     font-style: italic;
@@ -1309,12 +1210,6 @@ input[type="radio"] {
 
 .metaslider-ui .settings .disabled input {
     border-color: #bbb;
-}
-
-.wp-clearfix:after {
-    content: "";
-    display: table;
-    clear: both;
 }
 
 /* Grid and add-on page */
@@ -1457,7 +1352,7 @@ input[type="radio"] {
 .metaslider-ui .restore-slide-link:hover span {
     color: #de6826;
 }
-.metaslider-ui .restore-slide-link i {
+.metaslider-ui .restore-slide-link svg {
     position: relative;
     top: 2px;
     left: -2px;

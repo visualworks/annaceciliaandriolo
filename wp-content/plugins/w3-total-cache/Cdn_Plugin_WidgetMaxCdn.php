@@ -9,7 +9,16 @@ class Cdn_Plugin_WidgetMaxCdn {
 	private $have_zone;
 	private $_sealed;
 
+	/**
+	 *
+	 *
+	 * @var NetDNA
+	 */
 	private $api;
+
+	/**
+	 * Config
+	 */
 	private $_config = null;
 
 	function __construct() {

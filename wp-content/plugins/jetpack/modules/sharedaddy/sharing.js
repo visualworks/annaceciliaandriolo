@@ -19,7 +19,12 @@ if ( sharing_js_options && sharing_js_options.counts ) {
 				}
 
 				requests = {
-					// Pinterest handles share counts for both http and https
+					// LinkedIn actually gets the share count for both the http and https version automatically -- so we don't need to do extra magic
+					linkedin: [
+							'https://www.linkedin.com/countserv/count/share?format=jsonp&callback=updateLinkedInCount&url=' +
+							encodeURIComponent( url )
+					],
+					// Pinterest, like LinkedIn, handles share counts for both http and https
 					pinterest: [
 						window.location.protocol +
 							'//api.pinterest.com/v1/urls/count.json?callback=WPCOMSharing.update_pinterest_count&url=' +
@@ -80,6 +85,11 @@ if ( sharing_js_options && sharing_js_options.counts ) {
 				WPCOMSharing.inject_share_count( 'sharing-facebook-' + WPCOM_sharing_counts[ permalink ], data[ url ].share.share_count );
 			}
 		},
+		update_linkedin_count : function( data ) {
+			if ( 'undefined' !== typeof data.count && ( data.count * 1 ) > 0 ) {
+				WPCOMSharing.inject_share_count( 'sharing-linkedin-' + WPCOM_sharing_counts[ data.url ], data.count );
+			}
+		},
 		update_pinterest_count : function( data ) {
 			if ( 'undefined' !== typeof data.count && ( data.count * 1 ) > 0 ) {
 				WPCOMSharing.inject_share_count( 'sharing-pinterest-' + WPCOM_sharing_counts[ data.url ], data.count );
@@ -104,6 +114,10 @@ if ( sharing_js_options && sharing_js_options.counts ) {
 		}
 	};
 }
+
+var updateLinkedInCount = function( data ) {
+	WPCOMSharing.update_linkedin_count( data );
+};
 
 (function($){
 	var $body, $sharing_email;

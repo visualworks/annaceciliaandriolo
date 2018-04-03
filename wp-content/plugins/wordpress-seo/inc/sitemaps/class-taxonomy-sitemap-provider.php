@@ -8,8 +8,30 @@
  */
 class WPSEO_Taxonomy_Sitemap_Provider implements WPSEO_Sitemap_Provider {
 
+	/** @var array $options All of plugin options. */
+	protected static $options;
+
 	/** @var WPSEO_Sitemap_Image_Parser $image_parser Holds image parser instance. */
 	protected static $image_parser;
+
+	/**
+	 * Set up object properties for data reuse.
+	 */
+	public function __construct() {
+	}
+
+	/**
+	 * Get Options
+	 *
+	 * @return array
+	 */
+	protected function get_options() {
+		if ( ! isset( self::$options ) ) {
+			self::$options = WPSEO_Options::get_all();
+		}
+
+		return self::$options;
+	}
 
 	/**
 	 * Check if provider supports given item type.
@@ -21,15 +43,6 @@ class WPSEO_Taxonomy_Sitemap_Provider implements WPSEO_Sitemap_Provider {
 	public function handles_type( $type ) {
 
 		return taxonomy_exists( $type );
-	}
-
-	/**
-	 * Get all the options
-	 *
-	 * @deprecated 7.0
-	 */
-	protected function get_options() {
-		_deprecated_function( __METHOD__, 'WPSEO 7.0', 'WPSEO_Options::get' );
 	}
 
 	/**
@@ -153,6 +166,8 @@ class WPSEO_Taxonomy_Sitemap_Provider implements WPSEO_Sitemap_Provider {
 			return $links;
 		}
 
+		$options = $this->get_options();
+
 		$steps  = $max_entries;
 		$offset = ( $current_page > 1 ) ? ( ( $current_page - 1 ) * $max_entries ) : 0;
 
@@ -183,16 +198,27 @@ class WPSEO_Taxonomy_Sitemap_Provider implements WPSEO_Sitemap_Provider {
 
 			$url = array();
 
-			$tax_noindex = WPSEO_Taxonomy_Meta::get_term_meta( $term, $term->taxonomy, 'noindex' );
+			$tax_noindex     = WPSEO_Taxonomy_Meta::get_term_meta( $term, $term->taxonomy, 'noindex' );
+			$tax_sitemap_inc = WPSEO_Taxonomy_Meta::get_term_meta( $term, $term->taxonomy, 'sitemap_include' );
 
-			if ( $tax_noindex === 'noindex' ) {
+			if ( $tax_noindex === 'noindex' && $tax_sitemap_inc !== 'always' ) {
+				continue;
+			}
+
+			if ( $tax_sitemap_inc === 'never' ) {
 				continue;
 			}
 
 			$url['loc'] = WPSEO_Taxonomy_Meta::get_term_meta( $term, $term->taxonomy, 'canonical' );
 
 			if ( ! is_string( $url['loc'] ) || $url['loc'] === '' ) {
+
 				$url['loc'] = get_term_link( $term, $term->taxonomy );
+
+				if ( $options['trailingslash'] === true ) {
+
+					$url['loc'] = trailingslashit( $url['loc'] );
+				}
 			}
 
 			$url['mod']    = $wpdb->get_var( $wpdb->prepare( $sql, $term->taxonomy, $term->term_id ) );
@@ -222,7 +248,8 @@ class WPSEO_Taxonomy_Sitemap_Provider implements WPSEO_Sitemap_Provider {
 	 */
 	public function is_valid_taxonomy( $taxonomy_name ) {
 
-		if ( WPSEO_Options::get( "noindex-tax-{$taxonomy_name}" ) === true ) {
+		$options = $this->get_options();
+		if ( ! empty( $options[ "taxonomies-{$taxonomy_name}-not_in_sitemap" ] ) ) {
 			return false;
 		}
 
@@ -230,7 +257,7 @@ class WPSEO_Taxonomy_Sitemap_Provider implements WPSEO_Sitemap_Provider {
 			return false;
 		}
 
-		if ( 'post_format' === $taxonomy_name && ! WPSEO_Options::get( 'disable-post_format', false ) ) {
+		if ( 'post_format' === $taxonomy_name && ! empty( $options['disable-post_format'] ) ) {
 			return false;
 		}
 

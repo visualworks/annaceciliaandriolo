@@ -1,6 +1,10 @@
 <?php
 namespace W3TC;
 
+/**
+ * W3 CDN Netdna Class
+ */
+
 define( 'W3TC_CDN_MIRROR_COTENDO_WSDL', 'https://api.cotendo.net/cws?wsdl' );
 define( 'W3TC_CDN_MIRROR_COTENDO_ENDPOINT', 'http://api.cotendo.net/cws?ver=1.0' );
 define( 'W3TC_CDN_MIRROR_COTENDO_NAMESPACE', 'http://api.cotendo.net/' );
