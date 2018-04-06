@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Estilo Fit
+Template Name: Artigos
 */
 ?>
 
@@ -11,7 +11,7 @@ Template Name: Estilo Fit
 
         <div class="row">
             <div class="col-md-12">
-                <h1 class="page-header">Colunista</h1>
+                <h1 class="page-header">Artigos</h1>
             </div>
             <button onclick="goBack()" class="bt-voltar">&larr; Voltar</button>
             <script>
@@ -109,7 +109,7 @@ Template Name: Estilo Fit
 
                     <div class="col-sm-12 colunistas">
 
-                        <h2>Colunistas</h2>
+                        <!--<h2>Colunistas</h2>
 
                         <?php
                         $args=array(
@@ -132,7 +132,7 @@ Template Name: Estilo Fit
                             <?php
                         endwhile;
                         ?>
-
+                        -->
                     </div>
 
                 </div>

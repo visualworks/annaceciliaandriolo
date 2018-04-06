@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Estilo Fit
+Template Name: Artigos
 */
 ?>
 
