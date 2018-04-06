@@ -964,15 +964,15 @@ s3: ;
 
 
 .ends{
-
-    padding-top: 30px;
-
-    width: 100%;
-
-    float: left;
-
     border-top: 2px solid #1ba6b0;
+    float: left;
+    padding-top: 30px;
+    width: 100%;
+}
 
+.ends .end {
+    margin-bottom: 5rem;
+    margin-top: 5rem;
 }
 
 .bottom .img{
