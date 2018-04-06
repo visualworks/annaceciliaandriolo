@@ -11,9 +11,9 @@ Index - Posts
 
     <div class="row">
       <div class="col-md-12">
-          <h1 class="page-header">Clínica</h1>
+          <h1 class="page-header">Dermatologia Capilar</h1>
       </div>
-<button onclick="goBack()" class="bt-voltar">&larr; Voltar</button>
+      <button onclick="goBack()" class="bt-voltar">&larr; Voltar</button>
       <script>
       function goBack() {
           window.history.back();
@@ -80,3 +80,4 @@ Index - Posts
 </section>
 
 <?php get_footer(); ?>
+
