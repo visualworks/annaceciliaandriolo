@@ -119,27 +119,22 @@ Template Name: Home
             <div class="ends xs-center">
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     <div class="end end1">
-                        <p>Clínica Professor Doutor<br>Walter Belda Junior</p>
                         <p class="midp">Av. Açocê, 162<br>Moema - SP</p>
-                        <p><a href="tel:50515141">(11) 5051 5141</a> | <a href="tel:50511921">(11) 5051 1921</a></p>
+                        <p><a href="tel:+551150515141">(11) 5051 5141</a> | <a href="tel:+551150511921">(11) 5051 1921</a></p>
                     </div>
                 </div>
 
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     <div class="end end2">
-                        <p>Clínica Ruston</p>
                         <p class="midp">Av. Engenheiro Oscar Americano, 60<br>Cidade Jardim - SP</p>
-                        <p><a href="tel:30316360">(11) 3031 6360</a></p>
-                        <p><a href="http://www.ruston.com.br" target="_blank">www.ruston.com.br</a></p>
+                        <p><a href="tel:+551130316360">(11) 3031 6360</a></p>
                     </div>
                 </div>
                 
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     <div class="end end3">
-                        <p>Clínica Anna Cecília Andriolo</p>
                         <p class="midp">Alameda Ricardo Paranhos, 799<br>lote1/4, quadra 243-A<br>Marista - GO</p>
-                        <p><a href="tel:39990090">(62) 3999 0090</a> | <a href="tel:98089922">(62) 9808 9922</a></p>
-                        <p><a href="http://www.annaceciliaandriolo.com.br" target="_blank">www.annaceciliaandriolo.com.br</a></p>
+                        <p><a href="tel:+556239990090">(62) 3999 0090</a> | <a href="tel:+556298089922">(62) 9808 9922</a></p>
                     </div>
                 </div>
             </div>
