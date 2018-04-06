@@ -163,25 +163,23 @@ a.active {
 
 
 .circles{
-
-    float: left;
-
-    width: 100%;
-
-    position: relative;
-
     bottom: 220px;
-
+    float: left;
+    position: relative;
+    width: 100%;
 }
 
 .circles h2{
-
-    font-size: 28px;
-
     color: #46b0b8;
-
+    font-size: 28px;
     text-align: center;
+}
 
+.circles .img.img-placeholder {
+    background-color: #46b0b8;
+    border-radius: 100%;
+    height: 150px;
+    width: 150px;
 }
 
 
