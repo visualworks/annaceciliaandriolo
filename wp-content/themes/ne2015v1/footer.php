@@ -3,7 +3,7 @@
             <div class="row">
                 <div class="bottom">
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <div>
+                        <div class="footer-logo-anna-cecilia">
                             <a href="<?php echo get_home_url(); ?>">
                                 <img src="<?php echo get_template_directory_uri(); ?>/img/logo-anna-cecilia-andriolo-footer.png" alt="Dra Anna Cecilia Andriolo - Dermatologia - CRM SP 141502 - RQE SP 38665 - CRM GO 12882 - RQE GO 9653" title="Dra Anna Cecilia Andriolo - Dermatologia - CRM SP 141502 - RQE SP 38665 - CRM GO 12882 - RQE GO 9653" />
                             </a>
