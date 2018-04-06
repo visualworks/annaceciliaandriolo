@@ -88,7 +88,7 @@ Template Name: Home
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-sm-4 col-xs-12 text-right">
-                <a href="<?php echo get_site_url(); ?>/highlights"><h2>High<br><span class="quincy">lights</span></h2></a>
+                <a href="<?php echo get_site_url(); ?>/agenda"><h2>Agenda</h2></a>
             </div>
             <?php query_posts( 'posts_per_page=2' ); ?>
 
