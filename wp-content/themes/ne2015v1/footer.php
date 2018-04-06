@@ -3,7 +3,14 @@
             <div class="row">
                 <div class="bottom">
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        <p class="assinatura xs-center">Dra. Anna Cecília Andriolo - Todos os direitos reservados (2015)</p>
+                        <div>
+                            <a href="<?php echo get_home_url(); ?>">
+                                <img src="<?php echo get_template_directory_uri(); ?>/img/logo-ana-cecilia.png" alt="Dra Anna Cecilia Andriolo - Dermatologia - CRM SP 141502 - RQE SP 38665 - CRM GO 12882 - RQE GO 9653" title="Dra Anna Cecilia Andriolo - Dermatologia - CRM SP 141502 - RQE SP 38665 - CRM GO 12882 - RQE GO 9653" />
+                            </a>
+                        </div>
+                        <p>Dra Anna Cecilia Andriolo - Dermatologia</p>
+                        <p>CRM SP 141502<br />RQE SP 38665</p>
+                        <p>CRM GO 12882<br />RQE GO 9653</p>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="col-md-6 col-sm-6 col-xs-12">
