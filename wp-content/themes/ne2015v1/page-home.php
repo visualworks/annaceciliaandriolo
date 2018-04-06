@@ -60,7 +60,6 @@ Template Name: Home
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12 text-left">
                 <div class="perfilhome">
-                    <h5>Dra. Anna<br>Cecília Andriolo<br><span>Dermatologia <strong>&</strong> Cosmiatria</span></h5>
                     <a href="<?php echo site_url();?>/perfil">
                         <button>
                             Visite o perfil
@@ -74,7 +73,7 @@ Template Name: Home
                             </a>
                         </div>
                     <div class="icon">
-                        <a href="https://instagram.com/clinicadermi" target="_blank">
+                        <a href="https://www.instagram.com/dra_anna_cecilia_andriolo/" target="_blank">
                             <i class="fa fa-instagram"></i>
                         </a>
                     </div>

@@ -568,29 +568,23 @@ html body div.np{
 }
 
 .perfilhome{
-
-    padding: 100px 20px;
-
-    position: relative;
-
     bottom: 140px;
-
+    min-height: 433px;
+    height: 433px;
+    max-height: 433px;
+    min-width: 100%;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
 }
 
 .perfilhome h5{
-
     font-size: 50px;
-
     color: #fff;
-
     font-weight: 100;
-
     color: #fff;
-
     font-family: 'Allura';
-
     text-transform: capitalize;
-
 }
 
 .perfilhome span{
@@ -614,31 +608,20 @@ html body div.np{
 }
 
 .perfilhome button{
-
-    padding: 3px 5px;
-
-    text-transform: uppercase;
-
-    margin-top: 20px;
-
     background-color: transparent;
-
-    color: #fff;
-
     border: 1px solid #fff;
-
     border-radius: 3px;
-
+    color: #fff;
+    margin-left: 15rem;
+    margin-top: 25%;
+    padding: 3px 5px;
+    position: relative;
+    text-transform: uppercase;
     -webkit-transition: all .3s;
-
-       -moz-transition: all .3s;
-
-        -ms-transition: all .3s;
-
-         -o-transition: all .3s;
-
-            transition: all .3s;
-
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
 }
 
 
