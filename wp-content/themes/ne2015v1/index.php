@@ -11,7 +11,7 @@ Index - Posts
 
     <div class="row">
       <div class="col-md-12">
-          <h1 class="page-header">Highlights</h1>
+          <h1 class="page-header">Agenda</h1>
       </div>
       <button onclick="goBack()" class="bt-voltar">&larr; Voltar</button>
       <script>
