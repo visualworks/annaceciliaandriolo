@@ -323,10 +323,6 @@ class GalleriesView_bwg extends AdminView_bwg {
                     </div>
                     <!-- instagram gallery -->
                     <div id="add_instagram_gallery" <?php echo($params['gallery_type'] == 'instagram' ? '' : 'style="display:none"'); ?>>
-                      <div class="wd-group" id='tr_gallery_source'>
-                        <label class="wd-label" for="gallery_source"><?php _e('Instagram username', BWG()->prefix); ?></label>
-                        <input type="text" id="gallery_source" name="gallery_source" value="<?php echo $row->gallery_source; ?>" class="bwg_requried" />
-                      </div>
                       <div class="wd-group" id='tr_autogallery_image_number'>
                         <label class="wd-label" for="autogallery_image_number"><?php _e('Number of Instagram recent posts to add to gallery', BWG()->prefix); ?> </label>
                         <input type="number" id="autogallery_image_number" name="autogallery_image_number" value="<?php echo $row->autogallery_image_number; ?>" />

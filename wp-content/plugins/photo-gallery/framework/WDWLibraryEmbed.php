@@ -633,81 +633,52 @@ class WDWLibraryEmbed {
 
   }
 
-/**
- *
- * @return json_encode(array("error","error message")) on failure
- * @return json_encode(array of data of instagram user recent posts) on success 
- */
-  public static function add_instagram_gallery($instagram_user, $access_token, $whole_post, $autogallery_image_number) {
+  /**
+   * @return json_encode(array("error","error message")) on failure
+   * @return json_encode(array of data of instagram user recent posts) on success
+   */
+  public static function add_instagram_gallery( $instagram_user, $access_token, $whole_post, $autogallery_image_number ) {
     @set_time_limit(0);
-    $instagram_user = sanitize_text_field(urldecode($instagram_user));
-    $instagram_user_response = wp_remote_get("https://api.instagram.com/v1/users/search?q=".$instagram_user."&access_token=".$access_token."&count=1"); 
-    if ( is_wp_error( $instagram_user_response ) ) {
-      return json_encode(array("error", "cannot get Instagram user parameters"));
-    }
-    $user_json = wp_remote_retrieve_body($instagram_user_response);
-    $response_code = json_decode($user_json)->meta->code;
-
-    /*
-    instagram API returns
-    
-    *wrong username
-    {"meta":{"code":200},"data":[]}
-    
-    *wrong access_token
-    {"meta":{"error_type":"OAuthParameterException","code":400,"error_message":"The access_token provided is invalid and does not match a valid application."}}
-    */
-    if($response_code != 200){
-      return json_encode(array("error", json_decode($user_json)->meta->error_message));
-    }
-    if(!property_exists(json_decode($user_json), 'data')){
-      return json_encode(array("error", "cannot get Instagram user parameters"));
-    }
-    if(empty(json_decode($user_json)->data)){
-      return json_encode(array("error", "wrong Instagram username"));
-    }
-    $user_data = json_decode($user_json)->data[0];
-    $user_id = $user_data->id;  
-    $instagram_posts_response = wp_remote_get("https://api.instagram.com/v1/users/".$user_id."/media/recent/?access_token=".$access_token."&count=".$autogallery_image_number);
-    if ( is_wp_error( $instagram_posts_response ) ) {
-      return json_encode(array("error", "cannot get Instagram user posts"));
+    $instagram_posts_response = wp_remote_get("https://api.instagram.com/v1/users/self/media/recent/?access_token=" . $access_token . "&count=" . $autogallery_image_number);
+    if ( is_wp_error($instagram_posts_response) ) {
+      return json_encode(array( "error", "cannot get Instagram user posts" ));
     }
     $posts_json = wp_remote_retrieve_body($instagram_posts_response);
     $response_code = json_decode($posts_json)->meta->code;
-    
     /*
     instagram API returns
     *private user
     '{"meta":{"error_type":"APINotAllowedError","code":400,"error_message":"you cannot view this resource"}}'
     */
-    if($response_code != 200){
-      return json_encode(array("error", json_decode($posts_json)->meta->error_message));
+    if ( $response_code != 200 ) {
+      return json_encode(array( "error", json_decode($posts_json)->meta->error_message ));
     }
-    if(!property_exists(json_decode($posts_json), 'data')){
-      return json_encode(array("error", "cannot get Instagram user posts data"));
+    if ( !property_exists(json_decode($posts_json), 'data') ) {
+      return json_encode(array( "error", "cannot get Instagram user posts data" ));
     }
     /*
     if instagram user has no posts
     */
-    if(empty(json_decode($posts_json)->data)){
-      return json_encode(array("error", "Instagram user has no posts"));
+    if ( empty(json_decode($posts_json)->data) ) {
+      return json_encode(array( "error", "Instagram user has no posts" ));
     }
     $posts_array = json_decode($posts_json)->data;
     $instagram_album_data = array();
-    if($whole_post==1){
-      $post_flag ="post";
+    if ( $whole_post == 1 ) {
+      $post_flag = "post";
     }
-    else{
-      $post_flag ='';
+    else {
+      $post_flag = '';
     }
-    foreach ($posts_array as $post_data) {
+    foreach ( $posts_array as $post_data ) {
       $url = $post_data->link . $post_flag;
-      $post_to_embed = json_decode(self::add_embed($url, $post_data), true);
+      $post_to_embed = json_decode(self::add_embed($url, $post_data), TRUE);
       /* if add_embed function did not indexed array because of error */
-      if(!isset($post_to_embed[0]) ){
+      if ( !isset($post_to_embed[0]) ) {
         array_push($instagram_album_data, $post_to_embed);
       }
     }
+
     return json_encode($instagram_album_data);
   }
 

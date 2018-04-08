@@ -1109,9 +1109,6 @@ function bwg_check_instagram_gallery_input(instagram_client_id, from_popup){
   }
   else{
 	  if (bwg_is_instagram_gallery()){
-	    if(spider_check_required('gallery_source', 'Instagram user URL')){
-	      is_error = true;
-	    }
 	    if(instagram_client_id == ''){
 	      alert(bwg_objectL10B.bwg_access_token);
 	      is_error = true;
