@@ -789,62 +789,33 @@ s3: ;
 
 
 #s1 {
-
     /*background: url(img/bg-s1.jpg) center top;*/
-
-    padding: 40px 0;
-
-    height: 250px;
-
     background-color: #eee;
-
+    padding: 40px 0;
 }
-
-
 
 #s2 {
-
     background: url(img/bgperfilhome.jpg) no-repeat center top;
-
-    padding: 0;
-
     background-size: cover;
-
+    padding: 0;
 }
-
-
 
 #s3 {
-
     background: #eee;
-
     padding: 40px 0;
-
 }
-
-
 
 #s4{
-
     padding-bottom: 30px;
-
 }
-
-
 
 #ne img{
-
     max-width: 240px;
-
 }
 
-
 .page-tratamentos .post-title{
-
     font-size: 22px;
-
     min-height: 48px;
-
 }
 
 .page-tratamentos .post-text p{
@@ -935,17 +906,10 @@ s3: ;
 
 }
 
-
-
 #s1 .img{
-
     max-width: 150px;
-
     margin: auto;
-
 }
-
-
 
 .ends{
     border-top: 2px solid #1ba6b0;
@@ -1352,7 +1316,7 @@ MOBILE
         min-height: 100vh;
     }
 
-    .safari #s1 .img{
+    .safari #s1 .img {
         max-width: 90px;
     }
 
@@ -1369,13 +1333,6 @@ MOBILE
         height: initial;
 
     }
-
-    #s1{
-
-        height: 180px;
-
-    }
-
     .form-contato{
 
         margin-top: 30px;
