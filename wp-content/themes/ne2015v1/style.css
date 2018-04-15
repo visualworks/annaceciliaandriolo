@@ -821,36 +821,22 @@ s3: ;
 }
 
 .page-header{
-
+    color: #1ba6b0;
     text-transform: initial;
-
-    color: #1ba6b0;
-
 }
 
 
 
-.sectitle{
-
-    color: #1ba6b0;
-
+.sectitle {
     background-color: #fff;
-
-    padding: 10px 15px;
-
-    position: relative;
-
-    top: 32px;
-
+    color: #1ba6b0;
     display: inline-block;
-
     font-size: 28px;
-
+    padding: 10px 15px;
+    position: relative;
     text-transform: uppercase;
-
+    top: 32px;
 }
-
-
 
 .tbox{
 
@@ -1201,6 +1187,26 @@ MOBILE
 
 
 @media (max-width: 992px){
+    #s3 > .container > .row > .agenda-title-mobile {
+        border-top: 2px solid #1ba6b0;
+    }
+    .sectitle-mobile {
+        font-size: 28px;
+        left: inherit;
+        margin-top: -20px;
+        margin-bottom: 20px;
+        right: inherit;
+        text-align: center;
+    }
+    .sectitle-mobile a {
+        background-color: #eee;
+        color: #1ba6b0;
+        display: inline-block;
+        font-size: 28px;
+        padding: 0 15px;
+        position: relative;
+        text-transform: uppercase;
+    }
     .safari .circles{
         bottom: 100px;
     }
@@ -1292,10 +1298,10 @@ MOBILE
         background-color: #44B4BD;
         color: #fff;
     }
-.page-id-173 .circles {
-    margin: 0;
-    min-height: initial;
-}
+    .page-id-173 .circles {
+        margin: 0;
+        min-height: initial;
+    }
     .page-id-173{
         min-height: 100vh;
     }

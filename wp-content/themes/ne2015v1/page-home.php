@@ -86,8 +86,8 @@ Template Name: Home
 <div id="s3" class="hl">
     <div class="container">
         <div class="row">
-            <div class="col-md-4 col-sm-4 col-xs-12 text-right">
-                <a href="<?php echo get_site_url(); ?>/agenda"><h2>Agenda</h2></a>
+            <div class="col-md-4 col-sm-12 col-xs-12 text-right agenda-title-mobile">
+                <h2 class="sectitle-mobile"><a href="<?php echo get_site_url(); ?>/agenda">Agenda</a></h2>
             </div>
             <?php query_posts( 'posts_per_page=2' ); ?>
 
