@@ -270,13 +270,9 @@ display: inline-block;
 }
 
 .main-header{
-
     background: url(img/bgheadernh.jpg) no-repeat top center;
-
     background-size: cover;
-
     padding: 60px 0;
-
 }
 
 #home header{
@@ -1210,39 +1206,27 @@ MOBILE
     }
 
     .tbox:before, .tbox:after {
-
         width: 30px;
-
     }
 
-    header{
-
+    header.main-header {
         padding-bottom: 0;
-
     }
 
     .assinatura {
-
         font-size: 12px;
-
     }
 
     .bottom .img {
-
         max-width: 25px;
-
     }
 
     .end p {
-
         font-size: 13px;
-
     }
 
     .bloco h3 {
-
         font-size: 14px;
-
     }
 
     .hl h2 {
