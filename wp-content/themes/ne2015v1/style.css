@@ -1190,7 +1190,7 @@ MOBILE
     #s3 > .container > .row > .agenda-title-mobile {
         border-top: 2px solid #1ba6b0;
     }
-    .sectitle-mobile {
+    .agenda-title-mobile > h2.sectitle-mobile {
         font-size: 28px;
         left: inherit;
         margin-top: -20px;
@@ -1198,7 +1198,7 @@ MOBILE
         right: inherit;
         text-align: center;
     }
-    .sectitle-mobile a {
+    .agenda-title-mobile > .sectitle-mobile > a {
         background-color: #eee;
         color: #1ba6b0;
         display: inline-block;
@@ -1236,15 +1236,11 @@ MOBILE
     }
 
     .hl h2 {
-
         font-size: 54px;
-
     }
 
     #menu{
-
         padding-top: 40px;
-
     }
 
     .circles {
