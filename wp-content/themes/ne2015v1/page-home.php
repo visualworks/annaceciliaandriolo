@@ -29,25 +29,25 @@ Template Name: Home
                 <div class="col-md-3 col-sm-6 col-xs-6 bloco b1 text-center">
                     <a href='<?php echo get_site_url(); ?>/tipo-tratamento/dermatologia-clinica/'>
                         <div class="img img-placeholder"><!--<img src="<?php echo get_template_directory_uri(); ?>/img/clinica.png" alt="Tratamentos Faciais">--></div>
-                        <h2>Dermatologia Clínica</h2>
+                        <h2>Clínica</h2>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-xs-6 bloco b3 text-center">
                     <a href='<?php echo get_site_url(); ?>/tipo-tratamento/dermatologia-capilar/'>
                         <div class="img img-placeholder"><!--<img src="<?php echo get_template_directory_uri(); ?>/img/tricologia.png" alt="Tricologia">--></div>
-                        <h2>Dermatologia Cirúrgica</h2>
+                        <h2>Cirúrgica</h2>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-xs-6 bloco b2 text-center">
                     <a href='<?php echo get_site_url(); ?>/tipo-tratamento/dermatologia-estetica/'>
                         <div class="img img-placeholder"><!--<img src="<?php echo get_template_directory_uri(); ?>/img/estetica.png" alt="Tratamentos Corporais">--></div>
-                        <h2>Dermatologia Estética</h2>
+                        <h2>Estética</h2>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-xs-6 bloco b3 text-center">
                     <a href='<?php echo get_site_url(); ?>/tipo-tratamento/dermatologia-capilar/'>
                         <div class="img img-placeholder"><!--<img src="<?php echo get_template_directory_uri(); ?>/img/tricologia.png" alt="Tricologia">--></div>
-                        <h2>Dermatologia Capilar</h2>
+                        <h2>Capilar</h2>
                     </a>
                 </div>
             </div>

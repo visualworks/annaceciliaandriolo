@@ -1259,10 +1259,15 @@ MOBILE
     #logo{
         text-align: center;
     }
-    .perfilhome {
-        height: 180px;
+    #s2 div.perfilhome {
+        height: 160px;
+        min-height: 160px;
+        max-height: 160px;
     }
-
+    #s2 div.perfilhome > a > button {
+        margin-top: 80px;
+        margin-left: 20px;
+    }
 }
 
 
