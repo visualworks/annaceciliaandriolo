@@ -838,6 +838,10 @@ s3: ;
     top: 32px;
 }
 
+.sectitle-mobile > a {
+    color: #1ba6b0;
+}
+
 .tbox{
 
     height: 105px;
