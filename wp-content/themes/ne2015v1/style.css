@@ -1244,29 +1244,23 @@ MOBILE
     }
 
     .circles {
-
         bottom: 140px;
-        
     }
 
     .circles h2 {
-
         font-size: 16px;
-
         margin-top: 10px;
-
     }
 
     html body div.sm-center{
-
         text-align: center;
-
     }
 
     #logo{
-
         text-align: center;
-
+    }
+    .perfilhome {
+        height: 180px;
     }
 
 }
