@@ -30,11 +30,19 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12 xs-center">
-                        <div class="logo-ne xs-center">
-                            <a href="http://novoselementos.com.br" target="_blank" title="Agência Novos Elementos">
-                                <div class="img"><img src="https://www.annaceciliaandriolo.com.br/wp-content/uploads/2015/10/logo-ne.png" alt="Agência Novos Elementos"></div>
-                            </a>
-                        </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 text-center sociais sociais-footer">
+                                Siga:
+                                <div class="icon">
+                                    <a href="https://www.facebook.com/dermatologia.anna.cecilia.andriolo" target="_blank">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                </div>
+                                <div class="icon">
+                                    <a href="https://www.instagram.com/dra_anna_cecilia_andriolo/" target="_blank">
+                                        <i class="fa fa-instagram"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

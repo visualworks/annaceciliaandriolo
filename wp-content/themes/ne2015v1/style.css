@@ -1389,7 +1389,16 @@ MOBILE
         font-size: 24px;
 
     }
-
+    div.sociais-footer {
+        color: #333;
+        bottom: inherit;
+    }
+    div.sociais-footer > div.icon {
+        border-color: #333;
+    }
+    div.sociais-footer > div.icon > a > .fa {
+        color: #333;
+    }
     .perfilhome{
 
         padding: 40px 10px;
