@@ -760,6 +760,16 @@ html body div.np{
 
 }
 
+div.sociais.sociais-footer {
+    color: #333;
+    bottom: inherit;
+}
+div.sociais.sociais-footer > div.icon {
+    border-color: #333;
+}
+div.sociais.sociais-footer > div.icon > a > .fa {
+    color: #333;
+}
 
 
 
@@ -1393,14 +1403,14 @@ MOBILE
         font-size: 24px;
 
     }
-    div.sociais-footer {
+    div.sociais.sociais-footer {
         color: #333;
         bottom: inherit;
     }
-    div.sociais-footer > div.icon {
+    div.sociais.sociais-footer > div.icon {
         border-color: #333;
     }
-    div.sociais-footer > div.icon > a > .fa {
+    div.sociais.sociais-footer > div.icon > a > .fa {
         color: #333;
     }
     .perfilhome{
