@@ -4298,22 +4298,37 @@ class ShortcodeView_bwg extends AdminView_bwg {
             return "<img src='<?php echo BWG()->plugin_url; ?>/images/icons/gallery-icon.png' class='bwg_shortcode mceItem' title='Best_Wordpress_Gallery" + short_id + "' />";
           });
         }
-        jQuery("#task").val("save");
-        jQuery("#tagtext").val(tagtext);
-        jQuery("#currrent_id").val(shortcode_id);
-        jQuery("#title").val(title);
-        jQuery("#bwg_insert").val((content && !bwg_insert) ? 0 : 1);
-        jQuery("#bwg_shortcode_form").submit();
-        if (top.tinymce.isIE && content) {
-          // IE and Update.
-          var all_content = top.tinyMCE.activeEditor.getContent();
-          all_content = all_content.replace('<p></p><p>[Best_Wordpress_Gallery', '<p>[Best_Wordpress_Gallery');
-          top.tinyMCE.activeEditor.setContent(all_content.replace(content, '[Best_Wordpress_Gallery id="' + shortcode_id + '"' + title + ']'));
-        }
-        else {
-          top.send_to_editor(short_code);
-        }
-        top.tinyMCE.execCommand('mceRepaint');
+        //jQuery("#task").val("save");
+        //jQuery("#tagtext").val(tagtext);
+        //jQuery("#currrent_id").val(shortcode_id);
+        //jQuery("#title").val(title);
+        //jQuery("#bwg_insert").val((content && !bwg_insert) ? 0 : 1);
+        //jQuery("#bwg_shortcode_form").submit();
+        var post_data = {};
+        var url = '<?php echo add_query_arg(array( 'action' => 'shortcode_bwg' ), admin_url('admin-ajax.php')); ?>';
+        post_data['bwg_nonce'] = jQuery("#bwg_nonce").val();
+        post_data['task'] = "save";
+        post_data['tagtext'] = tagtext;
+        post_data['currrent_id'] = shortcode_id;
+        post_data['title'] = title;
+        post_data['bwg_insert'] = (content && !bwg_insert) ? 0 : 1;
+        var use_options_defaults = jQuery("#use_option_defaults").prop('checked') ? 1 : 0;
+        post_data['use_option_defaults'] = use_options_defaults;
+        jQuery.post(
+          url,
+          post_data
+        ).success(function (data, textStatus, errorThrown) {
+          if (top.tinymce.isIE && content) {
+            // IE and Update.
+            var all_content = top.tinyMCE.activeEditor.getContent();
+            all_content = all_content.replace('<p></p><p>[Best_Wordpress_Gallery', '<p>[Best_Wordpress_Gallery');
+            top.tinyMCE.activeEditor.setContent(all_content.replace(content, '[Best_Wordpress_Gallery id="' + shortcode_id + '"' + title + ']'));
+          }
+          else {
+            top.send_to_editor(short_code);
+          }
+          top.tinyMCE.execCommand('mceRepaint');
+        });
         <?php } else { ?>
         var post_data = {};
         var url = '<?php echo add_query_arg(array( 'action' => 'shortcode_bwg' ), admin_url('admin-ajax.php')); ?>';
