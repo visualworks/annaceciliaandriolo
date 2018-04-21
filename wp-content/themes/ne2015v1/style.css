@@ -697,17 +697,17 @@ html body div.np{
 
 
 .hl h2{
-
     color: #1ba6b0;
-
     font-size: 85px;
-
     position: relative;
-
     right: 50px;
-
 }
 
+.agenda-title-web > h2 {
+    font-size: 50px;
+    margin-top: 120px;
+    right: 55px;
+}
 
 
 .sociais{
