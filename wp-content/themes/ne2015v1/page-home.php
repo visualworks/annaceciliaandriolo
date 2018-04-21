@@ -34,7 +34,7 @@ Template Name: Home
                 </div>
                 <div class="col-md-3 col-sm-6 col-xs-6 bloco b3 text-center">
                     <a href='<?php echo get_site_url(); ?>/tipo-tratamento/dermatologia-capilar/'>
-                        <div class="img img-placeholder"><img src="https://www.annaceciliaandriolo.com.br/wp-content/uploads/2018/04/dermatologia-tricologia.png" alt="Tricologia" /></div>
+                        <div class="img img-placeholder"><img src="https://www.annaceciliaandriolo.com.br/wp-content/uploads/2018/04/dermatologia-cirurgica.png" alt="Tricologia" /></div>
                         <h2>Cirúrgica</h2>
                     </a>
                 </div>
