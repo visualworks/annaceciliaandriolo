@@ -28,25 +28,25 @@ Template Name: Home
             <div class="circles text-center">
                 <div class="col-md-3 col-sm-6 col-xs-6 bloco b1 text-center">
                     <a href='<?php echo get_site_url(); ?>/tipo-tratamento/dermatologia-clinica/'>
-                        <div class="img img-placeholder"><img src="https://www.annaceciliaandriolo.com.br/wp-content/uploads/2018/04/dermatologia-clinica.png" alt="Tratamentos Faciais" /></div>
+                        <div class="img img-placeholder"><img src="https://www.annaceciliaandriolo.com.br/wp-content/uploads/2018/04/dermatologia-clinica.png" alt="Dermatologia Clínica" title="Dermatologia Clínica" /></div>
                         <h2>Clínica</h2>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-xs-6 bloco b3 text-center">
                     <a href='<?php echo get_site_url(); ?>/tipo-tratamento/dermatologia-capilar/'>
-                        <div class="img img-placeholder"><img src="https://www.annaceciliaandriolo.com.br/wp-content/uploads/2018/04/dermatologia-cirurgica.png" alt="Tricologia" /></div>
-                        <h2>Cirúrgica</h2>
+                        <div class="img img-placeholder"><img src="https://www.annaceciliaandriolo.com.br/wp-content/uploads/2018/04/dermatologia-cirurgica.png" alt="Dermatologia Cirúrgica" title="Dermatologia Cirúrgica" /></div>
+                        <h2>Cirurgia</h2>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-xs-6 bloco b2 text-center">
                     <a href='<?php echo get_site_url(); ?>/tipo-tratamento/dermatologia-estetica/'>
-                        <div class="img img-placeholder"><img src="https://www.annaceciliaandriolo.com.br/wp-content/uploads/2018/04/dermatologia-estetica.png" alt="Tratamentos Corporais" /></div>
+                        <div class="img img-placeholder"><img src="https://www.annaceciliaandriolo.com.br/wp-content/uploads/2018/04/dermatologia-estetica.png" alt="Dermatologia Estética" title="Dermatologia Estética" /></div>
                         <h2>Estética</h2>
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6 col-xs-6 bloco b3 text-center">
                     <a href='<?php echo get_site_url(); ?>/tipo-tratamento/dermatologia-capilar/'>
-                        <div class="img img-placeholder"><img src="https://www.annaceciliaandriolo.com.br/wp-content/uploads/2018/04/dermatologia-capilar.png" alt="Tricologia" /></div>
+                        <div class="img img-placeholder"><img src="https://www.annaceciliaandriolo.com.br/wp-content/uploads/2018/04/dermatologia-capilar.png" alt="Dermatologia Capilar" title="Dermatologia Capilar" /></div>
                         <h2>Capilar</h2>
                     </a>
                 </div>
