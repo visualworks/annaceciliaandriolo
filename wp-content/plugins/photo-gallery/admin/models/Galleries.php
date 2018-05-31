@@ -347,7 +347,6 @@ class GalleriesModel_bwg {
     }
 
     $data = array(
-      'id' => $id,
       'name' => $name,
       'slug' => $slug,
       'description' => WDWLibrary::get('description', '', FALSE),
@@ -363,12 +362,15 @@ class GalleriesModel_bwg {
       'update_flag' => WDWLibrary::get('update_flag', ''),
       'modified_date' => WDWLibrary::get('modified_date', time() )
     );
-	  $saved = $wpdb->replace($wpdb->prefix . 'bwg_gallery', $data);
+    if ( $id == 0 ) {
+      $saved = $wpdb->insert($wpdb->prefix . 'bwg_gallery', $data);
+      $id = $wpdb->insert_id;
+    }
+	  else {
+      $saved = $wpdb->update($wpdb->prefix . 'bwg_gallery', $data, array( 'id' => $id ));
+    }
 
     if ( $saved !== FALSE ) {
-      if ( $id == 0 ) {
-        $id = $wpdb->insert_id;
-      }
       // Create custom post (type is gallery).
       $custom_post_params = array(
         'id' => $id,
@@ -876,14 +878,14 @@ class GalleriesModel_bwg {
     $gallery_id = (int) WDWLibrary::get('current_id', 0);
     $image_width = (int) WDWLibrary::get('image_width', 1600);
     $image_height = (int) WDWLibrary::get('image_height', 1200);
-	  $where = ( ($gallery_id) ? ' WHERE gallery_id=' . $gallery_id . ( $image_id ? ' AND id=' . $image_id : '' ) : '' );
+    $where = ( ($gallery_id) ? ' gallery_id=' . $gallery_id . ( $image_id ? ' AND id=' . $image_id : '' ) : '' );
     $images = $wpdb->get_results('SELECT * FROM `' . $wpdb->prefix . 'bwg_image` ' . $where );
     if ( !empty($images) ) {
       foreach ( $images as $image ) {
         $this->scaled_image(ABSPATH . BWG()->upload_dir . $image->image_url, $image_width, $image_height);
       }
     }
-    WDWLibrary::update_image_modifie_date( $where );
+    WDWLibrary::update_image_modified_date( $where );
 
     return 24;
   }
